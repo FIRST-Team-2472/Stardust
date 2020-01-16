@@ -7,7 +7,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import frc.subsystems.Drive;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,12 +20,19 @@ import edu.wpi.first.wpilibj.TimedRobot;
  * project.
  */
 public class Robot extends TimedRobot {
-  /**
-   * This function is run when the robot is first started up and should be used
-   * for any initialization code.
-   */
+  
+  private Drive drive;
+  private Happytwig joysticks;
+  private Happytwig joysticks2;
+  private Vroomvroom xboxcontroller;
+
   @Override
   public void robotInit() {
+    drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
+    joysticks = new Happytwig(Constants.jstickR);
+    joysticks2 = new Happytwig(Constants.jstickL);
+    xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
+    
   }
 
   @Override
@@ -39,6 +49,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    drive.tankDrive(joysticks.getY(), joysticks2.getY());
   }
 
   @Override
