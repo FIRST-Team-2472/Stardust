@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.sun.org.apache.xml.internal.security.Init;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
@@ -75,6 +77,10 @@ public class Robot extends TimedRobot {
     if (xboxcontroller.getXButton()) {
       // do somting
       drive.runFrontRight(.25);
+    }
+    
+    if (xboxcontroller.getPOV(0)) {
+      climb.runClimber(1);
     }
   }
 
