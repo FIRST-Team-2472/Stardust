@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.subsystems.Climber;
 import frc.subsystems.Drive;
 
 /**
@@ -18,8 +19,9 @@ import frc.subsystems.Drive;
  * project.
  */
 public class Robot extends TimedRobot {
-  
+
   private Drive drive;
+  private Climber climb;
   private Happytwig joysticks;
   private Happytwig joysticks2;
   private Vroomvroom xboxcontroller;
@@ -30,7 +32,7 @@ public class Robot extends TimedRobot {
     joysticks = new Happytwig(Constants.jstickR);
     joysticks2 = new Happytwig(Constants.jstickL);
     xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
-    
+
   }
 
   @Override
@@ -43,7 +45,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-  
+
   }
 
   @Override
@@ -58,7 +60,22 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    
+    if (xboxcontroller.getAButton()) {
+      // do somting
+      drive.runBackLeft(.25);
+    }
+    if (xboxcontroller.getBButton()) {
+      // do somting
+      drive.runBackRight(.25);
+    }
+    if (xboxcontroller.getYButton()) {
+      // do somting
+      drive.runFrontLeft(.25);
+    }
+    if (xboxcontroller.getXButton()) {
+      // do somting
+      drive.runFrontRight(.25);
+    }
   }
 
 }
