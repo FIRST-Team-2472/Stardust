@@ -11,13 +11,16 @@ public class Shooter {
         leftFlyWheel = new TalonSRX(leftFlyWheelID);
         rightFlyWheel = new TalonSRX(rightFlyWheelID);
     }
+
     public void runFlyWheel(double speed) {
         runLeftFlyWheel(speed);
         runRightFlyWheel(speed);
     }
+
     public void runLeftFlyWheel(double speed) {
         leftFlyWheel.set(ControlMode.PercentOutput, speed);
     }
+
     public void runRightFlyWheel(double speed) {
         rightFlyWheel.set(ControlMode.PercentOutput, speed);
     }
