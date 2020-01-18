@@ -1,5 +1,5 @@
 package frc.subsystems;
 
-public class Wheewhee {
+public class ColorWheel {
 
 }
