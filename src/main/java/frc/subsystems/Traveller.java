@@ -13,7 +13,7 @@ public class Traveller {
     }
 
     public void runTraveller(double speed) {
-        runTravllerR(speed);
+        runTravellerR(speed);
         runTravellerL(speed);
     }
 
