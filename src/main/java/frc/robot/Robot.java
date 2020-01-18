@@ -10,9 +10,11 @@ package frc.robot;
 import com.sun.org.apache.xml.internal.security.Init;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
-
+import frc.subsystems.Shooter;
+import frc.subsystems.Collector;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -23,6 +25,8 @@ import frc.subsystems.Drive;
 public class Robot extends TimedRobot {
 
   private Drive drive;
+  private Shooter shooter;
+  private Collector slurp;
   private Climber climb;
   private Happytwig joysticks;
   private Happytwig joysticks2;
@@ -79,9 +83,14 @@ public class Robot extends TimedRobot {
       drive.runFrontRight(.25);
     }
     
-    if (xboxcontroller.getPOV(0)) {
-      climb.runClimber(1);
+    if (xboxcontroller.getTriggerAxis(Vroomvroom.Hand.kLeft) > .5) {
+      shooter.runFlyWheel(1);
     }
+
+    if (xboxcontroller.getTriggerAxis(Vroomvroom.Hand.kRight) > .5) {
+      slurp.runConveyor(1);
+    }
+  
   }
 
 }
