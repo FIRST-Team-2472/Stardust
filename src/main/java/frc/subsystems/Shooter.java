@@ -1,5 +1,5 @@
 package frc.subsystems;
 
-public class Yeetus {
+public class Shooter {
     
 }
