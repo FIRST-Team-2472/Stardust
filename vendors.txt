@@ -1,0 +1,1 @@
+http://maven.highcurrent.io/vendordeps/ADIS16470.json
