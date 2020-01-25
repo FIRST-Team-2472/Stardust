@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
   private Happytwig joysticks;
   private Happytwig joysticks2;
   private Vroomvroom xboxcontroller;
+  //private DoubleSolo
 
   @Override
   public void robotInit() {
