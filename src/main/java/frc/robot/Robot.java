@@ -7,14 +7,16 @@
 
 package frc.robot;
 
-import com.sun.org.apache.xml.internal.security.Init;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.actions.runners.ActionQueue;
+import frc.actions.DriveStraight;
+import frc.actions.TurnLeft;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
 import frc.subsystems.Shooter;
 import frc.subsystems.Collector;
+import com.analog.adis16470.frc.ADIS16470_IMU;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -24,29 +26,33 @@ import frc.subsystems.Collector;
  */
 public class Robot extends TimedRobot {
 
-  private Drive drive;
+  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   private Shooter shooter;
   private Collector slurp;
   private Climber climb;
-  private Happytwig joysticks;
-  private Happytwig joysticks2;
-  private Vroomvroom xboxcontroller;
+  private final Happytwig joysticks = new Happytwig(Constants.jstickR);
+  private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
+  private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
+  public static final ADIS16470_IMU imu = new ADIS16470_IMU();
 
   @Override
   public void robotInit() {
-    drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
-    joysticks = new Happytwig(Constants.jstickR);
-    joysticks2 = new Happytwig(Constants.jstickL);
-    xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
-
   }
+  
 
+  private ActionQueue actionQueue = new ActionQueue();
+  
   @Override
   public void autonomousInit() {
+    actionQueue.clear();
+    actionQueue.addAction(new DriveStraight(.5, 3.3));
+    actionQueue.addAction(new TurnLeft());
+
   }
 
   @Override
   public void autonomousPeriodic() {
+    actionQueue.step();
   }
 
   @Override

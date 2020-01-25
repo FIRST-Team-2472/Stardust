@@ -9,7 +9,7 @@ public class Constants {
 	public static int conveyor = 4;
 	public static int climberR = 5;
 	//might not be needed
-	//public static int climberL = 6;
+	public static int climberL = 6;
 	public static int TravellerR = 7;
 	public static int TravellerL = 8;
 	public static int Turret = 9;
