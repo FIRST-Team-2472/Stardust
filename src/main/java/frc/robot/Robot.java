@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import com.sun.org.apache.xml.internal.security.Init;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.subsystems.Climber;
