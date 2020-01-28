@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.actions.runners.ActionQueue;
 import frc.actions.DriveStraight;
-import frc.actions.TurnLeft;
+import frc.actions.Turn;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
 import frc.subsystems.Shooter;
@@ -50,7 +50,7 @@ public static final String Turret = null;
   public void autonomousInit() {
     actionQueue.clear();
     actionQueue.addAction(new DriveStraight(.5, 3.3));
-    actionQueue.addAction(new TurnLeft());
+    actionQueue.addAction(new Turn(90));
 
   }
 
