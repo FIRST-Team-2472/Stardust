@@ -6,11 +6,15 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class Climber {
     private TalonSRX ClimberR;
     private TalonSRX ClimberL;
+    private TalonSRX PullClimberR;
+    private TalonSRX PullClimberL;
 
 
-   public Climber (int ClimberRID,int ClimberLID) {
+   public Climber (int ClimberRID,int ClimberLID, int PullClimberLID, int PullClimberRID) {
         ClimberR = new TalonSRX(ClimberRID);
         ClimberL = new TalonSRX(ClimberLID);
+        PullClimberR = new TalonSRX(PullClimberRID);
+        PullClimberL = new TalonSRX(PullClimberLID);
    }
 
    public void runClimber(double speed){
@@ -24,5 +28,12 @@ public class Climber {
 
    public void runClimberL(double speed) {
         ClimberL.set(ControlMode.PercentOutput, speed);
+   }
+   public void runPullClimberL(double speed) {
+        PullClimberL.set(ControlMode.PercentOutput, speed);
+   }
+
+   public void runPullClimberR(double speed) {
+    PullClimberR.set(ControlMode.PercentOutput, speed);
 }
 }
