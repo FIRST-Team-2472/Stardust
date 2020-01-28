@@ -1,6 +1,6 @@
 package frc.actions;
 
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.TimerBase;
 import frc.robot.Robot;
 
@@ -10,9 +10,8 @@ public class FeedBall extends TimerBase {
 
 
 
-	public FeedBall(double lifetime, double givenlifetime) {
+	public FeedBall(double lifetime) {
         super(lifetime);
-        lifetime = givenlifetime;
         // TODO Auto-generated constructor stub
     }
 
@@ -20,6 +19,7 @@ public class FeedBall extends TimerBase {
     public void startAction() {
         super.startAction();
         Robot.indexer.runIndexer(1);
+        SmartDashboard.putString("ActionName", "FeedBall");
     }
 
 

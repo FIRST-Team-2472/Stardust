@@ -1,5 +1,6 @@
 package frc.actions;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.TimerBase;
 import frc.robot.Robot;
 
@@ -14,6 +15,11 @@ public class StartShooter extends TimerBase {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
+    public void startAction() {
+        super.startAction();
+        SmartDashboard.putString("ActionName", "StartShooter");
+    }
 
 	@Override
 	public void periodic() {

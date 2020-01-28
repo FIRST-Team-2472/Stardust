@@ -1,5 +1,6 @@
 package frc.actions;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
 
@@ -13,6 +14,7 @@ public class Turn implements Actionable {
     @Override
     public void startAction() {
         Robot.imu.reset();
+        SmartDashboard.putString("ActionName", "Turn")
     }
 
     @Override

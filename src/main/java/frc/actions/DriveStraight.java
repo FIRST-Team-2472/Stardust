@@ -1,5 +1,6 @@
 package frc.actions;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.TimerBase;
 import frc.robot.Robot;
 
@@ -12,6 +13,11 @@ public class DriveStraight extends TimerBase {
         speed = givenSpeed;
     }
 
+    @Override
+    public void startAction() {
+        super.startAction();
+        SmartDashboard.putString("ActionName", "DriveStraight");
+    }
 
     @Override
     public void periodic() {

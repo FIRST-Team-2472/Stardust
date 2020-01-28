@@ -2,6 +2,7 @@ package frc.actions;
 
 import javax.lang.model.util.ElementScanner6;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.actions.runners.TimerBase;
 import frc.robot.Robot;
@@ -17,6 +18,11 @@ public class Shooting extends TimerBase {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
+    public void startAction() {
+        super.startAction();
+        SmartDashboard.putString("ActionName", "Shooting");
+    }
 
 	@Override
 	public void periodic() {
