@@ -15,6 +15,7 @@ import frc.actions.TurnLeft;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
 import frc.subsystems.Shooter;
+import frc.subsystems.Turret;
 import frc.subsystems.Collector;
 import com.analog.adis16470.frc.ADIS16470_IMU;
 /**
@@ -27,13 +28,16 @@ import com.analog.adis16470.frc.ADIS16470_IMU;
 public class Robot extends TimedRobot {
 
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
-  private Shooter shooter;
+  public static Shooter shooter;
   private Collector slurp;
   private Climber climb;
+  public static Turret turret = new Turret(Constants.turret);
+  public static Limelight limelight;
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
   public static final ADIS16470_IMU imu = new ADIS16470_IMU();
+public static final String Turret = null;
 
   @Override
   public void robotInit() {
@@ -57,7 +61,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-
+  
   }
 
   @Override
@@ -72,6 +76,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    turret.runTurret(joysticks.getY());
     if (xboxcontroller.getAButton()) {
       // do somting
       drive.runBackLeft(.25);
