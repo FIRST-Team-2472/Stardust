@@ -14,6 +14,7 @@ import frc.actions.DriveStraight;
 import frc.actions.Turn;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
+import frc.subsystems.Indexer;
 import frc.subsystems.Shooter;
 import frc.subsystems.Turret;
 import frc.subsystems.Collector;
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
   private Climber climb;
   public static Turret turret = new Turret(Constants.turret);
   public static Limelight limelight;
+  public static Indexer indexer;
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
