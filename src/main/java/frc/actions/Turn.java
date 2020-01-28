@@ -14,7 +14,7 @@ public class Turn implements Actionable {
     @Override
     public void startAction() {
         Robot.imu.reset();
-        SmartDashboard.putString("ActionName", "Turn")
+        SmartDashboard.putString("ActionName", "Turn");
     }
 
     @Override
