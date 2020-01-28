@@ -52,6 +52,10 @@ public static final String Turret = null;
     actionQueue.addAction(new DriveStraight(.5, 3.3));
     actionQueue.addAction(new TurnLeft());
 
+    actionQueue.addAction(new Aim());
+    actionQueue.addAction(new StartShooter());
+    actionQueue.addAction(new FeedBall());
+
   }
 
   @Override
