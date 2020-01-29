@@ -2,17 +2,18 @@ package frc.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class Drive {
 
-    private TalonSRX backLeft;
-    private TalonSRX backRight;
+    private VictorSPX backLeft;
+    private VictorSPX backRight;
     private TalonSRX frontLeft;
     private TalonSRX frontRight;
 
     public Drive(int backleftID, int backrightID, int frontleftID, int frontrightID) {
-        backLeft = new TalonSRX(backleftID);
-        backRight = new TalonSRX(backrightID);
+        backLeft = new VictorSPX(backleftID);
+        backRight = new VictorSPX(backrightID);
         frontLeft = new TalonSRX(frontleftID);
         frontRight = new TalonSRX(frontrightID);
 

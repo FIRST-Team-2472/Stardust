@@ -18,7 +18,7 @@ public class Aim implements Actionable {
 
 	@Override
 	public void periodic() {
-		if (Robot.limelight.distanceAngle() < 160) {
+		if (Robot.limelight.targetXAngleFromCenter() < 0) {
 		Robot.turret.runTurret(-0.5); 
 		} else {
 		Robot.turret.runTurret(0.5);	
@@ -33,10 +33,6 @@ public class Aim implements Actionable {
 
 	@Override
 	public boolean isFinished() {
-        if (Robot.limelight.distanceAngle() > 155 && Robot.limelight.distanceAngle() < 165){
-            return false;
-        } else {
-            return true;
-        }
+		return  Math.abs(Robot.limelight.targetXAngleFromCenter()) < 2;
     }
 }

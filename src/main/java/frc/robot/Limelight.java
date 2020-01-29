@@ -8,7 +8,7 @@ public class Limelight {
     public boolean isTargetSpoted() {
         return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1.0;
     }
-    public double distanceAngle() {
+    public double targetXAngleFromCenter() {
         return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     }
     public double distanceCM() {
