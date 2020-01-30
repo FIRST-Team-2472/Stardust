@@ -72,7 +72,7 @@ public static final String Turret = null;
 
   @Override
   public void teleopPeriodic() {
-    drive.tankDrive(joysticks.getY(), joysticks2.getY());
+    drive.tankDrive(joysticks.getY() * 1, joysticks2.getY() * 1);
   }
 
   @Override

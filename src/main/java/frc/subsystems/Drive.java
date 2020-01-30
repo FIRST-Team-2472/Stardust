@@ -17,8 +17,8 @@ public class Drive {
         frontLeft = new TalonSRX(frontleftID);
         frontRight = new TalonSRX(frontrightID);
 
-        frontRight.setInverted(true);
-        backRight.setInverted(true);
+        //frontRight.setInverted(true);
+        //backRight.setInverted(true);
 
     }
 
