@@ -23,10 +23,15 @@ public class JoinActions implements Actionable{
 
     public JoinActions(Actionable... actions) {
         this.actions = actions;
+        // JoinAction(Drive, FeedBall)
         StringBuilder sb = new StringBuilder("JoinAction(");
         for (Actionable action: actions) {
-            sb.append(str);
+            sb.append(action.getClass().getSimpleName());
+            sb.append(", ");
         }
+        sb.delete(sb.length()-2, sb.length());
+        sb.append(')');
+        SmartDashboard.putString("ActionName", sb.toString());
     }
 
     @Override
