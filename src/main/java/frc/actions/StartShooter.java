@@ -10,9 +10,8 @@ public class StartShooter extends TimerBase {
 
 
 
-	public StartShooter(double lifetime) {
-        super(lifetime);
-        // TODO Auto-generated constructor stub
+	public StartShooter() {
+        super(1);
     }
 
     @Override

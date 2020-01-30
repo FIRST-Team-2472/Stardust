@@ -11,6 +11,8 @@ import java.util.ArrayDeque;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class ActionQueue {
 	
 	private final Queue<Actionable> steps;
@@ -47,6 +49,7 @@ public class ActionQueue {
 				steps.remove();
 				action = steps.element();
 				
+				SmartDashboard.putString("ActionName", action.getClass().getSimpleName());
 				action.startAction();
 			}
 			

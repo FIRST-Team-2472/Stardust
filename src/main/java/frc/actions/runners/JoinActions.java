@@ -7,6 +7,7 @@
 
 package frc.actions.runners;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
@@ -17,10 +18,15 @@ public class JoinActions implements Actionable{
 
     public JoinActions() {
         actions = new Actionable[]{new NullAction()};
+        SmartDashboard.putString("ActionName", "JoinAction()");
     }
 
     public JoinActions(Actionable... actions) {
         this.actions = actions;
+        StringBuilder sb = new StringBuilder("JoinAction(");
+        for (Actionable action: actions) {
+            sb.append(str);
+        }
     }
 
     @Override
