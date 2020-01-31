@@ -1,6 +1,7 @@
 package frc.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -17,11 +18,79 @@ public class Drive {
         frontLeft = new TalonSRX(frontleftID);
         frontRight = new TalonSRX(frontrightID);
 
-        //frontRight.setInverted(true);
-        //backRight.setInverted(true);
+        backLeft.follow(frontLeft);
+        backRight.follow(frontRight);
+
+        // frontRight.setInverted(true);
+        // backRight.setInverted(true);
+
+        frontLeft.configFactoryDefault();
+
+        // Tell the talon that he has a quad encoder
+        frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+
+        // Set minimum output (closed loop) to 0 for now
+        frontLeft.configNominalOutputForward(0, 30);
+        frontLeft.configNominalOutputReverse(0, 30);
+
+        // Set maximum forward and backward to full speed
+        frontLeft.configPeakOutputForward(1, 30);
+        frontLeft.configPeakOutputReverse(-1, 30);
+
+        // Motion magic cruise (max speed) is 100 counts per 100 ms
+        frontLeft.configMotionCruiseVelocity(500, 30);
+
+        // Motion magic acceleration is 50 counts
+        frontLeft.configMotionAcceleration(100, 30);
+
+        // Zero the sensor once on robot boot up
+        frontLeft.setSelectedSensorPosition(0, 0, 30);
+
+        frontLeft.config_kP(0, 0);
+        frontLeft.config_kI(0, 0);
+        frontLeft.config_kD(0, 0);
+        frontLeft.config_kF(0, 0);
+
+        
+
+
+
+
+
+        frontRight.configFactoryDefault();
+        // Tell the talon that he has a quad encoder
+        frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+
+        // Set minimum output (closed loop) to 0 for now
+        frontRight.configNominalOutputForward(0, 30);
+        frontRight.configNominalOutputReverse(0, 30);
+
+        // Set maximum forward and backward to full speed
+        frontRight.configPeakOutputForward(1, 30);
+        frontRight.configPeakOutputReverse(-1, 30);
+
+        // Motion magic cruise (max speed) is 100 counts per 100 ms
+        frontRight.configMotionCruiseVelocity(500, 30);
+
+        // Motion magic acceleration is 50 counts
+        frontRight.configMotionAcceleration(100, 30);
+
+        // Zero the sensor once on robot boot up
+        frontRight.setSelectedSensorPosition(0, 0, 30);
+
+        frontRight.config_kP(0, 0);
+        frontRight.config_kI(0, 0);
+        frontRight.config_kD(0, 0);
+        frontRight.config_kF(0, 0);
+
 
     }
 
+    public void driverMeters(double meters) {
+        frontLeft.set(ControlMode.MotionMagic, meters);
+        frontRight.set(ControlMode.MotionMagic, meters);
+    }
+    
     /**
      * This will run the left side wheels of the robot and the right side wheels of
      * the robot at the given speeds
