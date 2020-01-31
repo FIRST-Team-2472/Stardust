@@ -50,12 +50,14 @@ public class ActionQueue {
 				action = steps.element();
 				
 				SmartDashboard.putString("ActionName", action.getClass().getSimpleName());
+				// Action may override Action name if they are more then their class name
 				action.startAction();
 			}
 			
 		} catch (NoSuchElementException e) {
 			if (done) {
 				System.out.println("Nothing in queue I am done");
+				SmartDashboard.putString("ActionName", "Action Queue Done");
 				done=false;
 			}
 		}

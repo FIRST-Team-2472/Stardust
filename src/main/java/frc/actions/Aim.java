@@ -12,7 +12,6 @@ public class Aim implements Actionable {
 
 	@Override
 	public void startAction() {
-		NetworkTableInstance.getDefault().getTable("limelight").getEntry( "tx" ).getDouble(0);
 		SmartDashboard.putString("ActionName", "Aim");
     }
 

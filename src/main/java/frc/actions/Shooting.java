@@ -21,7 +21,6 @@ public class Shooting extends TimerBase {
     @Override
     public void startAction() {
         super.startAction();
-        SmartDashboard.putString("ActionName", "Shooting");
     }
 
 	@Override
