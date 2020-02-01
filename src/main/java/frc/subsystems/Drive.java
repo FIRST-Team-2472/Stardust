@@ -86,9 +86,11 @@ public class Drive {
 
     }
 
+    public static final int COUNT_PER_METER = 2;
+
     public void driverMeters(double meters) {
-        frontLeft.set(ControlMode.MotionMagic, meters);
-        frontRight.set(ControlMode.MotionMagic, meters);
+        frontLeft.set(ControlMode.MotionMagic, meters * COUNT_PER_METER);
+        frontRight.set(ControlMode.MotionMagic, meters * COUNT_PER_METER);
     }
     
     /**
