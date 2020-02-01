@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
   public static final ADIS16470_IMU imu = new ADIS16470_IMU();
-public static final String Turret = null;
+  public static final String Turret = null;
 
   @Override
   public void robotInit() {
