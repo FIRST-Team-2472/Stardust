@@ -51,8 +51,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     actionQueue.clear();
-    actionQueue.addAction(new DriveStraight(.5, 3.3));
-    actionQueue.addAction(new Turn(90));
+    
 
     actionQueue.addAction(new Aim());
     //actionQueue.addAction(new StartShooter());

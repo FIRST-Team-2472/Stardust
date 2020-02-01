@@ -6,6 +6,7 @@ import frc.robot.Robot;
 
 public class Turn implements Actionable {
     private int angle;
+    
     public Turn(int angle){
         this.angle = angle;
     }
@@ -22,7 +23,6 @@ public class Turn implements Actionable {
         if (angle > 0) {
             Robot.drive.tankDrive(.5, -.5);
         } else {
-            //////
             Robot.drive.tankDrive(-.5, .5);
         }
     }
