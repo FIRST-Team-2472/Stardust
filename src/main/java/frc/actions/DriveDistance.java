@@ -1,5 +1,6 @@
 package frc.actions;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
 
@@ -15,13 +16,12 @@ public class DriveDistance implements Actionable{
 
     @Override
     public void startAction() {
-        Robot.drive.
+        SmartDashboard.putString("ActionName", "DriveDiatance");
     }
 
     @Override
     public void periodic() {
-        // TODO Auto-generated method stub
-
+        Robot.drive.driverMeters(target);
     }
 
     @Override
