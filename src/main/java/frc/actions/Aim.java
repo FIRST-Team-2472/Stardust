@@ -1,10 +1,7 @@
 package frc.actions;
 
 import frc.actions.runners.Actionable;
-import frc.robot.Limelight;
 import frc.robot.Robot;
-import frc.subsystems.Turret;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -12,7 +9,7 @@ public class Aim implements Actionable {
 
 	@Override
 	public void startAction() {
-		SmartDashboard.putString("ActionName", "Aim");
+		SmartDashboard.putString("ActionName", "Looking for gamers");
     }
 
 	@Override
