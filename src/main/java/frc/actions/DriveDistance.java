@@ -16,7 +16,7 @@ public class DriveDistance implements Actionable{
 
     @Override
     public void startAction() {
-        SmartDashboard.putString("ActionName", "DriveDiatance");
+        SmartDashboard.putString("ActionName", "DriveDistance");
     }
 
     @Override
@@ -26,16 +26,16 @@ public class DriveDistance implements Actionable{
 
     @Override
     public void endAction() {
-        // TODO Auto-generated method stub
+        Robot.drive.tankDrive(0, 0);
 
     }
 
     @Override
     public boolean isFinished() {
-        // TODO Auto-generated method stub
-        return false;
+        if () {
+            return true;
+        } else {
+            return false;
+        }
     }
-
-
-
 }
