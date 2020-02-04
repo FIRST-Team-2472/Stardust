@@ -14,8 +14,10 @@ public class Aim implements Actionable {
 
 	@Override
 	public void periodic() {
+		SmartDashboard.putNumber("angleoffcenter", Robot.limelight.targetXAngleFromCenter());
 		if (Robot.limelight.targetXAngleFromCenter() < 0) {
 		Robot.turret.runTurret(-0.5); 
+
 		} else {
 		Robot.turret.runTurret(0.5);	
 		}
