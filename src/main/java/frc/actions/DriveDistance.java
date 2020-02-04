@@ -27,15 +27,10 @@ public class DriveDistance implements Actionable{
     @Override
     public void endAction() {
         Robot.drive.tankDrive(0, 0);
-
     }
 
     @Override
     public boolean isFinished() {
-        if () {
-            return true;
-        } else {
             return false;
-        }
     }
 }

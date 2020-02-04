@@ -7,7 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -32,17 +34,17 @@ public class Robot extends TimedRobot {
   public static Shooter shooter;
   private Collector slurp;
   private Climber climb;
-  public static Turret turret = new Turret(Constants.turret);
-  public static Limelight limelight;
-  public static Indexer indexer;
+  public static final Turret turret = new Turret(Constants.turret);
+  public static final Limelight limelight = new Limelight();
+  public static final Indexer indexer = new Indexer(0);
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
   public static final ADIS16470_IMU imu = new ADIS16470_IMU();
-  public static final String Turret = null;
 
   @Override
   public void robotInit() {
+    Preferences.getInstance();
   }
   
 
@@ -51,8 +53,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     actionQueue.clear();
-    actionQueue.addAction(new DriveStraight(.5, 3.3));
-    actionQueue.addAction(new Turn(90));
+    
 
     actionQueue.addAction(new Aim());
     //actionQueue.addAction(new StartShooter());
@@ -82,32 +83,45 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    turret.runTurret(joysticks.getY());
+    turret.runTurret(xboxcontroller.getY());
     if (xboxcontroller.getAButton()) {
-      // do somting
-      drive.runBackLeft(.25);
-    }
+      //Robot.turret.runTurret(0.5);
+    } else {
+      //
+      
+      
+      Robot.turret.runTurret(0);
+    }/*
     if (xboxcontroller.getBButton()) {
       // do somting
-      drive.runBackRight(.25);
+      //drive.runBackRight(.25);
+    } else {
     }
     if (xboxcontroller.getYButton()) {
       // do somting
-      drive.runFrontLeft(.25);
+      //drive.runFrontLeft(.25);
+    } else {
+      drive.runFrontLeft(0);
     }
     if (xboxcontroller.getXButton()) {
       // do somting
-      drive.runFrontRight(.25);
+      //drive.runFrontRight(.25);
+    } else {
+      //drive.runBackRight(0);
     }
     
     if (xboxcontroller.getTriggerAxis(Vroomvroom.Hand.kLeft) > .5) {
-      shooter.runFlyWheel(1);
+      //shooter.runFlyWheel(1);
     }
 
     if (xboxcontroller.getTriggerAxis(Vroomvroom.Hand.kRight) > .5) {
-      slurp.runConveyor(1);
+      //slurp.runConveyor(1);
     }
+    */
+
+
   
+
   }
 
 }

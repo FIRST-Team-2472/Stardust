@@ -12,7 +12,7 @@ public class Turret {
     }
 
     public void runTurret(double speed) {
-        turret.set(ControlMode.PercentOutput, 0.25);
+        turret.set(ControlMode.PercentOutput, speed);
     }
 
 }
