@@ -10,5 +10,8 @@ public class Constants {
 	//Controllers
 	public static int jstickL = 1;
     public static int jstickR = 0;
-    public static int xboxcontroller= 2;
-}
+	public static int xboxcontroller= 2;
+	//Pistons btw wes is like mega dumb
+	public static int IndexerF = 1;
+	public static int IndexerR = 0;
+ }

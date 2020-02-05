@@ -13,8 +13,16 @@ public class Indexer {
         Indexer = new DoubleSolenoid(IndexerID, IndexerID2);
     }
 
-    public void runIndexer(double value) {
-        Indexer.set(DoubleSolenoid.Value, value);
+    public void runIndexerForward() {
+        Indexer.set(DoubleSolenoid.Value.kForward);
+    }
+    
+    public void runIndexerBackward() {
+        Indexer.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void runIndexerOff() {
+        Indexer.set(DoubleSolenoid.Value.kOff);
     }
 
 }
