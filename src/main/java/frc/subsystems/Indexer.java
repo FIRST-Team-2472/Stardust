@@ -1,17 +1,20 @@
 package frc.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 
 public class Indexer {
-    private TalonSRX Indexer;
+    private DoubleSolenoid Indexer;
 
-    public Indexer(int IndexerID) {
-        Indexer = new TalonSRX(IndexerID);
+    public Indexer(int IndexerID, int IndexerID2) {
+        Indexer = new DoubleSolenoid(IndexerID, IndexerID2);
     }
 
-    public void runIndexer(double speed) {
-        Indexer.set(ControlMode.PercentOutput, speed);
+    public void runIndexer(double value) {
+        Indexer.set(DoubleSolenoid.Value, value);
     }
 
 }
