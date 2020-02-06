@@ -18,19 +18,19 @@ public class FeedBall extends TimerBase {
     @Override
     public void startAction() {
         super.startAction();
-        Robot.indexer.runIndexer(1);
+        Robot.indexer.runIndexerOff();;
         SmartDashboard.putString("ActionName", "FeedBall");
     }
 
 
 	@Override
 	public void periodic() {
-        Robot.indexer.runIndexer(1);
+        Robot.indexer.runIndexerForward();;
 	}
 
 	@Override
 	public void endAction() {
-        Robot.indexer.runIndexer(0);
+        Robot.indexer.runIndexerBackward();
 	}
 
 }
