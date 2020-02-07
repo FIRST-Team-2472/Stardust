@@ -7,8 +7,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
 import frc.actions.Turn;
@@ -73,16 +75,36 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     drive.tankDrive(joysticks.getY() * 1, joysticks2.getY() * 1);
+
+
+
+
   }
+
+    Preferences prefs = Preferences.getInstance();
 
   @Override
   public void testInit() {
+    double p = prefs.getDouble("p", 0);
+    SmartDashboard.putNumber("p", p);
+    double i = prefs.getDouble("i", 0);
+    SmartDashboard.putNumber("i", i);
+    double f = prefs.getDouble("f", 0);
+    SmartDashboard.putNumber("f", f);
+    int velocity = prefs.getInt("velocity", 0);
+    SmartDashboard.putNumber("velocity", velocity);
+    double d = prefs.getDouble("d", 0);
+    SmartDashboard.putNumber("d", d);
+    int acceleration = prefs.getInt("acceleration", 0);
+    SmartDashboard.putNumber("acceleration", acceleration);
 
+    Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
   }
 
   @Override
   public void testPeriodic() {
-    turret.runTurret(joysticks.getY());
+    drive.driverMeters(2);
+    /*turret.runTurret(joysticks.getY());
     if (xboxcontroller.getAButton()) {
       // do somting
       drive.runBackLeft(.25);
@@ -107,6 +129,7 @@ public class Robot extends TimedRobot {
     if (xboxcontroller.getTriggerAxis(Vroomvroom.Hand.kRight) > .5) {
       slurp.runConveyor(1);
     }
+    */
   
   }
 

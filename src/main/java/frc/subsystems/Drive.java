@@ -21,6 +21,11 @@ public class Drive {
         backLeft.follow(frontLeft);
         backRight.follow(frontRight);
 
+        setupMotionMagic(0, 0, 0, 0, 500, 100);
+
+    }
+
+    public void setupMotionMagic(double f, double p, double i, double d, int velocity, int acceleration) {
         // frontRight.setInverted(true);
         // backRight.setInverted(true);
 
@@ -38,24 +43,18 @@ public class Drive {
         frontLeft.configPeakOutputReverse(-1, 30);
 
         // Motion magic cruise (max speed) is 100 counts per 100 ms
-        frontLeft.configMotionCruiseVelocity(500, 30);
+        frontLeft.configMotionCruiseVelocity(velocity, 30);
 
         // Motion magic acceleration is 50 counts
-        frontLeft.configMotionAcceleration(100, 30);
+        frontLeft.configMotionAcceleration(acceleration, 30);
 
         // Zero the sensor once on robot boot up
         frontLeft.setSelectedSensorPosition(0, 0, 30);
 
-        frontLeft.config_kP(0, 0);
-        frontLeft.config_kI(0, 0);
-        frontLeft.config_kD(0, 0);
-        frontLeft.config_kF(0, 0);
-
-        
-
-
-
-
+        frontLeft.config_kP(0, p);
+        frontLeft.config_kI(0, i);
+        frontLeft.config_kD(0, d);
+        frontLeft.config_kF(0, f);
 
         frontRight.configFactoryDefault();
         // Tell the talon that he has a quad encoder
@@ -70,29 +69,29 @@ public class Drive {
         frontRight.configPeakOutputReverse(-1, 30);
 
         // Motion magic cruise (max speed) is 100 counts per 100 ms
-        frontRight.configMotionCruiseVelocity(500, 30);
+        frontRight.configMotionCruiseVelocity(velocity, 30);
 
         // Motion magic acceleration is 50 counts
-        frontRight.configMotionAcceleration(100, 30);
+        frontRight.configMotionAcceleration(acceleration, 30);
 
         // Zero the sensor once on robot boot up
         frontRight.setSelectedSensorPosition(0, 0, 30);
 
-        frontRight.config_kP(0, 0);
-        frontRight.config_kI(0, 0);
-        frontRight.config_kD(0, 0);
-        frontRight.config_kF(0, 0);
-
+        frontRight.config_kP(0, p);
+        frontRight.config_kI(0, i);
+        frontRight.config_kD(0, d);
+        frontRight.config_kF(0, f);
 
     }
 
-    public static final int COUNT_PER_METER = 2;
+    public static final int COUNT_PER_METER = 1;
 
     public void driverMeters(double meters) {
+
         frontLeft.set(ControlMode.MotionMagic, meters * COUNT_PER_METER);
         frontRight.set(ControlMode.MotionMagic, meters * COUNT_PER_METER);
     }
-    
+
     /**
      * This will run the left side wheels of the robot and the right side wheels of
      * the robot at the given speeds
@@ -121,4 +120,7 @@ public class Drive {
         frontRight.set(ControlMode.PercentOutput, speed);
     }
 
+    public distanceFromTarget(int targetDistance) {
+
+    }
 }
