@@ -18,7 +18,7 @@ public class FeedBall extends TimerBase {
     @Override
     public void startAction() {
         super.startAction();
-        Robot.indexer.runIndexerOff();;
+        Robot.indexer.runIndexerOff();
         SmartDashboard.putString("ActionName", "FeedBall");
     }
 
