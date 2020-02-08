@@ -12,20 +12,24 @@ public class Aim implements Actionable {
 		SmartDashboard.putString("ActionName", "Looking for gamers");
 	}
 	
-	private static final double kP = .2;
+	private static final double kP = .03;
+	private static double TurretSpeed = 0;
 	@Override
 	public void periodic() {
 		//double error = Robot.limelight.targetXAngleFromCenter();
 		//Robot.turret.runTurret(kP*error);
 		SmartDashboard.putNumber("Error", Robot.limelight.targetXAngleFromCenter());
-		SmartDashboard.putBoolean("seein it", Robot.limelight.isTargetSpoted());
-		if (Robot.limelight.isTargetSpoted()) {
+		SmartDashboard.putBoolean("seein it", Robot.limelight.isTargetSpotted());
+		if (Robot.limelight.isTargetSpotted()) {
 			if (Robot.limelight.targetXAngleFromCenter() < 0) {
-				Robot.turret.runTurret(0.05); 
+				TurretSpeed = Robot.limelight.targetXAngleFromCenter() * kP; 
 			} else {
-				Robot.turret.runTurret(-0.05);	
+				TurretSpeed =  Robot.limelight.targetXAngleFromCenter() * kP;	
 			}
-	}
+			Robot.turret.runTurret (TurretSpeed);
+		} else {
+			Robot.turret.runTurret(0);
+		}
         
 	}
 
@@ -36,6 +40,7 @@ public class Aim implements Actionable {
 
 	@Override
 	public boolean isFinished() {
-		return  Math.abs(Robot.limelight.targetXAngleFromCenter()) < 2;
+		return  Robot.limelight.isTargetSpotted()  && Math.abs(Robot.limelight.targetXAngleFromCenter()) < 2;
+	
     }
 }
