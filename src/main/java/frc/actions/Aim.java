@@ -2,6 +2,7 @@ package frc.actions;
 
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
+import frc.robot.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -14,20 +15,20 @@ public class Aim implements Actionable {
 	
 	private static final double kP = .03;
 	private static double TurretSpeed = 0;
+
+	private Timer timeout = null;
 	@Override
 	public void periodic() {
 		//double error = Robot.limelight.targetXAngleFromCenter();
 		//Robot.turret.runTurret(kP*error);
 		SmartDashboard.putNumber("Error", Robot.limelight.targetXAngleFromCenter());
-		SmartDashboard.putBoolean("seein it", Robot.limelight.isTargetSpotted());
 		if (Robot.limelight.isTargetSpotted()) {
-			if (Robot.limelight.targetXAngleFromCenter() < 0) {
-				TurretSpeed = Robot.limelight.targetXAngleFromCenter() * kP; 
-			} else {
-				TurretSpeed =  Robot.limelight.targetXAngleFromCenter() * kP;	
-			}
+			TurretSpeed = Robot.limelight.targetXAngleFromCenter() * kP; 
+						
 			Robot.turret.runTurret (TurretSpeed);
-		} else {
+			timeout = null;
+		} else { 
+			if (timeout == null) timeout = new Timer(2);
 			Robot.turret.runTurret(0);
 		}
         
@@ -40,7 +41,6 @@ public class Aim implements Actionable {
 
 	@Override
 	public boolean isFinished() {
-		return  Robot.limelight.isTargetSpotted()  && Math.abs(Robot.limelight.targetXAngleFromCenter()) < 2;
-	
+		return Timer.tryIsTimedOut(timeout) || Robot.limelight.isTargetSpotted() && Math.abs(Robot.limelight.targetXAngleFromCenter()) < 2;
     }
 }

@@ -10,4 +10,11 @@ public class Timer {
     public boolean isTimedOut() {
         return end <= System.currentTimeMillis();
     }
+
+    public static boolean tryIsTimedOut(Timer it) {
+        if (it == null) {
+            return false;
+        }
+        return it.isTimedOut();
+    }
 }

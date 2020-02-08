@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
-import frc.actions.Turn;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
 import frc.subsystems.Indexer;
@@ -64,13 +63,20 @@ public class Robot extends TimedRobot {
   
   @Override
   public void autonomousInit() {
+
+    
     actionQueue.clear();
     
 
+    actionQueue.addAction(new DriveStraight(.5, 2));
+    actionQueue.addAction(new Wait(5));
+    actionQueue.addAction(new DriveStraight(-.5, 2));
+
+    /*// Shooting
     actionQueue.addAction(new Aim());
     //actionQueue.addAction(new StartShooter());
     //actionQueue.addAction(new FeedBall());
-
+    */
   }
 
   @Override

@@ -6,9 +6,8 @@ import frc.robot.Robot;
 
 public class Wait extends TimerBase {
 
-    public Wait(double lifetime, double givenlifetime) {
-    super(lifetime);
-    lifetime = givenlifetime;
+    public Wait(double givenlifetime) {
+        super(givenlifetime);
     }
 
     @Override
