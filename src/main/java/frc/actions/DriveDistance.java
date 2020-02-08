@@ -1,5 +1,7 @@
 package frc.actions;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
@@ -31,6 +33,6 @@ public class DriveDistance implements Actionable{
 
     @Override
     public boolean isFinished() {
-            return false;
+            .getClosedLoopError()
     }
 }
