@@ -10,15 +10,22 @@ public class Aim implements Actionable {
 	@Override
 	public void startAction() {
 		SmartDashboard.putString("ActionName", "Looking for gamers");
-    }
-
+	}
+	
+	private static final double kP = .2;
 	@Override
 	public void periodic() {
-		if (Robot.limelight.targetXAngleFromCenter() < 0) {
-		Robot.turret.runTurret(-0.5); 
-		} else {
-		Robot.turret.runTurret(0.5);	
-		}
+		//double error = Robot.limelight.targetXAngleFromCenter();
+		//Robot.turret.runTurret(kP*error);
+		SmartDashboard.putNumber("Error", Robot.limelight.targetXAngleFromCenter());
+		SmartDashboard.putBoolean("seein it", Robot.limelight.isTargetSpoted());
+		if (Robot.limelight.isTargetSpoted()) {
+			if (Robot.limelight.targetXAngleFromCenter() < 0) {
+				Robot.turret.runTurret(0.05); 
+			} else {
+				Robot.turret.runTurret(-0.05);	
+			}
+	}
         
 	}
 

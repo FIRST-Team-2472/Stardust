@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
   private Collector slurp;
   private Climber climb;
   public static Turret turret = new Turret(Constants.turret);
-  public static Limelight limelight;
+  public static Limelight limelight = new Limelight();
   public static Indexer indexer;
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);

@@ -16,10 +16,13 @@ public class Limelight {
         return limelight.getEntry("tv").getDouble(0) == 1.0;
     }
     public double targetXAngleFromCenter() {
-        return limelight.getEntry("tx").getDouble(Double.NaN);
+        //return limelight.getEntry("tx").getDouble(Double.NaN);
+        return limelight.getEntry("ty").getDouble(Double.NaN);
+
     }
     public double targetYAngleFromCenter() {
-        return limelight.getEntry("ty").getDouble(Double.NaN);
+        //return limelight.getEntry("tx").getDouble(Double.NaN);
+        return limelight.getEntry("tx").getDouble(Double.NaN);
     }
     public double targetArea() {
         return limelight.getEntry("ta").getDouble(Double.NaN);
