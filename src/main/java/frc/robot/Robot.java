@@ -40,14 +40,25 @@ public class Robot extends TimedRobot {
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
-  public static final ADIS16470_IMU imu = new ADIS16470_IMU();
-  public static final String Turret = null;
+  //public static final ADIS16470_IMU imu = new ADIS16470_IMU();
+  public static final ADIS16470_IMU imu = null;
+  public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
   
 
   @Override
   public void robotInit() {
   }
+
+  @Override
+  public void robotPeriodic() {
+    SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
+    SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
+  }
   
+  @Override
+  public void disabledInit() {
+    SmartDashboard.putString("actionName", "Disabled");
+  }
 
   private ActionQueue actionQueue = new ActionQueue();
   

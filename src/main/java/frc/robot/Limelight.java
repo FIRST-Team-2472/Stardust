@@ -12,7 +12,7 @@ public class Limelight {
     public enum Pipeline {}
     
 
-    public boolean isTargetSpoted() {
+    public boolean isTargetSpotted() {
         return limelight.getEntry("tv").getDouble(0) == 1.0;
     }
     public double targetXAngleFromCenter() {
