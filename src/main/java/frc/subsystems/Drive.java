@@ -119,8 +119,4 @@ public class Drive {
     public void runFrontRight(double speed) {
         frontRight.set(ControlMode.PercentOutput, speed);
     }
-
-    public distanceFromTarget(int targetDistance) {
-
-    }
 }
