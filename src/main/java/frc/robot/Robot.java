@@ -31,7 +31,8 @@ import com.analog.adis16470.frc.ADIS16470_IMU;
  */
 public class Robot extends TimedRobot {
 
-  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
+  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,
+      Constants.motorFR);
   public static Shooter shooter;
   public static Collector collector = new Collector(Constants.converyer);
   private Climber climb;
@@ -42,10 +43,9 @@ public class Robot extends TimedRobot {
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
   public static Timer timer;
-  //public static final ADIS16470_IMU imu = new ADIS16470_IMU();
+  // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
   public static final ADIS16470_IMU imu = null;
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
-  
 
   @Override
   public void robotInit() {
@@ -56,30 +56,27 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
   }
-  
+
   @Override
   public void disabledInit() {
     SmartDashboard.putString("actionName", "Disabled");
   }
 
   private ActionQueue actionQueue = new ActionQueue();
-  
+
   @Override
   public void autonomousInit() {
 
-    
     actionQueue.clear();
-    
 
     actionQueue.addAction(new DriveStraight(1, 1));
     actionQueue.addAction(new Turn(180));
     actionQueue.addAction(new Aim());
 
-    /*// Shooting
-    actionQueue.addAction(new Aim());
-    //actionQueue.addAction(new StartShooter());
-    //actionQueue.addAction(new FeedBall());
-    */
+    /*
+     * // Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
+     * StartShooter()); //actionQueue.addAction(new FeedBall());
+     */
   }
 
   @Override
@@ -89,32 +86,49 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-  
+
   }
 
   @Override
   public void teleopPeriodic() {
     drive.tankDrive(joysticks.getY(), joysticks2.getY());
 
-    if (xboxcontroller.getBumperPressed(GenericHID.Hand.kLeft)) {
+    if (joysticks.getRawButton(1)) {
       collector.runConveyor(1);
-    }
-    if (xboxcontroller.getBumperPressed(GenericHID.Hand.kRight)) {
+    } else if (joysticks2.getRawButton(1)) {
       collector.runConveyor(-1);
+    } else {
+      collector.runConveyor(0);
     }
     if (xboxcontroller.getXButton()) {
       indexer.runIndexerForward();
-    }
-    if (xboxcontroller.getAButton()) {
+    } else if (xboxcontroller.getAButton()) {
       indexer.runIndexerBackward();
+    } else {
+      indexer.runIndexerOff();
     }
-    
+    if (xboxcontroller.getYButton()) {
+      turret.runTurret(.25);
+    } else if (xboxcontroller.getBButton()) {
+      turret.runTurret(-.25);
+    } else {
+      turret.runTurret(0);
+    }
+    if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
+      shooter.runFlyWheel(.25);
+    } else {
+      shooter.runFlyWheel(0);
+    }
+    if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
+      climb.runClimber(1);
+    } else {
+      climb.runClimber(0);
+    }
   }
-
-    Preferences prefs = Preferences.getInstance();
 
   @Override
   public void testInit() {
+    Preferences prefs = Preferences.getInstance();
     double p = prefs.getDouble("p", 0);
     SmartDashboard.putNumber("p", p);
     double i = prefs.getDouble("i", 0);
@@ -135,7 +149,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
- 
+
     if (joysticks.getRawButtonPressed(1)) {
       teststate += 1;
       if (teststate == 3) {
@@ -143,32 +157,29 @@ public class Robot extends TimedRobot {
       }
     }
     switch (teststate) {
-      case 0:
-        if (xboxcontroller.getAButton()) {
-          // do somting
-          drive.runBackLeft(.25);
-        }
-        if (xboxcontroller.getBButton()) {
-          // do somting
-          drive.runBackRight(.25);
-        }
-        if (xboxcontroller.getYButton()) {
-          // do somting
-          drive.runFrontLeft(.25);
-        }
-        if (xboxcontroller.getXButton()) {
-          // do somting
-          drive.runFrontRight(.25);
-        }
-        break;
-      case 3:
+    case 0:
+      if (xboxcontroller.getAButton()) {
+        // do somting
+        drive.runBackLeft(.25);
+      }
+      if (xboxcontroller.getBButton()) {
+        // do somting
+        drive.runBackRight(.25);
+      }
+      if (xboxcontroller.getYButton()) {
+        // do somting
+        drive.runFrontLeft(.25);
+      }
+      if (xboxcontroller.getXButton()) {
+        // do somting
+        drive.runFrontRight(.25);
+      }
+      break;
+    case 3:
 
-      default:
+    default:
     }
 
-    
-  
   }
 
 }
- 
