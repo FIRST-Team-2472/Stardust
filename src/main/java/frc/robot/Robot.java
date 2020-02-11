@@ -47,6 +47,15 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
   }
+
+  @Override
+  public void robotPeriodic() {
+
+  }
+
+  public void disabledInit() {
+    SmartDashboard.getInstance();
+  }
   
 
   private ActionQueue actionQueue = new ActionQueue();
