@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -20,6 +21,7 @@ import frc.subsystems.Shooter;
 import frc.subsystems.Turret;
 import frc.subsystems.Collector;
 import com.analog.adis16470.frc.ADIS16470_IMU;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -31,14 +33,15 @@ public class Robot extends TimedRobot {
 
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   public static Shooter shooter;
-  private Collector slurp;
+  public static Collector collector = new Collector(Constants.converyer);
   private Climber climb;
   public static Turret turret = new Turret(Constants.turret);
   public static Limelight limelight = new Limelight();
-  public static Indexer indexer;
+  public static Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
+  public static Timer timer;
   //public static final ADIS16470_IMU imu = new ADIS16470_IMU();
   public static final ADIS16470_IMU imu = null;
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
@@ -68,9 +71,9 @@ public class Robot extends TimedRobot {
     actionQueue.clear();
     
 
-    actionQueue.addAction(new DriveStraight(.5, 2));
-    actionQueue.addAction(new Wait(5));
-    actionQueue.addAction(new DriveStraight(-.5, 2));
+    actionQueue.addAction(new DriveStraight(1, 1));
+    actionQueue.addAction(new Turn(180));
+    actionQueue.addAction(new Aim());
 
     /*// Shooting
     actionQueue.addAction(new Aim());
@@ -91,11 +94,21 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    drive.tankDrive(joysticks.getY() * 1, joysticks2.getY() * 1);
+    drive.tankDrive(joysticks.getY(), joysticks2.getY());
 
-
-
-
+    if (xboxcontroller.getBumperPressed(GenericHID.Hand.kLeft)) {
+      collector.runConveyor(1);
+    }
+    if (xboxcontroller.getBumperPressed(GenericHID.Hand.kRight)) {
+      collector.runConveyor(-1);
+    }
+    if (xboxcontroller.getXButton()) {
+      indexer.runIndexerForward();
+    }
+    if (xboxcontroller.getAButton()) {
+      indexer.runIndexerBackward();
+    }
+    
   }
 
     Preferences prefs = Preferences.getInstance();
@@ -118,35 +131,42 @@ public class Robot extends TimedRobot {
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
   }
 
+  int teststate = 0;
+
   @Override
   public void testPeriodic() {
-    drive.driverMeters(2);
-    /*turret.runTurret(joysticks.getY());
-    if (xboxcontroller.getAButton()) {
-      // do somting
-      drive.runBackLeft(.25);
+ 
+    if (joysticks.getRawButtonPressed(1)) {
+      teststate += 1;
+      if (teststate == 3) {
+        teststate = 0;
+      }
     }
-    if (xboxcontroller.getBButton()) {
-      // do somting
-      drive.runBackRight(.25);
-    }
-    if (xboxcontroller.getYButton()) {
-      // do somting
-      drive.runFrontLeft(.25);
-    }
-    if (xboxcontroller.getXButton()) {
-      // do somting
-      drive.runFrontRight(.25);
-    }
-    
-    if (xboxcontroller.getTriggerAxis(Vroomvroom.Hand.kLeft) > .5) {
-      shooter.runFlyWheel(1);
+    switch (teststate) {
+      case 0:
+        if (xboxcontroller.getAButton()) {
+          // do somting
+          drive.runBackLeft(.25);
+        }
+        if (xboxcontroller.getBButton()) {
+          // do somting
+          drive.runBackRight(.25);
+        }
+        if (xboxcontroller.getYButton()) {
+          // do somting
+          drive.runFrontLeft(.25);
+        }
+        if (xboxcontroller.getXButton()) {
+          // do somting
+          drive.runFrontRight(.25);
+        }
+        break;
+      case 3:
+
+      default:
     }
 
-    if (xboxcontroller.getTriggerAxis(Vroomvroom.Hand.kRight) > .5) {
-      slurp.runConveyor(1);
-    }
-    */
+    
   
   }
 

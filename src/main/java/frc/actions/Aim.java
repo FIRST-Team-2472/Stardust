@@ -43,4 +43,7 @@ public class Aim implements Actionable {
 	public boolean isFinished() {
 		return Timer.tryIsTimedOut(timeout) || Robot.limelight.isTargetSpotted() && Math.abs(Robot.limelight.targetXAngleFromCenter()) < 2;
     }
+
+	public static void aim() {
+	}
 }
