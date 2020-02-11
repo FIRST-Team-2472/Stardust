@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
-import frc.actions.Turn;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
 import frc.subsystems.Indexer;
@@ -35,13 +34,14 @@ public class Robot extends TimedRobot {
   private Collector slurp;
   private Climber climb;
   public static Turret turret = new Turret(Constants.turret);
-  public static Limelight limelight;
+  public static Limelight limelight = new Limelight();
   public static Indexer indexer;
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
-  public static final ADIS16470_IMU imu = new ADIS16470_IMU();
-  public static final String Turret = null;
+  //public static final ADIS16470_IMU imu = new ADIS16470_IMU();
+  public static final ADIS16470_IMU imu = null;
+  public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
   
 
   @Override
@@ -50,25 +50,41 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+<<<<<<< HEAD
 
   }
 
   public void disabledInit() {
     SmartDashboard.getInstance();
+=======
+    SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
+    SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
+>>>>>>> d5c0cc94a475c65fdf7ed1a9608babf3a54cc599
   }
   
+  @Override
+  public void disabledInit() {
+    SmartDashboard.putString("actionName", "Disabled");
+  }
 
   private ActionQueue actionQueue = new ActionQueue();
   
   @Override
   public void autonomousInit() {
+
+    
     actionQueue.clear();
     
 
+    actionQueue.addAction(new DriveStraight(.5, 2));
+    actionQueue.addAction(new Wait(5));
+    actionQueue.addAction(new DriveStraight(-.5, 2));
+
+    /*// Shooting
     actionQueue.addAction(new Aim());
     //actionQueue.addAction(new StartShooter());
     //actionQueue.addAction(new FeedBall());
-
+    */
   }
 
   @Override
