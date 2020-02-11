@@ -10,7 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -69,10 +68,9 @@ public class Robot extends TimedRobot {
 
     actionQueue.clear();
 
-    actionQueue.addAction(new DriveStraight(1, 1));
-    actionQueue.addAction(new Turn(180));
-    actionQueue.addAction(new Aim());
-
+    actionQueue.addAction(new DriveStraight(1, 2));
+    //actionQueue.addAction(new Turn(180));
+    //actionQueue.addAction(new Aim());
     /*
      * // Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
      * StartShooter()); //actionQueue.addAction(new FeedBall());
