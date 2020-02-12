@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
 
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
-  public static final Collector collector = new Collector(Constants.converyer);
+  public static final Collector collector = new Collector(Constants.conveyor);
   public static final Climber climb = new Climber(Constants.ClimberL, Constants.ClimberR, Constants.PullClimberL, Constants.PullClimberR);
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     SmartDashboard.putString("actionName", "Disabled");
-  }*/
+  }
 
   private final ActionQueue actionQueue = new ActionQueue();
 
@@ -123,9 +123,9 @@ public class Robot extends TimedRobot {
 
     // shooter control
     if (xboxcontroller.getYButton()) {
-     shooter.runFlyWheel(.25); // this should be variable based on distance to the target
+      shooter.runFlyWheel(); // this should  be variable based on distance to the target
     } else {
-      shooter.runFlyWheel(0);
+      shooter.runFlyWheel();
     }
 
     // using the HAT switch?
@@ -167,9 +167,11 @@ public class Robot extends TimedRobot {
 
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
 
-    // initalize the PID Test state
-    int teststate = 0;
+    //TODO initalize the PID Test state
+    
   }
+
+  int teststate = 0;
 
   @Override
   public void testPeriodic() {
