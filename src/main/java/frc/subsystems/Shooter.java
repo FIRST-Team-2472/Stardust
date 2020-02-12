@@ -15,4 +15,5 @@ public class Shooter {
     }
 
     // TODO Write a set RPM method
+    
 }

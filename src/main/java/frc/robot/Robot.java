@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     // TODO SMART Dashboard INIT here
-   
+
   }
 
   @Override
@@ -80,7 +80,7 @@ public class Robot extends TimedRobot {
     // FIXME different atonomous modes should be built out into separate functions
     actionQueue.clear();
 
-    actionQueue.addAction(new DriveStraight(0.5, 2));
+    actionQueue.addAction(new DriveStraightTime(0.5, 2));
     // why are we turning?
     //actionQueue.addAction(new Turn(180));
     //actionQueue.addAction(new Aim());
