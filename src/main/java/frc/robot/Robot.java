@@ -32,12 +32,13 @@ public class Robot extends TimedRobot {
 
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,
       Constants.motorFR);
-  public static Shooter shooter;
-  public static Collector collector = new Collector(Constants.converyer);
-  private Climber climb;
-  public static Turret turret = new Turret(Constants.turret);
-  public static Limelight limelight = new Limelight();
-  public static Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
+  public static final Shooter shooter = new Shooter(Constants.shooterID);
+  public static final Collector collector = new Collector(Constants.converyer);
+  public static final Climber climb = null;
+  public static final Turret turret = new Turret(Constants.turret);
+  public static final Limelight limelight = new Limelight();
+  //public static Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
+  public static final Indexer indexer = null;
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
@@ -68,7 +69,7 @@ public class Robot extends TimedRobot {
 
     actionQueue.clear();
 
-    actionQueue.addAction(new DriveStraight(1, 2));
+    actionQueue.addAction(new DriveStraight(0.5, 2));
     //actionQueue.addAction(new Turn(180));
     //actionQueue.addAction(new Aim());
     /*
@@ -98,6 +99,7 @@ public class Robot extends TimedRobot {
     } else {
       collector.runConveyor(0);
     }
+    /* not plugged in
     if (xboxcontroller.getXButton()) {
       indexer.runIndexerForward();
     } else if (xboxcontroller.getAButton()) {
@@ -105,6 +107,7 @@ public class Robot extends TimedRobot {
     } else {
       indexer.runIndexerOff();
     }
+    */
     if (xboxcontroller.getYButton()) {
       turret.runTurret(.25);
     } else if (xboxcontroller.getBButton()) {
@@ -117,11 +120,13 @@ public class Robot extends TimedRobot {
     } else {
       shooter.runFlyWheel(0);
     }
+    /* Not plugged in
     if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       climb.runClimber(1);
     } else {
       climb.runClimber(0);
     }
+    */
   }
 
   @Override

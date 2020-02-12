@@ -3,11 +3,13 @@ package frc.robot;
 public class Constants {
 	//Talons
     public static final int motorBL = 1;
-	public static final int motorBR = 2;
+	public static final int motorBR = 0;
 	public static final int motorFL = 13;
 	public static final int motorFR = 3;
 
 	public static final int turret = 16;
+
+	public static final int shooterID = 100;
 
 	public static final int converyer = 4;
 	//Controllers 
