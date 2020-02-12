@@ -14,7 +14,9 @@ public class Aim implements Actionable {
 	}
 	
 	private static final double kP = .03;
-	private static double TurretSpeed = 0;
+
+	// this should not be static in case you need to aim multiple times
+	private double TurretSpeed = 0;
 
 	private Timer timeout = null;
 	@Override

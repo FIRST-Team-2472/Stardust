@@ -43,34 +43,38 @@ public class Robot extends TimedRobot {
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
   public static Timer timer;
+  // there has to be a better way to say the imu is disabled
   // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
   public static final ADIS16470_IMU imu = null;
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
 
   @Override
   public void robotInit() {
+    // TODO SMART Dashboard INIT here
   }
 
   @Override
   public void robotPeriodic() {
-
+    // Tasks that the robot should always be doing (Lights?)
   }
   /*@Override
   public void disabledInit() {
     //SmartDashboard.getInstance();
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
+
+    // TODO set all motors to 0 and disbale the compressor
   }*/  
 
   private ActionQueue actionQueue = new ActionQueue();
 
   @Override
   public void autonomousInit() {
-
+    // FIXME different atonomous modes should be built out into separate functions
     actionQueue.clear();
 
     actionQueue.addAction(new DriveStraight(0.5, 2));
-    //actionQueue.addAction(new Turn(180));
+    //actionQueue.addAction(new Turn(180)); ?
     //actionQueue.addAction(new Aim());
     
      //*  Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
@@ -84,13 +88,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-  
+    // TODO initalize smart dashboard values / set teleop state
   }
 
   @Override
   public void teleopPeriodic() {
     drive.tankDrive(joysticks.getY(), joysticks2.getY());
 
+    // NOTE joystick trigger (probably should be on the xbox controler)
     if (joysticks.getRawButton(1)) {
       collector.runConveyor(1);
     } else if (joysticks2.getRawButton(1)) {
@@ -98,6 +103,8 @@ public class Robot extends TimedRobot {
     } else {
       collector.runConveyor(0);
     }
+
+    // FIXME what is the indexer?
     if (xboxcontroller.getXButton()) {
       indexer.runIndexerForward();
     } else if (xboxcontroller.getAButton()) {
@@ -105,11 +112,15 @@ public class Robot extends TimedRobot {
     } else {
       indexer.runIndexerOff();
     }
+
+    // shooter control
     if (xboxcontroller.getYButton()) {
-     shooter.runFlyWheel(.75);
+     shooter.runFlyWheel(.75); // this should be variable based on distance to the target
     } else {
       shooter.runFlyWheel(0);
     }
+
+    // using the HAT switch?
     if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
        turret.runTurret(.25);
     } else if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
@@ -117,6 +128,8 @@ public class Robot extends TimedRobot {
     } else {
       turret.runTurret(0);
     }
+
+    // NOTE: should probably have another control to prevent misfires since this can only be done once per match
     if (xboxcontroller.getBButton()) {
       climb.runClimber(1);
     } else {
@@ -126,24 +139,29 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    // SMART Dashboard perfs
     Preferences prefs = Preferences.getInstance();
+    // FIXME give this a better name
     double p = prefs.getDouble("p", 0);
     SmartDashboard.putNumber("p", p);
     double i = prefs.getDouble("i", 0);
+    // FIXME give this a better name
     SmartDashboard.putNumber("i", i);
     double f = prefs.getDouble("f", 0);
     SmartDashboard.putNumber("f", f);
     int velocity = prefs.getInt("velocity", 0);
     SmartDashboard.putNumber("velocity", velocity);
+    // FIXME give this a better name
     double d = prefs.getDouble("d", 0);
     SmartDashboard.putNumber("d", d);
     int acceleration = prefs.getInt("acceleration", 0);
     SmartDashboard.putNumber("acceleration", acceleration);
 
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
-  }
 
-  int teststate = 0;
+    // initalize the PID Test state
+    int teststate = 0;
+  }
 
   @Override
   public void testPeriodic() {
