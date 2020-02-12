@@ -45,7 +45,6 @@ public class Robot extends TimedRobot {
   // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
   public static final ADIS16470_IMU imu = null;
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
-  int teststate;
 
   @Override
   public void robotInit() {
@@ -123,8 +122,8 @@ public class Robot extends TimedRobot {
     }
 
     // shooter control
-    if (joysticks.getRawButton(1)) {
-     shooter.runFlyWheel(.25); // this should be variable based on distance to the target
+    if (xboxcontroller.getYButton()) {
+      shooter.runFlyWheel(1); // this should  be variable based on distance to the target
     } else {
       shooter.runFlyWheel(0);
     }
@@ -149,11 +148,11 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // SMART Dashboard perfs
-    Preferences prefs = Preferences.getInstance();
+    final Preferences prefs = Preferences.getInstance();
     // FIXME give this a better name
-    double p = prefs.getDouble("p", 0);
+    final double p = prefs.getDouble("p", 0);
     SmartDashboard.putNumber("p", p);
-    double i = prefs.getDouble("i", 0);
+    final double i = prefs.getDouble("i", 0);
     // FIXME give this a better name
     SmartDashboard.putNumber("i", i);
     final double f = prefs.getDouble("f", 0);
@@ -161,16 +160,18 @@ public class Robot extends TimedRobot {
     final int velocity = prefs.getInt("velocity", 0);
     SmartDashboard.putNumber("velocity", velocity);
     // FIXME give this a better name
-    double d = prefs.getDouble("d", 0);
+    final double d = prefs.getDouble("d", 0);
     SmartDashboard.putNumber("d", d);
     final int acceleration = prefs.getInt("acceleration", 0);
     SmartDashboard.putNumber("acceleration", acceleration);
 
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
 
-    // initalize the PID Test state
-    teststate = 0;
+    //TODO initalize the PID Test state
+    
   }
+
+  int teststate = 0;
 
   @Override
   public void testPeriodic() {
