@@ -123,9 +123,9 @@ public class Robot extends TimedRobot {
 
     // shooter control
     if (xboxcontroller.getYButton()) {
-      shooter.runFlyWheel(); // this should  be variable based on distance to the target
+      shooter.runFlyWheel(1); // this should  be variable based on distance to the target
     } else {
-      shooter.runFlyWheel();
+      shooter.runFlyWheel(0);
     }
 
     // using the HAT switch?
@@ -234,10 +234,10 @@ public class Robot extends TimedRobot {
       break;
       case 2:
       if (xboxcontroller.getAButton()) {
-        shooter.runFlyWheel();
+        shooter.runFlyWheel(.25);
         SmartDashboard.putString("MotorsTest", "runShooter");
       } else {
-        shooter.runFlyWheel();
+        shooter.runFlyWheel(0);
       }
       if (xboxcontroller.getBButton()) {
         climb.runClimberL(.25);

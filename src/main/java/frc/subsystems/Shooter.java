@@ -12,8 +12,12 @@ public class Shooter {
         FlyWheel = new TalonSRX(FlyWheelID);
     }
 
-    public void runFlyWheel() {
-      FlyWheel.set(ControlMode.PercentOutput, Robot.limelight.distanceCM() /* TODO make speed of flywheel effected by distance from target*/);    
+    public void runFlyWheel(double speed) {
+      FlyWheel.set(ControlMode.PercentOutput, speed);    
+    }
+
+    public void fireFlyWheel() {
+      FlyWheel.set(ControlMode.PercentOutput, Robot.limelight.distanceCM() /* TODO make speed of flywheel effected by distance from target*/);
     }
 
     // TODO Write a set RPM method
