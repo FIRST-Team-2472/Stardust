@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
 
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
-  public static final Collector collector = new Collector(Constants.converyer);
+  public static final Collector collector = new Collector(Constants.conveyor);
   public static final Climber climb = new Climber(Constants.ClimberL, Constants.ClimberR, Constants.PullClimberL, Constants.PullClimberR);
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
