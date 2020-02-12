@@ -37,8 +37,7 @@ public class Robot extends TimedRobot {
   public static final Climber climb = null;
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
-  //public static Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
-  public static final Indexer indexer = null;
+  public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
@@ -49,20 +48,27 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+   
   }
 
   @Override
   public void robotPeriodic() {
-
-  }
-  /*@Override
-  public void disabledInit() {
-    //SmartDashboard.getInstance();
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
-  }*/  
+  }
 
-  private ActionQueue actionQueue = new ActionQueue();
+  /*public void disabledInit() {
+    SmartDashboard.getInstance();
+    SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
+    SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
+  }
+
+  @Override
+  public void disabledInit() {
+    SmartDashboard.putString("actionName", "Disabled");
+  }*/
+
+  private final ActionQueue actionQueue = new ActionQueue();
 
   @Override
   public void autonomousInit() {
@@ -72,9 +78,10 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new DriveStraight(0.5, 2));
     actionQueue.addAction(new Turn(180));
     //actionQueue.addAction(new Aim());
-    
-     //*  Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
-     //*  StartShooter()); //actionQueue.addAction(new FeedBall());
+    /*
+     * // Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
+     * StartShooter()); //actionQueue.addAction(new FeedBall());
+     */
   }
 
   @Override
@@ -84,7 +91,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-  
+
   }
 
   @Override
@@ -106,18 +113,18 @@ public class Robot extends TimedRobot {
       indexer.runIndexerOff();
     }
     if (xboxcontroller.getYButton()) {
-     shooter.runFlyWheel(.75);
-    } else {
-      shooter.runFlyWheel(0);
-    }
-    if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
-       turret.runTurret(.25);
-    } else if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
+      turret.runTurret(.25);
+    } else if (xboxcontroller.getBButton()) {
       turret.runTurret(-.25);
     } else {
       turret.runTurret(0);
     }
-    if (xboxcontroller.getBButton()) {
+    if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
+      shooter.runFlyWheel(.25);
+    } else {
+      shooter.runFlyWheel(0);
+    }
+    if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       climb.runClimber(1);
     } else {
       climb.runClimber(0);
@@ -126,18 +133,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    Preferences prefs = Preferences.getInstance();
-    double p = prefs.getDouble("p", 0);
+    final Preferences prefs = Preferences.getInstance();
+    final double p = prefs.getDouble("p", 0);
     SmartDashboard.putNumber("p", p);
-    double i = prefs.getDouble("i", 0);
+    final double i = prefs.getDouble("i", 0);
     SmartDashboard.putNumber("i", i);
-    double f = prefs.getDouble("f", 0);
+    final double f = prefs.getDouble("f", 0);
     SmartDashboard.putNumber("f", f);
-    int velocity = prefs.getInt("velocity", 0);
+    final int velocity = prefs.getInt("velocity", 0);
     SmartDashboard.putNumber("velocity", velocity);
-    double d = prefs.getDouble("d", 0);
+    final double d = prefs.getDouble("d", 0);
     SmartDashboard.putNumber("d", d);
-    int acceleration = prefs.getInt("acceleration", 0);
+    final int acceleration = prefs.getInt("acceleration", 0);
     SmartDashboard.putNumber("acceleration", acceleration);
 
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
