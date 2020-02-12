@@ -41,11 +41,11 @@ public class Robot extends TimedRobot {
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
-  public static Timer timer;
+  public static Timer timer = null;
   // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
   public static final ADIS16470_IMU imu = null;
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
-
+   
   @Override
   public void robotInit() {
    
@@ -177,6 +177,42 @@ public class Robot extends TimedRobot {
       }
       if (xboxcontroller.getXButton()) {
         // do somting
+        drive.runFrontRight(.25);
+      }
+      break;
+      case 1:
+      if (xboxcontroller.getAButton()) {
+        // do somting
+        collector.runConveyor(.25);
+      }else {
+        collector.runConveyor(0);
+      }
+      if (xboxcontroller.getBButton()) {
+        // do somting
+        indexer.runIndexerForward();
+      }else if(xboxcontroller.getYButton()) {
+        indexer.runIndexerBackward();
+      }else {
+        indexer.runIndexerOff();
+      }
+      if (xboxcontroller.getXButton()) {
+        // do somting
+        turret.runTurret(.25);
+      }else {
+        turret.runTurret(0);
+      }
+      break;
+      case 2:
+      if (xboxcontroller.getAButton()) {
+        drive.runBackLeft(.25);
+      }
+      if (xboxcontroller.getBButton()) {
+        drive.runBackRight(.25);
+      }
+      if (xboxcontroller.getYButton()) {
+        drive.runFrontLeft(.25);
+      }
+      if (xboxcontroller.getXButton()) {
         drive.runFrontRight(.25);
       }
       break;
