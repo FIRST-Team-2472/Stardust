@@ -1,8 +1,5 @@
 package frc.actions;
 
-import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
@@ -13,7 +10,6 @@ public class DriveDistance implements Actionable {
 
     private double countsPerMeter = 99999;
 
-    private BaseMotorController drive;
 
     public DriveDistance(double meters) {
         target = meters * (countsPerMeter);
