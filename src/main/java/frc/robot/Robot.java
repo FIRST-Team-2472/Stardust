@@ -30,22 +30,26 @@ import com.analog.adis16470.frc.ADIS16470_IMU;
  */
 public class Robot extends TimedRobot {
 
-  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,
-      Constants.motorFR);
+  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
+<<<<<<< HEAD
   public static final Collector collector = new Collector(Constants.converyer);
   public static final Climber climb = new Climber(Constants.ClimberL, Constants.ClimberR, Constants.PullClimberL, Constants.PullClimberR);
+=======
+  public static final Collector collector = new Collector(Constants.conveyor);
+  public static final Climber climb = null;
+>>>>>>> 14f34c8a035a46a31b2a51220ebf13927d894135
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
   public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
-  public static Timer timer = null;
+  public static Timer timer;
   // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
   public static final ADIS16470_IMU imu = null;
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
-   
+
   @Override
   public void robotInit() {
    
