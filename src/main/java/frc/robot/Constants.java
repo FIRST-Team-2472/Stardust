@@ -14,6 +14,11 @@ public class Constants {
 	public static final int shooterID = 100;
 
 	public static final int converyer = 4;
+
+	public static final int ClimberR = 2;
+	public static final int ClimberL = 4;
+	public static final int PullClimberL = 0;
+	public static final int PullClimberR = 0;
 	//Controllers 
 	public static final int jstickL = 1;
     public static final int jstickR = 0;

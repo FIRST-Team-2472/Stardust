@@ -30,15 +30,13 @@ import com.analog.adis16470.frc.ADIS16470_IMU;
  */
 public class Robot extends TimedRobot {
 
-  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,
-      Constants.motorFR);
+  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
-  public static final Collector collector = new Collector(Constants.converyer);
+  public static final Collector collector = new Collector(Constants.conveyor);
   public static final Climber climb = null;
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
-  //public static Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
-  public static final Indexer indexer = null;
+  public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
@@ -51,22 +49,30 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     // TODO SMART Dashboard INIT here
+   
   }
 
   @Override
   public void robotPeriodic() {
     // Tasks that the robot should always be doing (Lights?)
+    SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
+    SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
   }
-  /*@Override
-  public void disabledInit() {
-    //SmartDashboard.getInstance();
+
+  /*public void disabledInit() {
+    SmartDashboard.getInstance();
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
 
     // TODO set all motors to 0 and disbale the compressor
-  }*/  
+  }*/ 
 
-  private ActionQueue actionQueue = new ActionQueue();
+  @Override
+  public void disabledInit() {
+    SmartDashboard.putString("actionName", "Disabled");
+  }*/
+
+  private final ActionQueue actionQueue = new ActionQueue();
 
   @Override
   public void autonomousInit() {
@@ -74,11 +80,13 @@ public class Robot extends TimedRobot {
     actionQueue.clear();
 
     actionQueue.addAction(new DriveStraight(0.5, 2));
-    //actionQueue.addAction(new Turn(180)); ?
+    // why are we turning?
+    actionQueue.addAction(new Turn(180));
     //actionQueue.addAction(new Aim());
-    
-     //*  Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
-     //*  StartShooter()); //actionQueue.addAction(new FeedBall());
+    /*
+     * // Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
+     * StartShooter()); //actionQueue.addAction(new FeedBall());
+     */
   }
 
   @Override
@@ -105,9 +113,9 @@ public class Robot extends TimedRobot {
     }
 
     // FIXME what is the indexer?
-    if (xboxcontroller.getXButton()) {
+    if (xboxcontroller.getAButton()) {
       indexer.runIndexerForward();
-    } else if (xboxcontroller.getAButton()) {
+    } else if (xboxcontroller.getXButton()) {
       indexer.runIndexerBackward();
     } else {
       indexer.runIndexerOff();
@@ -115,14 +123,14 @@ public class Robot extends TimedRobot {
 
     // shooter control
     if (xboxcontroller.getYButton()) {
-     shooter.runFlyWheel(.75); // this should be variable based on distance to the target
+     shooter.runFlyWheel(.25); // this should be variable based on distance to the target
     } else {
       shooter.runFlyWheel(0);
     }
 
     // using the HAT switch?
     if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
-       turret.runTurret(.25);
+      turret.runTurret(.25);
     } else if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       turret.runTurret(-.25);
     } else {
@@ -147,14 +155,14 @@ public class Robot extends TimedRobot {
     double i = prefs.getDouble("i", 0);
     // FIXME give this a better name
     SmartDashboard.putNumber("i", i);
-    double f = prefs.getDouble("f", 0);
+    final double f = prefs.getDouble("f", 0);
     SmartDashboard.putNumber("f", f);
-    int velocity = prefs.getInt("velocity", 0);
+    final int velocity = prefs.getInt("velocity", 0);
     SmartDashboard.putNumber("velocity", velocity);
     // FIXME give this a better name
     double d = prefs.getDouble("d", 0);
     SmartDashboard.putNumber("d", d);
-    int acceleration = prefs.getInt("acceleration", 0);
+    final int acceleration = prefs.getInt("acceleration", 0);
     SmartDashboard.putNumber("acceleration", acceleration);
 
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
@@ -175,22 +183,61 @@ public class Robot extends TimedRobot {
     switch (teststate) {
     case 0:
       if (xboxcontroller.getAButton()) {
-        // do somting
         drive.runBackLeft(.25);
+      } else {
+        drive.runBackLeft(0);
       }
       if (xboxcontroller.getBButton()) {
-        // do somting
         drive.runBackRight(.25);
+      } else {
+        drive.runBackRight(0);
       }
       if (xboxcontroller.getYButton()) {
-        // do somting
         drive.runFrontLeft(.25);
+      } else {
+        drive.runFrontLeft(0);
       }
       if (xboxcontroller.getXButton()) {
-        // do somting
         drive.runFrontRight(.25);
+      } else {
+        drive.runFrontRight(0);
       }
       break;
+      case 1:
+      if (xboxcontroller.getAButton()) {
+        collector.runConveyor(.25);
+      }else {
+        collector.runConveyor(0);
+      }
+      if (xboxcontroller.getBButton()) {
+        indexer.runIndexerForward();
+      }else if(xboxcontroller.getYButton()) {
+        indexer.runIndexerBackward();
+      }else {
+        indexer.runIndexerOff();
+      }
+      if (xboxcontroller.getXButton()) {
+        turret.runTurret(.25);
+      }else {
+        turret.runTurret(0);
+      }
+      break;
+      case 2:
+      if (xboxcontroller.getAButton()) {
+        shooter.runFlyWheel(.25);
+      } else {
+        shooter.runFlyWheel(0);
+      }
+      if (xboxcontroller.getBButton()) {
+        climb.runClimberL(.25);
+      } else {
+        climb.runClimberL(0);
+      }
+      if (xboxcontroller.getYButton()) {
+        climb.runClimberR(.25);
+      } else {
+        climb.runClimberR(0);
+      }
     case 3:
 
     default:
