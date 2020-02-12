@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,
       Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
-  public static final Collector collector = new Collector(Constants.converyer);
+  public static final Collector collector = new Collector(Constants.conveyor);
   public static final Climber climb = null;
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
@@ -41,11 +41,11 @@ public class Robot extends TimedRobot {
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
-  public static Timer timer = null;
+  public static Timer timer;
   // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
   public static final ADIS16470_IMU imu = null;
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
-   
+
   @Override
   public void robotInit() {
    
@@ -186,42 +186,6 @@ public class Robot extends TimedRobot {
         drive.runFrontRight(.25);
       } else {
         drive.runFrontRight(0);
-      }
-      break;
-      case 1:
-      if (xboxcontroller.getAButton()) {
-        // do somting
-        collector.runConveyor(.25);
-      }else {
-        collector.runConveyor(0);
-      }
-      if (xboxcontroller.getBButton()) {
-        // do somting
-        indexer.runIndexerForward();
-      }else if(xboxcontroller.getYButton()) {
-        indexer.runIndexerBackward();
-      }else {
-        indexer.runIndexerOff();
-      }
-      if (xboxcontroller.getXButton()) {
-        // do somting
-        turret.runTurret(.25);
-      }else {
-        turret.runTurret(0);
-      }
-      break;
-      case 2:
-      if (xboxcontroller.getAButton()) {
-        drive.runBackLeft(.25);
-      }
-      if (xboxcontroller.getBButton()) {
-        drive.runBackRight(.25);
-      }
-      if (xboxcontroller.getYButton()) {
-        drive.runFrontLeft(.25);
-      }
-      if (xboxcontroller.getXButton()) {
-        drive.runFrontRight(.25);
       }
       break;
     case 3:
