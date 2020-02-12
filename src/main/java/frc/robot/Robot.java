@@ -166,18 +166,26 @@ public class Robot extends TimedRobot {
       if (xboxcontroller.getAButton()) {
         // do somting
         drive.runBackLeft(.25);
+      } else {
+        drive.runBackLeft(0);
       }
       if (xboxcontroller.getBButton()) {
         // do somting
         drive.runBackRight(.25);
+      } else {
+        drive.runBackRight(0);
       }
       if (xboxcontroller.getYButton()) {
         // do somting
         drive.runFrontLeft(.25);
+      } else {
+        drive.runFrontLeft(0);
       }
       if (xboxcontroller.getXButton()) {
         // do somting
         drive.runFrontRight(.25);
+      } else {
+        drive.runFrontRight(0);
       }
       break;
       case 1:
