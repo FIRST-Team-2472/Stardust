@@ -11,7 +11,7 @@ public class Constants {
 
 	public static final int shooterID = 100;
 
-	public static final int converyer = 4;
+	public static final int conveyor = 4;
 
 	public static final int ClimberR = 2;
 	public static final int ClimberL = 4;
