@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
       Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
   public static final Collector collector = new Collector(Constants.converyer);
-  public static final Climber climb = null;
+  public static final Climber climb = new Climber(Constants.ClimberL, Constants.ClimberR, Constants.PullClimberL, Constants.PullClimberR);
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
   public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
