@@ -55,17 +55,12 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
 
   }
-
-  /*public void disabledInit() {
-    SmartDashboard.getInstance();
+  /*@Override
+  public void disabledInit() {
+    //SmartDashboard.getInstance();
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
-  }
-
-  @Override
-  public void disabledInit() {
-    SmartDashboard.putString("actionName", "Disabled");
-  }*/
+  }*/  
 
   private ActionQueue actionQueue = new ActionQueue();
 
@@ -77,10 +72,9 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new DriveStraight(0.5, 2));
     //actionQueue.addAction(new Turn(180));
     //actionQueue.addAction(new Aim());
-    /*
-     * // Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
-     * StartShooter()); //actionQueue.addAction(new FeedBall());
-     */
+    
+     //*  Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
+     //*  StartShooter()); //actionQueue.addAction(new FeedBall());
   }
 
   @Override
@@ -90,7 +84,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-
+  
   }
 
   @Override
@@ -112,18 +106,18 @@ public class Robot extends TimedRobot {
       indexer.runIndexerOff();
     }
     if (xboxcontroller.getYButton()) {
-      turret.runTurret(.25);
-    } else if (xboxcontroller.getBButton()) {
+     shooter.runFlyWheel(.75);
+    } else {
+      shooter.runFlyWheel(0);
+    }
+    if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
+       turret.runTurret(.25);
+    } else if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       turret.runTurret(-.25);
     } else {
       turret.runTurret(0);
     }
-    if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
-      shooter.runFlyWheel(.25);
-    } else {
-      shooter.runFlyWheel(0);
-    }
-    if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
+    if (xboxcontroller.getBButton()) {
       climb.runClimber(1);
     } else {
       climb.runClimber(0);
