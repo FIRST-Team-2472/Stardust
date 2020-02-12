@@ -32,13 +32,8 @@ public class Robot extends TimedRobot {
 
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
-<<<<<<< HEAD
   public static final Collector collector = new Collector(Constants.converyer);
   public static final Climber climb = new Climber(Constants.ClimberL, Constants.ClimberR, Constants.PullClimberL, Constants.PullClimberR);
-=======
-  public static final Collector collector = new Collector(Constants.conveyor);
-  public static final Climber climb = null;
->>>>>>> 14f34c8a035a46a31b2a51220ebf13927d894135
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
   public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
@@ -80,7 +75,7 @@ public class Robot extends TimedRobot {
     actionQueue.clear();
 
     actionQueue.addAction(new DriveStraight(0.5, 2));
-    actionQueue.addAction(new Turn(180));
+    //actionQueue.addAction(new Turn(180));
     //actionQueue.addAction(new Aim());
     /*
      * // Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
@@ -169,21 +164,25 @@ public class Robot extends TimedRobot {
     case 0:
       if (xboxcontroller.getAButton()) {
         drive.runBackLeft(.25);
+        SmartDashboard.putString("MotorsTest", "runBackLeft");
       } else {
         drive.runBackLeft(0);
       }
       if (xboxcontroller.getBButton()) {
         drive.runBackRight(.25);
+        SmartDashboard.putString("MotorsTest", "runBackRight");
       } else {
         drive.runBackRight(0);
       }
       if (xboxcontroller.getYButton()) {
         drive.runFrontLeft(.25);
+        SmartDashboard.putString("MotorsTest", "runFrontLeft");
       } else {
         drive.runFrontLeft(0);
       }
       if (xboxcontroller.getXButton()) {
         drive.runFrontRight(.25);
+        SmartDashboard.putString("MotorsTest", "runFrontRight");
       } else {
         drive.runFrontRight(0);
       }
@@ -191,18 +190,22 @@ public class Robot extends TimedRobot {
       case 1:
       if (xboxcontroller.getAButton()) {
         collector.runConveyor(.25);
+        SmartDashboard.putString("MotorsTest", "runCollector");
       }else {
         collector.runConveyor(0);
       }
       if (xboxcontroller.getBButton()) {
         indexer.runIndexerForward();
+        SmartDashboard.putString("MotorsTest", "runIndexerForward");
       }else if(xboxcontroller.getYButton()) {
         indexer.runIndexerBackward();
+        SmartDashboard.putString("MotorsTest", "runIndexerBackward");
       }else {
         indexer.runIndexerOff();
       }
       if (xboxcontroller.getXButton()) {
         turret.runTurret(.25);
+        SmartDashboard.putString("MotorsTest", "runTurret");
       }else {
         turret.runTurret(0);
       }
@@ -210,16 +213,18 @@ public class Robot extends TimedRobot {
       case 2:
       if (xboxcontroller.getAButton()) {
         shooter.runFlyWheel(.25);
+        SmartDashboard.putString("MotorsTest", "runShooter");
       } else {
         shooter.runFlyWheel(0);
       }
       if (xboxcontroller.getBButton()) {
         climb.runClimberL(.25);
-      } else {
+        SmartDashboard.putString("MotorsTest", "runClimberLeft");
         climb.runClimberL(0);
       }
       if (xboxcontroller.getYButton()) {
         climb.runClimberR(.25);
+        SmartDashboard.putString("MotorsTest", "runClimberRight");
       } else {
         climb.runClimberR(0);
       }
