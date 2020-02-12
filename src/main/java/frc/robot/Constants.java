@@ -4,8 +4,8 @@ public class Constants {
 	//Talons
     public static final int motorBL = 1;
 	public static final int motorBR = 2;
-	public static final int motorFL = 3;
-	public static final int motorFR = 2;
+	public static final int motorFL = 13;
+	public static final int motorFR = 3;
 
 	public static final int turret = 16;
 
