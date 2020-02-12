@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
   // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
   public static final ADIS16470_IMU imu = null;
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
+  int teststate;
 
   @Override
   public void robotInit() {
@@ -70,7 +71,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     SmartDashboard.putString("actionName", "Disabled");
-  }*/
+  }
 
   private final ActionQueue actionQueue = new ActionQueue();
 
@@ -104,9 +105,9 @@ public class Robot extends TimedRobot {
     drive.tankDrive(joysticks.getY(), joysticks2.getY());
 
     // NOTE joystick trigger (probably should be on the xbox controler)
-    if (joysticks.getRawButton(1)) {
+    if (xboxcontroller.getAButton()) {
       collector.runConveyor(1);
-    } else if (joysticks2.getRawButton(1)) {
+    } else if (xboxcontroller.getYButton()) {
       collector.runConveyor(-1);
     } else {
       collector.runConveyor(0);
@@ -122,7 +123,7 @@ public class Robot extends TimedRobot {
     }
 
     // shooter control
-    if (xboxcontroller.getYButton()) {
+    if (joysticks.getRawButton(1)) {
      shooter.runFlyWheel(.25); // this should be variable based on distance to the target
     } else {
       shooter.runFlyWheel(0);
@@ -138,7 +139,7 @@ public class Robot extends TimedRobot {
     }
 
     // NOTE: should probably have another control to prevent misfires since this can only be done once per match
-    if (xboxcontroller.getBButton()) {
+    if (joysticks2.getRawButton(3) && joysticks.getRawButton(3)) {
       climb.runClimber(1);
     } else {
       climb.runClimber(0);
@@ -168,7 +169,7 @@ public class Robot extends TimedRobot {
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
 
     // initalize the PID Test state
-    int teststate = 0;
+    teststate = 0;
   }
 
   @Override
