@@ -14,5 +14,5 @@ public class Shooter {
       FlyWheel.set(ControlMode.PercentOutput, speed);    
     }
 
-    
+    // TODO Write a set RPM method
 }

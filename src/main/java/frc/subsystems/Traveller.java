@@ -3,6 +3,7 @@ package frc.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+// What is the traveller?
 public class Traveller {
     private TalonSRX TravellerR;
     private TalonSRX TravellerL;
