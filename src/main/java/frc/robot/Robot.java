@@ -104,9 +104,9 @@ public class Robot extends TimedRobot {
     drive.tankDrive(joysticks.getY(), joysticks2.getY());
 
     // NOTE joystick trigger (probably should be on the xbox controler)
-    if (joysticks.getRawButton(1)) {
+    if (xboxcontroller.getAButton()) {
       collector.runConveyor(1);
-    } else if (joysticks2.getRawButton(1)) {
+    } else if (xboxcontroller.getYButton()) {
       collector.runConveyor(-1);
     } else {
       collector.runConveyor(0);
@@ -138,7 +138,7 @@ public class Robot extends TimedRobot {
     }
 
     // NOTE: should probably have another control to prevent misfires since this can only be done once per match
-    if (xboxcontroller.getBButton()) {
+    if (joysticks2.getRawButton(3) && joysticks.getRawButton(3)) {
       climb.runClimber(1);
     } else {
       climb.runClimber(0);
@@ -148,11 +148,11 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // SMART Dashboard perfs
-    Preferences prefs = Preferences.getInstance();
+    final Preferences prefs = Preferences.getInstance();
     // FIXME give this a better name
-    double p = prefs.getDouble("p", 0);
+    final double p = prefs.getDouble("p", 0);
     SmartDashboard.putNumber("p", p);
-    double i = prefs.getDouble("i", 0);
+    final double i = prefs.getDouble("i", 0);
     // FIXME give this a better name
     SmartDashboard.putNumber("i", i);
     final double f = prefs.getDouble("f", 0);
@@ -160,7 +160,7 @@ public class Robot extends TimedRobot {
     final int velocity = prefs.getInt("velocity", 0);
     SmartDashboard.putNumber("velocity", velocity);
     // FIXME give this a better name
-    double d = prefs.getDouble("d", 0);
+    final double d = prefs.getDouble("d", 0);
     SmartDashboard.putNumber("d", d);
     final int acceleration = prefs.getInt("acceleration", 0);
     SmartDashboard.putNumber("acceleration", acceleration);
@@ -234,10 +234,10 @@ public class Robot extends TimedRobot {
       break;
       case 2:
       if (xboxcontroller.getAButton()) {
-        shooter.runFlyWheel(.25);
+        shooter.runFlyWheel();
         SmartDashboard.putString("MotorsTest", "runShooter");
       } else {
-        shooter.runFlyWheel(0);
+        shooter.runFlyWheel();
       }
       if (xboxcontroller.getBButton()) {
         climb.runClimberL(.25);
