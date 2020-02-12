@@ -53,8 +53,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+<<<<<<< HEAD
+
+  }
+
+  public void disabledInit() {
+    SmartDashboard.getInstance();
+=======
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
+>>>>>>> d5c0cc94a475c65fdf7ed1a9608babf3a54cc599
   }
 
   @Override
