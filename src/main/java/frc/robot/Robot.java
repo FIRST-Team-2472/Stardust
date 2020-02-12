@@ -105,26 +105,26 @@ public class Robot extends TimedRobot {
     } else {
       collector.runConveyor(0);
     }
-    if (xboxcontroller.getXButton()) {
+    if (xboxcontroller.getAButton()) {
       indexer.runIndexerForward();
-    } else if (xboxcontroller.getAButton()) {
+    } else if (xboxcontroller.getXButton()) {
       indexer.runIndexerBackward();
     } else {
       indexer.runIndexerOff();
     }
-    if (xboxcontroller.getYButton()) {
+    if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
       turret.runTurret(.25);
-    } else if (xboxcontroller.getBButton()) {
+    } else if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       turret.runTurret(-.25);
     } else {
       turret.runTurret(0);
     }
-    if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
+    if (xboxcontroller.getYButton()) {
       shooter.runFlyWheel(.25);
     } else {
       shooter.runFlyWheel(0);
     }
-    if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
+    if (xboxcontroller.getBButton()) {
       climb.runClimber(1);
     } else {
       climb.runClimber(0);
