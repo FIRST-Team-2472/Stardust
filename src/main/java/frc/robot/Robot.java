@@ -164,25 +164,21 @@ public class Robot extends TimedRobot {
     switch (teststate) {
     case 0:
       if (xboxcontroller.getAButton()) {
-        // do somting
         drive.runBackLeft(.25);
       } else {
         drive.runBackLeft(0);
       }
       if (xboxcontroller.getBButton()) {
-        // do somting
         drive.runBackRight(.25);
       } else {
         drive.runBackRight(0);
       }
       if (xboxcontroller.getYButton()) {
-        // do somting
         drive.runFrontLeft(.25);
       } else {
         drive.runFrontLeft(0);
       }
       if (xboxcontroller.getXButton()) {
-        // do somting
         drive.runFrontRight(.25);
       } else {
         drive.runFrontRight(0);
@@ -190,13 +186,11 @@ public class Robot extends TimedRobot {
       break;
       case 1:
       if (xboxcontroller.getAButton()) {
-        // do somting
         collector.runConveyor(.25);
       }else {
         collector.runConveyor(0);
       }
       if (xboxcontroller.getBButton()) {
-        // do somting
         indexer.runIndexerForward();
       }else if(xboxcontroller.getYButton()) {
         indexer.runIndexerBackward();
@@ -204,7 +198,6 @@ public class Robot extends TimedRobot {
         indexer.runIndexerOff();
       }
       if (xboxcontroller.getXButton()) {
-        // do somting
         turret.runTurret(.25);
       }else {
         turret.runTurret(0);
@@ -212,18 +205,20 @@ public class Robot extends TimedRobot {
       break;
       case 2:
       if (xboxcontroller.getAButton()) {
-        drive.runBackLeft(.25);
+        shooter.runFlyWheel(.25);
+      } else {
+        shooter.runFlyWheel(0);
       }
       if (xboxcontroller.getBButton()) {
-        drive.runBackRight(.25);
+        climb.runClimberL(.25);
+      } else {
+        climb.runClimberL(0);
       }
       if (xboxcontroller.getYButton()) {
-        drive.runFrontLeft(.25);
+        climb.runClimberR(.25);
+      } else {
+        climb.runClimberR(0);
       }
-      if (xboxcontroller.getXButton()) {
-        drive.runFrontRight(.25);
-      }
-      break;
     case 3:
 
     default:
