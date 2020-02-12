@@ -53,22 +53,19 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-<<<<<<< HEAD
 
   }
 
-  public void disabledInit() {
+  /*public void disabledInit() {
     SmartDashboard.getInstance();
-=======
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
->>>>>>> d5c0cc94a475c65fdf7ed1a9608babf3a54cc599
   }
 
   @Override
   public void disabledInit() {
     SmartDashboard.putString("actionName", "Disabled");
-  }
+  }*/
 
   private ActionQueue actionQueue = new ActionQueue();
 
@@ -107,7 +104,6 @@ public class Robot extends TimedRobot {
     } else {
       collector.runConveyor(0);
     }
-    /* not plugged in
     if (xboxcontroller.getXButton()) {
       indexer.runIndexerForward();
     } else if (xboxcontroller.getAButton()) {
@@ -115,7 +111,6 @@ public class Robot extends TimedRobot {
     } else {
       indexer.runIndexerOff();
     }
-    */
     if (xboxcontroller.getYButton()) {
       turret.runTurret(.25);
     } else if (xboxcontroller.getBButton()) {
@@ -128,13 +123,11 @@ public class Robot extends TimedRobot {
     } else {
       shooter.runFlyWheel(0);
     }
-    /* Not plugged in
     if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       climb.runClimber(1);
     } else {
       climb.runClimber(0);
     }
-    */
   }
 
   @Override
