@@ -8,9 +8,7 @@ import frc.robot.Robot;
 
 public class FeedBall extends TimerBase {
 
-
-
-	public FeedBall(double lifetime) {
+    public FeedBall(double lifetime) {
         super(lifetime);
         // TODO Auto-generated constructor stub
     }
@@ -23,14 +21,14 @@ public class FeedBall extends TimerBase {
     }
 
 
-	@Override
-	public void periodic() {
+    @Override
+    public void periodic() {    
         Robot.indexer.runIndexerForward();;
-	}
+    }
 
-	@Override
-	public void endAction() {
+    @Override
+    public void endAction() {
         Robot.indexer.runIndexerBackward();
-	}
+    }
 
 }

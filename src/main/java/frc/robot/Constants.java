@@ -1,5 +1,7 @@
 package frc.robot;
 
+// These can probably all be sent to the smart dashboard as preferences for configuration during debugging
+// and for driver preference
 public class Constants {
 	//Talons
     public static final int motorBL = 1;
@@ -25,4 +27,7 @@ public class Constants {
 	public static final int IndexerF = 1;
 	public static final int IndexerR = 0;
 	
+	// TODO Add Controls
+
+	// TODO Add Autonomous Config
  }
