@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    // FIXME different atonomous modes should be built out into separate functions
+    // FIXME different autonomous modes should be built out into separate functions
     actionQueue.clear();
 
     actionQueue.addAction(new DriveStraightTime(0.5, 2));
