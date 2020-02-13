@@ -102,7 +102,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     drive.tankDrive(joysticks.getY(), joysticks2.getY());
-
+    // TODO configer buttons w/ smartdash board
+    
     // NOTE joystick trigger (probably should be on the xbox controler)
     if (xboxcontroller.getAButton()) {
       collector.runConveyor(1);
