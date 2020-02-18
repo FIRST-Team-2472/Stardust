@@ -31,24 +31,26 @@ import com.analog.adis16470.frc.ADIS16470_IMU;
  */
 public class Robot extends TimedRobot {
 
-  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,
-      Constants.motorFR);
+  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
   public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS);
   public static final Climber climb = null;
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
-  //public static Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
-  public static final Indexer indexer = null;
+  public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
   public static Timer timer;
-  public static final ADIS16470_IMU imu = new ADIS16470_IMU();
+  // there has to be a better way to say the imu is disabled
+  // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
+  public static final ADIS16470_IMU imu = null;
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
 
   @Override
   public void robotInit() {
+    // TODO SMART Dashboard INIT here
+
   }
 
   @Override
@@ -56,17 +58,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
   }
-
-  @Override
-  public void disabledInit() {
-    SmartDashboard.putString("actionName", "Disabled");
-  }
-
-  private ActionQueue actionQueue = new ActionQueue();
+  private final ActionQueue actionQueue = new ActionQueue();
 
   @Override
   public void autonomousInit() {
-
+    // FIXME different autonomous modes should be built out into separate functions
     actionQueue.clear();
 
     /*actionQueue.addAction(new DriveStraight(0.5, 1.5));
@@ -75,9 +71,9 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new Wait(2));
     actionQueue.addAction(new Turn(180));*/
 
-    actionQueue.addAction(new DriveStraight(0.5, 1.5));
-    actionQueue.addAction(new Turn(45));
-    actionQueue.addAction(new DriveStraight(0.5, 7));
+    actionQueue.addAction(new DriveStraightTime(0.5, 1.5));
+    actionQueue.addAction(new TurnRobot(45));
+    actionQueue.addAction(new DriveStraightTime(0.5, 7));
 
     //actionQueue.addAction(new Turn(180));
     //actionQueue.addAction(new Aim());
@@ -94,7 +90,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-
+    // TODO initalize smart dashboard values / set teleop state
   }
   
 
@@ -114,53 +110,63 @@ public class Robot extends TimedRobot {
     } else {
       collector.runConveyor(0);
     }*/
-    /* not plugged in
+    // not plugged in
     if (xboxcontroller.getXButton()) {
       indexer.runIndexerForward();
-    } else if (xboxcontroller.getAButton()) {
+    } else if (xboxcontroller.getXButton()) {
       indexer.runIndexerBackward();
     } else {
       indexer.runIndexerOff();
     }
-    */
+
+    // shooter control
     if (xboxcontroller.getYButton()) {
+      shooter.runFlyWheel(1); // this should  be variable based on distance to the target
+    } else {
+      shooter.runFlyWheel(0);
+    }
+
+    // using the HAT switch?
+    if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
       turret.runTurret(.25);
-    } else if (xboxcontroller.getBButton()) {
+    } else if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       turret.runTurret(-.25);
     } else {
       turret.runTurret(0);
     }
-    if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
-      shooter.runFlyWheel(.25);
-    } else {
-      shooter.runFlyWheel(0);
-    }
-    /* Not plugged in
-    if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
+
+    // NOTE: should probably have another control to prevent misfires since this can only be done once per match
+    if (joysticks2.getRawButton(3) && joysticks.getRawButton(3)) {
       climb.runClimber(1);
     } else {
       climb.runClimber(0);
     }
-    */
   }
 
   @Override
   public void testInit() {
-    Preferences prefs = Preferences.getInstance();
-    double p = prefs.getDouble("p", 0);
+    // SMART Dashboard perfs
+    final Preferences prefs = Preferences.getInstance();
+    // FIXME give this a better name
+    final double p = prefs.getDouble("p", 0);
     SmartDashboard.putNumber("p", p);
-    double i = prefs.getDouble("i", 0);
+    final double i = prefs.getDouble("i", 0);
+    // FIXME give this a better name
     SmartDashboard.putNumber("i", i);
-    double f = prefs.getDouble("f", 0);
+    final double f = prefs.getDouble("f", 0);
     SmartDashboard.putNumber("f", f);
-    int velocity = prefs.getInt("velocity", 0);
+    final int velocity = prefs.getInt("velocity", 0);
     SmartDashboard.putNumber("velocity", velocity);
-    double d = prefs.getDouble("d", 0);
+    // FIXME give this a better name
+    final double d = prefs.getDouble("d", 0);
     SmartDashboard.putNumber("d", d);
-    int acceleration = prefs.getInt("acceleration", 0);
+    final int acceleration = prefs.getInt("acceleration", 0);
     SmartDashboard.putNumber("acceleration", acceleration);
 
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
+
+    //TODO initalize the PID Test state
+    
   }
 
   int teststate = 0;
@@ -179,30 +185,71 @@ public class Robot extends TimedRobot {
       collector.runConveyor(-xboxcontroller.getY(Hand.kLeft));
       collector.runFrontWheels(-xboxcontroller.getY(Hand.kRight));
       if (xboxcontroller.getAButton()) {
-        // do somting
         drive.runBackLeft(.25);
+        SmartDashboard.putString("MotorsTest", "runBackLeft");
       } else {
         drive.runBackLeft(0);
       }
       if (xboxcontroller.getBButton()) {
-        // do somting
         drive.runBackRight(.25);
+        SmartDashboard.putString("MotorsTest", "runBackRight");
       } else {
         drive.runBackRight(0);
       }
       if (xboxcontroller.getYButton()) {
-        // do somting
         drive.runFrontLeft(.25);
+        SmartDashboard.putString("MotorsTest", "runFrontLeft");
       } else {
         drive.runFrontLeft(0);
       }
       if (xboxcontroller.getXButton()) {
-        // do somting
         drive.runFrontRight(.25);
+        SmartDashboard.putString("MotorsTest", "runFrontRight");
       } else {
         drive.runFrontRight(0);
       }
       break;
+      case 1:
+      if (xboxcontroller.getAButton()) {
+        collector.runConveyor(.25);
+        SmartDashboard.putString("MotorsTest", "runCollector");
+      }else {
+        collector.runConveyor(0);
+      }
+      if (xboxcontroller.getBButton()) {
+        indexer.runIndexerForward();
+        SmartDashboard.putString("MotorsTest", "runIndexerForward");
+      }else if(xboxcontroller.getYButton()) {
+        indexer.runIndexerBackward();
+        SmartDashboard.putString("MotorsTest", "runIndexerBackward");
+      }else {
+        indexer.runIndexerOff();
+      }
+      if (xboxcontroller.getXButton()) {
+        turret.runTurret(.25);
+        SmartDashboard.putString("MotorsTest", "runTurret");
+      }else {
+        turret.runTurret(0);
+      }
+      break;
+      case 2:
+      if (xboxcontroller.getAButton()) {
+        shooter.runFlyWheel(.25);
+        SmartDashboard.putString("MotorsTest", "runShooter");
+      } else {
+        shooter.runFlyWheel(0);
+      }
+      if (xboxcontroller.getBButton()) {
+        climb.runClimberL(.25);
+        SmartDashboard.putString("MotorsTest", "runClimberLeft");
+        climb.runClimberL(0);
+      }
+      if (xboxcontroller.getYButton()) {
+        climb.runClimberR(.25);
+        SmartDashboard.putString("MotorsTest", "runClimberRight");
+      } else {
+        climb.runClimberR(0);
+      }
     case 3:
 
     default:

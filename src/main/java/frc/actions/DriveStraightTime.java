@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.TimerBase;
 import frc.robot.Robot;
 
-public class DriveStraight extends TimerBase {
+public class DriveStraightTime extends TimerBase {
 
     public double speed;
 
-    public DriveStraight(double givenSpeed, double seconds) {
+    public DriveStraightTime(double givenSpeed, double seconds) {
         super(seconds);
         speed = givenSpeed;
     }

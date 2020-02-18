@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 
 public class Drive {
@@ -94,6 +93,7 @@ public class Drive {
 
     }
 
+    // TODO Add actual value
     public static final int COUNT_PER_METER = 1;
 
     public void driverMeters(double meters) {

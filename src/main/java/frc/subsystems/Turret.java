@@ -17,5 +17,4 @@ public class Turret {
         turret.set(ControlMode.PercentOutput, speed);
         SmartDashboard.putNumber("TurretSpeed", speed);
     }
-
 }

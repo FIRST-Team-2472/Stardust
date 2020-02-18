@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
 
-public class Turn implements Actionable {
+public class TurnRobot implements Actionable {
     private final int angle;
     
-    public Turn(int angle){
+    public TurnRobot(int angle){
         this.angle = angle;
     }
     

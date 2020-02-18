@@ -6,11 +6,10 @@ import frc.robot.Robot;
 
 //sawyers a nerd
 
+// Run Shooter for X seconds
 public class Shooting extends TimerBase {
 
-
-
-	public Shooting(double lifetime) {
+    public Shooting(double lifetime) {
         super(lifetime);
         // TODO Auto-generated constructor stub
     }
@@ -20,14 +19,14 @@ public class Shooting extends TimerBase {
         super.startAction();
     }
 
-	@Override
-	public void periodic() {
+    @Override
+    public void periodic() {
         Robot.shooter.runFlyWheel(1);
-	}
+    }
 
-	@Override
-	public void endAction() {
+    @Override
+    public void endAction() {
         Robot.shooter.runFlyWheel(0);
-	}
+    }
 
 }
