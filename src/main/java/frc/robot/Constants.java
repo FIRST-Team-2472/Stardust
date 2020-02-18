@@ -24,7 +24,5 @@ public class Constants {
 	public static final int IndexerF = 1;
 	public static final int IndexerR = 0;
 	
-	// TODO Add Controls
 
-	// TODO Add Autonomous Config
 }

@@ -11,7 +11,6 @@ public class Shooting extends TimerBase {
 
     public Shooting(double lifetime) {
         super(lifetime);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
