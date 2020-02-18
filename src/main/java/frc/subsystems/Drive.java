@@ -22,16 +22,16 @@ public class Drive {
 
         // Not slaved for testing
         //backLeft.follow(frontLeft);
-        backLeft.setInverted(InvertType.FollowMaster);
+        //backLeft.setInverted(InvertType.FollowMaster);
         //backRight.follow(frontRight);
-        backRight.setInverted(InvertType.FollowMaster);
+        //backRight.setInverted(InvertType.FollowMaster);
 
 
-        frontRight.setInverted(true);
         backRight.setInverted(true);
+        frontRight.setInverted((true));
         
 
-        setupMotionMagic(0, 0, 0, 0, 500, 100);
+        //setupMotionMagic(0, 0, 0, 0, 500, 100);
 
     }
 

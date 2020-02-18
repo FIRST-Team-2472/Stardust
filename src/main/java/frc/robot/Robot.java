@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -33,7 +34,7 @@ public class Robot extends TimedRobot {
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,
       Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
-  public static final Collector collector = new Collector(Constants.converyer);
+  public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS);
   public static final Climber climb = null;
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
@@ -43,8 +44,7 @@ public class Robot extends TimedRobot {
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
   public static Timer timer;
-  // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
-  public static final ADIS16470_IMU imu = null;
+  public static final ADIS16470_IMU imu = new ADIS16470_IMU();
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
 
   @Override
@@ -53,16 +53,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-<<<<<<< HEAD
-
-  }
-
-  public void disabledInit() {
-    SmartDashboard.getInstance();
-=======
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
->>>>>>> d5c0cc94a475c65fdf7ed1a9608babf3a54cc599
   }
 
   @Override
@@ -77,7 +69,16 @@ public class Robot extends TimedRobot {
 
     actionQueue.clear();
 
-    actionQueue.addAction(new DriveStraight(0.5, 2));
+    /*actionQueue.addAction(new DriveStraight(0.5, 1.5));
+    actionQueue.addAction(new Turn(540));
+    actionQueue.addAction(new DriveStraight(0.5, 1.5));
+    actionQueue.addAction(new Wait(2));
+    actionQueue.addAction(new Turn(180));*/
+
+    actionQueue.addAction(new DriveStraight(0.5, 1.5));
+    actionQueue.addAction(new Turn(45));
+    actionQueue.addAction(new DriveStraight(0.5, 7));
+
     //actionQueue.addAction(new Turn(180));
     //actionQueue.addAction(new Aim());
     /*
@@ -95,18 +96,24 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
 
   }
+  
 
   @Override
   public void teleopPeriodic() {
-    drive.tankDrive(joysticks.getY(), joysticks2.getY());
+    drive.tankDrive(-joysticks2.getY(), -joysticks.getY());
 
-    if (joysticks.getRawButton(1)) {
+    // Real coooolector
+    collector.runConveyor(.75*-xboxcontroller.getY(Hand.kLeft));
+    collector.runFrontWheels(.75*-xboxcontroller.getY(Hand.kRight));
+
+    /* Other collector
+    if (xboxcontroller.getAButton()) {
       collector.runConveyor(1);
-    } else if (joysticks2.getRawButton(1)) {
+    } else if (xboxcontroller.getBButton()) {
       collector.runConveyor(-1);
     } else {
       collector.runConveyor(0);
-    }
+    }*/
     /* not plugged in
     if (xboxcontroller.getXButton()) {
       indexer.runIndexerForward();
@@ -169,21 +176,31 @@ public class Robot extends TimedRobot {
     }
     switch (teststate) {
     case 0:
+      collector.runConveyor(-xboxcontroller.getY(Hand.kLeft));
+      collector.runFrontWheels(-xboxcontroller.getY(Hand.kRight));
       if (xboxcontroller.getAButton()) {
         // do somting
         drive.runBackLeft(.25);
+      } else {
+        drive.runBackLeft(0);
       }
       if (xboxcontroller.getBButton()) {
         // do somting
         drive.runBackRight(.25);
+      } else {
+        drive.runBackRight(0);
       }
       if (xboxcontroller.getYButton()) {
         // do somting
         drive.runFrontLeft(.25);
+      } else {
+        drive.runFrontLeft(0);
       }
       if (xboxcontroller.getXButton()) {
         // do somting
         drive.runFrontRight(.25);
+      } else {
+        drive.runFrontRight(0);
       }
       break;
     case 3:
