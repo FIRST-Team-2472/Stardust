@@ -71,9 +71,9 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new Wait(2));
     actionQueue.addAction(new Turn(180));*/
 
-    actionQueue.addAction(new DriveStraightTime(0.5, 1.5));
+    //actionQueue.addAction(new DriveStraightTime(0.5, 1.5));
     actionQueue.addAction(new TurnRobot(45));
-    actionQueue.addAction(new DriveStraightTime(0.5, 7));
+    //actionQueue.addAction(new DriveStraightTime(0.5, 7));
 
     //actionQueue.addAction(new Turn(180));
     //actionQueue.addAction(new Aim());
