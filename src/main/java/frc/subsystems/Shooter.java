@@ -1,23 +1,57 @@
 package frc.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import frc.robot.Robot;
 
 public class Shooter {
-    private TalonSRX FlyWheel;
+  private TalonSRX flyWheel;
 
     public Shooter(int FlyWheelID) {
-        FlyWheel = new TalonSRX(FlyWheelID);
+        flyWheel = new TalonSRX(FlyWheelID);
+    }
+
+    public void setupMotionMagic(double f, double p, double i, double d, int velocity, int acceleration) {
+      // frontRight.setInverted(true);
+      // backRight.setInverted(true);
+
+      flyWheel.configFactoryDefault();
+
+      // Tell the talon that he has a quad encoder
+      flyWheel.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+
+      // Set minimum output (closed loop) to 0 for now
+      flyWheel.configNominalOutputForward(0, 30);
+      flyWheel.configNominalOutputReverse(0, 30);
+
+      // Set maximum forward and backward to full speed
+      flyWheel.configPeakOutputForward(1, 30);
+      flyWheel.configPeakOutputReverse(-1, 30);
+
+      // Motion magic cruise (max speed) is 100 counts per 100 ms
+      flyWheel.configMotionCruiseVelocity(velocity, 30);
+
+      // Motion magic acceleration is 50 counts
+      flyWheel.configMotionAcceleration(acceleration, 30);
+
+      // Zero the sensor once on robot boot up
+      flyWheel.setSelectedSensorPosition(0, 0, 30);
+
+      flyWheel.config_kP(0, p);
+      flyWheel.config_kI(0, i);
+      flyWheel.config_kD(0, d);
+      flyWheel.config_kF(0, f);
     }
 
     public void runFlyWheel(double speed) {
-      FlyWheel.set(ControlMode.PercentOutput, speed);    
+      flyWheel.set(ControlMode.PercentOutput, speed);    
     }
 
     public void fireFlyWheel() {
-      FlyWheel.set(ControlMode.PercentOutput, Robot.limelight.distanceCM()  /* TODO make speed of flywheel effected by distance from target*/);
+      flyWheel.set(ControlMode.PercentOutput, Robot.limelight.distanceCM()  /* TODO make speed of flywheel effected by distance from target*/);
     }
 
     // TODO Write a set RPM method
