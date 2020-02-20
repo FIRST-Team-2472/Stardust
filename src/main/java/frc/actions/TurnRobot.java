@@ -5,7 +5,7 @@ import frc.actions.runners.Actionable;
 import frc.robot.Robot;
 
 public class TurnRobot implements Actionable {
-    private int angle;
+    private final int angle;
     
     public TurnRobot(int angle){
         this.angle = angle;
@@ -20,10 +20,10 @@ public class TurnRobot implements Actionable {
 
     @Override
     public void periodic() {
-        if (angle > 0) {
-            Robot.drive.tankDrive(.5, -.5);
-        } else {
+        if (angle < 0) {
             Robot.drive.tankDrive(-.5, .5);
+        } else {
+            Robot.drive.tankDrive(.5, -.5);
         }
     }
 

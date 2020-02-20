@@ -10,7 +10,6 @@ public class FeedBall extends TimerBase {
 
     public FeedBall(double lifetime) {
         super(lifetime);
-        // TODO Auto-generated constructor stub
     }
 
     @Override

@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -32,8 +33,8 @@ public class Robot extends TimedRobot {
 
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
-  public static final Collector collector = new Collector(Constants.conveyor);
-  public static final Climber climb = new Climber(Constants.ClimberL, Constants.ClimberR, Constants.PullClimberL, Constants.PullClimberR);
+  public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS);
+  public static final Climber climb = null;
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
   //public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
@@ -54,33 +55,26 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    // Tasks that the robot should always be doing (Lights?)
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
   }
-
-    // TODO set all motors to 0 and disbale the compressor
-
-  @Override
-  public void disabledInit() {
-    SmartDashboard.putString("RobotState", "Disabled");
-    collector.runConveyor(0);
-    shooter.runFlyWheel(0);
-    turret.runTurret(0);
-    climb.runClimber(0);
-    climb.runPullClimber(0);
-    //indexer.runIndexerOff();
-  }
-
   private final ActionQueue actionQueue = new ActionQueue();
 
   @Override
   public void autonomousInit() {
-    // FIXME different atonomous modes should be built out into separate functions
+    // FIXME different autonomous modes should be built out into separate functions
     actionQueue.clear();
 
-    actionQueue.addAction(new DriveStraightTime(0.5, 2));
-    // why are we turning?
+    /*actionQueue.addAction(new DriveStraight(0.5, 1.5));
+    actionQueue.addAction(new Turn(540));
+    actionQueue.addAction(new DriveStraight(0.5, 1.5));
+    actionQueue.addAction(new Wait(2));
+    actionQueue.addAction(new Turn(180));*/
+
+    //actionQueue.addAction(new DriveStraightTime(0.5, 1.5));
+    actionQueue.addAction(new TurnRobot(45));
+    //actionQueue.addAction(new DriveStraightTime(0.5, 7));
+
     //actionQueue.addAction(new Turn(180));
     //actionQueue.addAction(new Aim());
     /*
@@ -99,15 +93,20 @@ public class Robot extends TimedRobot {
     // TODO initalize smart dashboard values / set teleop state
     SmartDashboard.putString("RobotState", "TeleopEnabled");
   }
+  
 
   @Override
   public void teleopPeriodic() {
-    drive.tankDrive(joysticks.getY(), joysticks2.getY());
+    drive.tankDrive(-joysticks2.getY(), -joysticks.getY());
 
-    // NOTE joystick trigger (probably should be on the xbox controler)
+    // Real coooolector
+    collector.runConveyor(.75*-xboxcontroller.getY(Hand.kLeft));
+    collector.runFrontWheels(.75*-xboxcontroller.getY(Hand.kRight));
+
+    /* Other collector
     if (xboxcontroller.getAButton()) {
       collector.runConveyor(1);
-    } else if (xboxcontroller.getYButton()) {
+    } else if (xboxcontroller.getBButton()) {
       collector.runConveyor(-1);
     } else {
       collector.runConveyor(0);
@@ -186,6 +185,8 @@ public class Robot extends TimedRobot {
     }
     switch (teststate) {
     case 0:
+      collector.runConveyor(-xboxcontroller.getY(Hand.kLeft));
+      collector.runFrontWheels(-xboxcontroller.getY(Hand.kRight));
       if (xboxcontroller.getAButton()) {
         drive.runBackLeft(.25);
         SmartDashboard.putString("MotorsTest", "runBackLeft");
