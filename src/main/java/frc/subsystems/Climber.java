@@ -30,6 +30,12 @@ public class Climber {
     public void runClimberL(double speed) {
         ClimberL.set(ControlMode.PercentOutput, speed);
     }
+
+    public void runPullClimber(double speed){
+        runPullClimberL(speed);
+        runPullClimberR(speed);
+    }
+
     public void runPullClimberL(double speed) {
         PullClimberL.set(ControlMode.PercentOutput, speed);
     }

@@ -27,10 +27,10 @@ public class Drive {
 
 
         frontRight.setInverted(true);
-        backRight.setInverted(true);
+        //backRight.setInverted(true);
         
 
-        setupMotionMagic(0, 0, 0, 0, 500, 100);
+        //setupMotionMagic(0, 0, 0, 0, 500, 100);
 
     }
 

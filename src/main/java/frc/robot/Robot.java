@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
   public static final Climber climb = new Climber(Constants.ClimberL, Constants.ClimberR, Constants.PullClimberL, Constants.PullClimberR);
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
-  public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
+  //public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     // TODO SMART Dashboard INIT here
-
+    SmartDashboard.putString("RobotState", "Robot On");
   }
 
   @Override
@@ -59,17 +59,17 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
   }
 
-  /*public void disabledInit() {
-    SmartDashboard.getInstance();
-    SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
-    SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
-
     // TODO set all motors to 0 and disbale the compressor
-  }*/ 
 
   @Override
   public void disabledInit() {
-    SmartDashboard.putString("actionName", "Disabled");
+    SmartDashboard.putString("RobotState", "Disabled");
+    collector.runConveyor(0);
+    shooter.runFlyWheel(0);
+    turret.runTurret(0);
+    climb.runClimber(0);
+    climb.runPullClimber(0);
+    //indexer.runIndexerOff();
   }
 
   private final ActionQueue actionQueue = new ActionQueue();
@@ -97,6 +97,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // TODO initalize smart dashboard values / set teleop state
+    SmartDashboard.putString("RobotState", "TeleopEnabled");
   }
 
   @Override
@@ -113,6 +114,7 @@ public class Robot extends TimedRobot {
     }
 
     // FIXME what is the indexer?
+    /* not plugged in
     if (xboxcontroller.getAButton()) {
       indexer.runIndexerForward();
     } else if (xboxcontroller.getXButton()) {
@@ -120,7 +122,7 @@ public class Robot extends TimedRobot {
     } else {
       indexer.runIndexerOff();
     }
-
+    */
     // shooter control
     if (xboxcontroller.getYButton()) {
       shooter.runFlyWheel(1); // this should  be variable based on distance to the target
@@ -216,6 +218,7 @@ public class Robot extends TimedRobot {
       }else {
         collector.runConveyor(0);
       }
+      /* not plugged in
       if (xboxcontroller.getBButton()) {
         indexer.runIndexerForward();
         SmartDashboard.putString("MotorsTest", "runIndexerForward");
@@ -225,6 +228,7 @@ public class Robot extends TimedRobot {
       }else {
         indexer.runIndexerOff();
       }
+      */
       if (xboxcontroller.getXButton()) {
         turret.runTurret(.25);
         SmartDashboard.putString("MotorsTest", "runTurret");
