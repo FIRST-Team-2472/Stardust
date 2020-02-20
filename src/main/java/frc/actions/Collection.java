@@ -19,10 +19,9 @@ public class Collection extends TimerBase {
         Robot.collector.runFrontWheels(1);
     }
 	public void periodic() {
-        Robot.collector.runFrontWheels(1);
     }
 	
 	public void endAction() {
-	
+        Robot.collector.runFrontWheels(0);
     }
 }
