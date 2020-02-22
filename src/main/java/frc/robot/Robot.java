@@ -251,16 +251,11 @@ public class Robot extends TimedRobot {
       } else {
         shooter.runFlyWheel(0);
       }
-      if (xboxcontroller.getBButton()) {
-        climb.runClimberL(.25);
-        SmartDashboard.putString("MotorsTest", "runClimberLeft");
-        climb.runClimberL(0);
-      }
       if (xboxcontroller.getYButton()) {
-        climb.runClimberR(.25);
+        climb.runClimber(.25);
         SmartDashboard.putString("MotorsTest", "runClimberRight");
       } else {
-        climb.runClimberR(0);
+        climb.runClimber(0);
       }
     case 3:
 
