@@ -18,13 +18,18 @@ public class TurnRobot implements Actionable {
         SmartDashboard.putString("ActionName", "Turn");
     }
 
+
+
     @Override
     public void periodic() {
-        if (angle < 0) {
-            Robot.drive.tankDrive(-.5, .5);
-        } else {
-            Robot.drive.tankDrive(.5, -.5);
-        }
+        /*
+            we are at 0 want to go to 90
+            90 - 0 =90
+            left = 90*.5 = 45
+        */
+        double error =  angle - Robot.imu.getAngle();
+        double kP = .5;
+        Robot.drive.tankDrive(error*kP, error*-kP);
     }
 
     @Override

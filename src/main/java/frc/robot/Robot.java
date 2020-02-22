@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
   public static final Climber climb = null;
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
-  //public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
+  public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
@@ -52,7 +52,6 @@ public class Robot extends TimedRobot {
     // TODO SMART Dashboard INIT here
     SmartDashboard.putString("RobotState", "Robot On");
   }
-
   @Override
   public void robotPeriodic() {
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
@@ -60,16 +59,25 @@ public class Robot extends TimedRobot {
   }
   private final ActionQueue actionQueue = new ActionQueue();
 
+  private void driveOverLineAuto(ActionQueue actions) {
+    actions.clear();
+    actions.addAction(new DriveStraightTime(.5 , 1.5));
+  }
+
+  private void sixBallAuto(ActionQueue actions) {
+    actions.clear();
+    actionQueue.addAction(new Aim());
+    actionQueue.addAction(new StartShooter());
+    actionQueue.addAction(new FeedBall());
+    actionQueue.addAction(new FeedBall());
+    actionQueue.addAction(new FeedBall());
+  }
+
   @Override
   public void autonomousInit() {
-    // FIXME different autonomous modes should be built out into separate functions
-    actionQueue.clear();
+    
 
-    /*actionQueue.addAction(new DriveStraight(0.5, 1.5));
-    actionQueue.addAction(new Turn(540));
-    actionQueue.addAction(new DriveStraight(0.5, 1.5));
-    actionQueue.addAction(new Wait(2));
-    actionQueue.addAction(new Turn(180));*/
+
 
     //actionQueue.addAction(new DriveStraightTime(0.5, 1.5));
     actionQueue.addAction(new TurnRobot(45));
