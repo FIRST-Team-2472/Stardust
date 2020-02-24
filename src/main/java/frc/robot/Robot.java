@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -64,7 +65,7 @@ public class Robot extends TimedRobot {
     actions.addAction(new DriveStraightTime(.5 , 1.5));
   }
 
-  private void sixBallAuto(ActionQueue actions) {
+  private void shootBallAuto(ActionQueue actions) {
     actions.clear();
     actionQueue.addAction(new Aim());
     actionQueue.addAction(new StartShooter(1));
@@ -76,21 +77,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    
-
-
-
-    //actionQueue.addAction(new DriveStraightTime(0.5, 1.5));
-    actionQueue.addAction(new StartShooter(1));
-    actionQueue.addAction(new StopShooter());
-    //actionQueue.addAction(new DriveStraightTime(0.5, 7));
-
-    //actionQueue.addAction(new Turn(180));
-    //actionQueue.addAction(new Aim());
-    /*
-     * // Shooting actionQueue.addAction(new Aim()); //actionQueue.addAction(new
-     * StartShooter()); //actionQueue.addAction(new FeedBall());
-     */
+    driveOverLineAuto(actionQueue);
   }
 
   @Override
@@ -105,22 +92,32 @@ public class Robot extends TimedRobot {
   }
   
 
+  private final ActionQueue teleopActions = new ActionQueue();
+  private boolean teleopShooting = false;
   @Override
   public void teleopPeriodic() {
+
+    if (limelight.isTargetSpotted() && !teleopShooting) {
+      teleopShooting = true;
+      shootBallAuto(teleopActions);
+    }
+    if (teleopShooting) {
+      xboxcontroller.setRumble(RumbleType.kLeftRumble, 1);
+      if (teleopActions.step()) {
+        //get that babe done
+        teleopShooting = false;
+      }
+    }
+    if (xboxcontroller.getRawButton(8)) {
+      teleopShooting = false;
+      teleopActions.abort();
+    }
+
     drive.tankDrive(-joysticks2.getY(), -joysticks.getY());
 
     // Real coooolector
     collector.runConveyor(.75*-xboxcontroller.getY(Hand.kLeft));
     collector.runFrontWheels(.75*-xboxcontroller.getY(Hand.kRight));
-
-    /* Other collector
-    if (xboxcontroller.getAButton()) {
-      collector.runConveyor(1);
-    } else if (xboxcontroller.getBButton()) {
-      collector.runConveyor(-1);
-    } else {
-      collector.runConveyor(0);
-    }
 
     // FIXME what is the indexer?
     /* not plugged in
@@ -161,11 +158,11 @@ public class Robot extends TimedRobot {
     // SMART Dashboard perfs
     final Preferences prefs = Preferences.getInstance();
     // FIXME give this a better name
-    final double p = prefs.getDouble("p", 0);
-    SmartDashboard.putNumber("p", p);
-    final double i = prefs.getDouble("i", 0);
+    final double p = prefs.getDouble("PID p value", 0);
+    SmartDashboard.putNumber("PID p value", p);
+    final double i = prefs.getDouble("PID i VALUE", 0);
     // FIXME give this a better name
-    SmartDashboard.putNumber("i", i);
+    SmartDashboard.putNumber("PID i value", i);
     final double f = prefs.getDouble("f", 0);
     SmartDashboard.putNumber("f", f);
     final int velocity = prefs.getInt("velocity", 0);
@@ -193,6 +190,7 @@ public class Robot extends TimedRobot {
         teststate = 0;
       }
     }
+    SmartDashboard.putNumber("teststate", teststate);
     switch (teststate) {
     case 0:
       collector.runConveyor(-xboxcontroller.getY(Hand.kLeft));
@@ -254,16 +252,11 @@ public class Robot extends TimedRobot {
       } else {
         shooter.runFlyWheel(0);
       }
-      if (xboxcontroller.getBButton()) {
-        climb.runClimberL(.25);
-        SmartDashboard.putString("MotorsTest", "runClimberLeft");
-        climb.runClimberL(0);
-      }
       if (xboxcontroller.getYButton()) {
-        climb.runClimberR(.25);
+        climb.runClimber(.25);
         SmartDashboard.putString("MotorsTest", "runClimberRight");
       } else {
-        climb.runClimberR(0);
+        climb.runClimber(0);
       }
     case 3:
 

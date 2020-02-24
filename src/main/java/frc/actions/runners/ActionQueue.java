@@ -32,9 +32,14 @@ public class ActionQueue {
 	public void addAction(Actionable action) {
 		steps.add(action);
 	}
+
+	public void abort() {
+		try { steps.element().endAction();} catch (NoSuchElementException e) {};
+		clear();
+	}
 	
 	
-	public void step() {
+	public boolean step() {
 		try {
 			Actionable action = steps.element();
 			
@@ -53,6 +58,7 @@ public class ActionQueue {
 				// Action may override Action name if they are more then their class name
 				action.startAction();
 			}
+			return false;
 			
 		} catch (NoSuchElementException e) {
 			if (done) {
@@ -60,6 +66,7 @@ public class ActionQueue {
 				SmartDashboard.putString("ActionName", "Action Queue Done");
 				done=false;
 			}
+			return true;
 		}
 	}
 	
