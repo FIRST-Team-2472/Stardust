@@ -67,10 +67,11 @@ public class Robot extends TimedRobot {
   private void sixBallAuto(ActionQueue actions) {
     actions.clear();
     actionQueue.addAction(new Aim());
-    actionQueue.addAction(new StartShooter());
+    actionQueue.addAction(new StartShooter(1));
     actionQueue.addAction(new FeedBall());
     actionQueue.addAction(new FeedBall());
     actionQueue.addAction(new FeedBall());
+    actionQueue.addAction(new StopShooter());
   }
 
   @Override
@@ -80,7 +81,8 @@ public class Robot extends TimedRobot {
 
 
     //actionQueue.addAction(new DriveStraightTime(0.5, 1.5));
-    actionQueue.addAction(new TurnRobot(45));
+    actionQueue.addAction(new StartShooter(1));
+    actionQueue.addAction(new StopShooter());
     //actionQueue.addAction(new DriveStraightTime(0.5, 7));
 
     //actionQueue.addAction(new Turn(180));
