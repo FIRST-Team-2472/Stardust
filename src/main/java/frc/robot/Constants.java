@@ -16,6 +16,9 @@ public class Constants {
 	public static final int COLLECTOR_CONVERYER = 99;
 	public static final int COLLECTOR_WHEELS = 99;
 
+	public static final int COLLECTOR_WHEELS_PUSH_FORWARD = 1;
+	public static final int COLLECTOR_WHEELS_PUSH_REVERSE = 2;
+
 	//Controllers 
 	public static final int jstickL = 1;
     public static final int jstickR = 0;

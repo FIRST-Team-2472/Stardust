@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -32,9 +33,9 @@ import com.analog.adis16470.frc.ADIS16470_IMU;
  */
 public class Robot extends TimedRobot {
 
-  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
+  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
-  public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS);
+  public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS, Constants.COLLECTOR_WHEELS_PUSH_FORWARD, Constants.COLLECTOR_WHEELS_PUSH_REVERSE);
   public static final Climber climb = null;
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
@@ -42,6 +43,7 @@ public class Robot extends TimedRobot {
   private final Happytwig joysticks = new Happytwig(Constants.jstickR);
   private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
+  private static final Compressor compressor = new Compressor();
   public static Timer timer;
   // there has to be a better way to say the imu is disabled
   // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
@@ -52,17 +54,20 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // TODO SMART Dashboard INIT here
     SmartDashboard.putString("RobotState", "Robot On");
+    compressor.start();
   }
+
   @Override
   public void robotPeriodic() {
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
   }
+
   private final ActionQueue actionQueue = new ActionQueue();
 
   private void driveOverLineAuto(ActionQueue actions) {
     actions.clear();
-    actions.addAction(new DriveStraightTime(.5 , 1.5));
+    actions.addAction(new DriveStraightTime(.5, 1.5));
   }
 
   private void shootBallAuto(ActionQueue actions) {
@@ -92,10 +97,10 @@ public class Robot extends TimedRobot {
     // TODO initalize smart dashboard values / set teleop state
     SmartDashboard.putString("RobotState", "TeleopEnabled");
   }
-  
 
   private final ActionQueue teleopActions = new ActionQueue();
   private boolean teleopShooting = false;
+
   @Override
   public void teleopPeriodic() {
 
@@ -106,7 +111,7 @@ public class Robot extends TimedRobot {
     if (teleopShooting) {
       xboxcontroller.setRumble(RumbleType.kLeftRumble, 1);
       if (teleopActions.step()) {
-        //get that babe done
+        // get that babe done
         teleopShooting = false;
       }
     }
@@ -118,22 +123,18 @@ public class Robot extends TimedRobot {
     drive.tankDrive(-joysticks2.getY(), -joysticks.getY());
 
     // Real coooolector
-    collector.runConveyor(.75*-xboxcontroller.getY(Hand.kLeft));
-    collector.runFrontWheels(.75*-xboxcontroller.getY(Hand.kRight));
+    collector.runConveyor(.75 * -xboxcontroller.getY(Hand.kLeft));
+    collector.runFrontWheels(.75 * -xboxcontroller.getY(Hand.kRight));
 
     // FIXME what is the indexer?
-    /* not plugged in
-    if (xboxcontroller.getAButton()) {
-      indexer.runIndexerForward();
-    } else if (xboxcontroller.getXButton()) {
-      indexer.runIndexerBackward();
-    } else {
-      indexer.runIndexerOff();
-    }
-    */
+    /*
+     * not plugged in if (xboxcontroller.getAButton()) {
+     * indexer.runIndexerForward(); } else if (xboxcontroller.getXButton()) {
+     * indexer.runIndexerBackward(); } else { indexer.runIndexerOff(); }
+     */
     // shooter control
     if (xboxcontroller.getYButton()) {
-      shooter.runFlyWheel(1); // this should  be variable based on distance to the target
+      shooter.runFlyWheel(1); // this should be variable based on distance to the target
     } else {
       shooter.runFlyWheel(0);
     }
@@ -147,7 +148,8 @@ public class Robot extends TimedRobot {
       turret.runTurret(0);
     }
 
-    // NOTE: should probably have another control to prevent misfires since this can only be done once per match
+    // NOTE: should probably have another control to prevent misfires since this can
+    // only be done once per match
     if (joysticks2.getRawButton(3) && joysticks.getRawButton(3)) {
       climb.runClimber(1);
     } else {
@@ -177,8 +179,8 @@ public class Robot extends TimedRobot {
 
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
 
-    //TODO initalize the PID Test state
-    
+    // TODO initalize the PID Test state
+
   }
 
   int teststate = 0;
@@ -222,32 +224,28 @@ public class Robot extends TimedRobot {
         drive.runFrontRight(0);
       }
       break;
-      case 1:
+    case 1:
       if (xboxcontroller.getAButton()) {
         collector.runConveyor(.25);
         SmartDashboard.putString("MotorsTest", "runCollector");
-      }else {
+      } else {
         collector.runConveyor(0);
       }
-      /* not plugged in
-      if (xboxcontroller.getBButton()) {
-        indexer.runIndexerForward();
-        SmartDashboard.putString("MotorsTest", "runIndexerForward");
-      }else if(xboxcontroller.getYButton()) {
-        indexer.runIndexerBackward();
-        SmartDashboard.putString("MotorsTest", "runIndexerBackward");
-      }else {
-        indexer.runIndexerOff();
-      }
-      */
+      /*
+       * not plugged in if (xboxcontroller.getBButton()) {
+       * indexer.runIndexerForward(); SmartDashboard.putString("MotorsTest",
+       * "runIndexerForward"); }else if(xboxcontroller.getYButton()) {
+       * indexer.runIndexerBackward(); SmartDashboard.putString("MotorsTest",
+       * "runIndexerBackward"); }else { indexer.runIndexerOff(); }
+       */
       if (xboxcontroller.getXButton()) {
         turret.runTurret(.25);
         SmartDashboard.putString("MotorsTest", "runTurret");
-      }else {
+      } else {
         turret.runTurret(0);
       }
       break;
-      case 2:
+    case 2:
       if (xboxcontroller.getAButton()) {
         shooter.runFlyWheel(.25);
         SmartDashboard.putString("MotorsTest", "runShooter");
