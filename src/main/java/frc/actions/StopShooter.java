@@ -10,8 +10,8 @@ public class StopShooter extends TimerBase {
 
 
 
-	public StopShooter(double lifetime) {
-        super(lifetime);
+	public StopShooter() {
+        super(0.1);
     }
 
     @Override

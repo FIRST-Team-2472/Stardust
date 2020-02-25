@@ -10,8 +10,8 @@ public class StartShooter extends TimerBase {
 
 
 
-	public StartShooter() {
-        super(1);
+	public StartShooter(double lifetime) {
+        super(lifetime);
     }
 
     @Override

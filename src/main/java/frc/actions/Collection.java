@@ -15,7 +15,7 @@ public class Collection extends TimerBase {
 
     public void startAction() {
         super.startAction();
-        SmartDashboard.putString("ActionName", "Grabbin the boomers");
+        SmartDashboard.putString("ActionName", "Collecting");
         Robot.collector.runFrontWheels(1);
     }
 	public void periodic() {

@@ -72,10 +72,11 @@ public class Robot extends TimedRobot {
   private void shootBallAuto(ActionQueue actions) {
     actions.clear();
     actionQueue.addAction(new Aim());
-    actionQueue.addAction(new StartShooter());
+    actionQueue.addAction(new StartShooter(1));
     actionQueue.addAction(new FeedBall());
     actionQueue.addAction(new FeedBall());
     actionQueue.addAction(new FeedBall());
+    actionQueue.addAction(new StopShooter());
   }
 
   @Override
