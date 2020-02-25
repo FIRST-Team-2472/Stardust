@@ -4,21 +4,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.TimerBase;
 import frc.robot.Robot;
 
-public class Collection extends TimerBase {
+public class Conveyor extends TimerBase {
 
-	public Collection(double lifetime) {
+    public double speed;
+
+	public Conveyor(double lifetime, double givenSpeed) {
         super(lifetime);
+        speed = givenSpeed;
     }
 
     public void startAction() {
         super.startAction();
-        SmartDashboard.putString("ActionName", "Collecting");
-        Robot.collector.runFrontWheels(1);
+        SmartDashboard.putString("ActionName", "Conveyor");
     }
 	public void periodic() {
+        Robot.collector.runConveyor(speed);
     }
 	
 	public void endAction() {
-        Robot.collector.runFrontWheels(0);
+        Robot.collector.runConveyor(0);
     }
 }
