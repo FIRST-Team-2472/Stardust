@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -53,7 +54,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // TODO SMART Dashboard INIT here
     SmartDashboard.putString("RobotState", "Robot On");
-    compressor.
+    compressor.start();
   }
 
   @Override
