@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     driveOverLineAuto(actionQueue);
+    shootBallAuto(actionQueue);
   }
 
   @Override
@@ -152,6 +153,12 @@ public class Robot extends TimedRobot {
     // only be done once per match
     if (joysticks2.getRawButton(3) && joysticks.getRawButton(3)) {
       climb.runClimber(1);
+    } else {
+      climb.runClimber(0);
+    }
+  
+    if (joysticks2.getRawButton(2) && joysticks.getRawButton(2)) {
+      climb.runClimber(-1);
     } else {
       climb.runClimber(0);
     }
