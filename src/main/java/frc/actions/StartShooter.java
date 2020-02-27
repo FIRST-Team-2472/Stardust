@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.TimerBase;
 import frc.robot.Robot;
 
-//sawyers a nerd
-
 public class StartShooter extends TimerBase {
 
 

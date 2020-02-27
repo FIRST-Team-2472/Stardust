@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class Collector {
     private final TalonSRX conveyor;
     private final TalonSRX frontWheels;
-    private final DoubleSolenoid frontwheelspush;
+    private final DoubleSolenoid frontWheelPush;
     
-    public Collector (int conveyorID, int frontWheelsID, int frontwheelsforward, int frontwheelsback) {
+    public Collector (int conveyorID, int frontWheelsID, int pcmID, int frontWheelForwardID, int frontWheelBackID) {
         conveyor = new TalonSRX(conveyorID);
         frontWheels = new TalonSRX(frontWheelsID);
-        frontwheelspush = new DoubleSolenoid(frontwheelsforward, frontwheelsback);
+        frontWheelPush = new DoubleSolenoid(pcmID, frontWheelForwardID, frontWheelBackID);
         conveyor.setInverted(true);
     }
 
@@ -29,13 +29,14 @@ public class Collector {
     public void runConveyor(double speed) {
         conveyor.set(ControlMode.PercentOutput, speed);
     }
-    public void pushoutfrontwheels() {
-        frontwheelspush.set(Value.kForward);
+
+    public void pushoutfrontwheel() {
+        frontWheelPush.set(Value.kForward);
     }
-    public void frontwheelspushoff() {
-        frontwheelspush.set(Value.kOff);
+    public void pushofffrontwheel() {
+        frontWheelPush.set(Value.kOff);
     }
-    public void frontwheelspushin() {
-        frontwheelspush.set(Value.kReverse);
+    public void pushinfrontwheel() {
+        frontWheelPush.set(Value.kReverse);
     }
 }
