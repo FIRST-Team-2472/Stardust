@@ -6,13 +6,13 @@ import frc.robot.Robot;
 
 public class DriveDistance implements Actionable {
 
-    public final double target;
+    private final double feet;
 
-    private double countsPerMeter = 99999;
+    private static final double countsPerFoot = 5215;
 
 
-    public DriveDistance(double meters) {
-        target = meters * (countsPerMeter);
+    public DriveDistance(double feet) {
+        this.feet = feet;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class DriveDistance implements Actionable {
 
     @Override
     public void periodic() {
-        Robot.drive.driverMeters(target);
+        Robot.drive.driverFeet(feet);
     }
 
     @Override
@@ -32,13 +32,6 @@ public class DriveDistance implements Actionable {
 
     @Override
     public boolean isFinished() {
-        // TODO Finish Writing this condition
-        /*if (Robot.drive.tankDrive(0, 0)) {
-            return true;
-        }
-        else {
-            return false;
-        }*/
-        return true;
+        return Robot.drive.driveError() < 500;
     }
 }

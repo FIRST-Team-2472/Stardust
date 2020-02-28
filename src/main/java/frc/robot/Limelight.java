@@ -16,9 +16,9 @@ public class Limelight {
     public static final int LED_FORCE_ON = 3;
     public static final int LED_FORCE_BLINK = 2;
 
-    // are this pipelines?
-    public static final int FIND_TARGET = 0;
-    public static final int FIND_BALL = 1;
+    // pipelines
+    public static final int PIPLINE_FIND_TARGET = 0;
+    public static final int PIPELINE_FIND_BALL = 1;
 
     // stream modes
     public static final int STANDARD_STREAM = 0;
@@ -80,7 +80,7 @@ public class Limelight {
     }
 
     public void setDriverCamMode(boolean yes) {
-        limelight.getEntry("ledMode").setNumber(yes ? 1 : 0 );
+        assert limelight.getEntry("ledMode").setNumber(yes ? 1 : 0 );
     }
 
     public void setPipeLine(int pipelineMode) {
