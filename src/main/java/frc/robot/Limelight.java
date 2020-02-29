@@ -19,6 +19,7 @@ public class Limelight {
     // pipelines
     public static final int PIPLINE_FIND_TARGET = 0;
     public static final int PIPELINE_FIND_BALL = 1;
+    public static final int PIPELINE_DRIVER_CAM = 3;
 
     // stream modes
     public static final int STANDARD_STREAM = 0;
@@ -72,7 +73,7 @@ public class Limelight {
     }
 
     public double limelightPipeline() {
-        return limelight.getEntry("getpipe").getDouble(-1);
+        return limelight.getEntry("pipeline").getDouble(-1);
     }
 
     public void setLedMode(int mode) {
@@ -80,11 +81,11 @@ public class Limelight {
     }
 
     public void setDriverCamMode(boolean yes) {
-        assert limelight.getEntry("ledMode").setNumber(yes ? 1 : 0 );
+        assert limelight.getEntry("camMode").setNumber(yes ? 1 : 0 );
     }
 
     public void setPipeLine(int pipelineMode) {
-        limelight.getEntry("pipeLine").setNumber(pipelineMode);
+        limelight.getEntry("pipeline").setNumber(pipelineMode);
     }
 
     public void setStream(int streamMode) {
@@ -93,7 +94,7 @@ public class Limelight {
 
 
     public void setSnapshot(int snapshotMode) {
-        limelight.getEntry("pipeLine").setNumber(snapshotMode);
+        limelight.getEntry("snapshot").setNumber(snapshotMode);
     }
 
     public double distanceCM() {
