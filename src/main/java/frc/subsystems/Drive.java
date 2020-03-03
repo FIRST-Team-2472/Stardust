@@ -26,7 +26,7 @@ public class Drive {
 
 
         frontRight.setInverted(true);
-        
+         
 
         //setupMotionMagic(0, 0, 0, 0, 500, 100);
 

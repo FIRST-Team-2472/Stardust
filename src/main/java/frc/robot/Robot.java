@@ -123,6 +123,7 @@ public class Robot extends TimedRobot {
     // Real coooolector
     collector.runConveyor(.75 * -xboxcontroller.getY(Hand.kLeft));
     collector.runFrontWheels(.75 * -xboxcontroller.getY(Hand.kRight));
+  
 
     // FIXME what is the indexer?
     /*
@@ -228,14 +229,15 @@ public class Robot extends TimedRobot {
         SmartDashboard.putString("MotorsTest", "runCollector");
       } else {
         collector.runConveyor(0);
+
       }
-      /*
-       * not plugged in if (xboxcontroller.getBButton()) {
-       * indexer.runIndexerForward(); SmartDashboard.putString("MotorsTest",
-       * "runIndexerForward"); }else if(xboxcontroller.getYButton()) {
-       * indexer.runIndexerBackward(); SmartDashboard.putString("MotorsTest",
-       * "runIndexerBackward"); }else { indexer.runIndexerOff(); }
-       */
+      
+       if (xboxcontroller.getBButton()) {
+       indexer.runIndexerForward(); SmartDashboard.putString("MotorsTest",
+       "runIndexerForward"); }else if(xboxcontroller.getYButton()) {
+       indexer.runIndexerBackward(); SmartDashboard.putString("MotorsTest",
+       "runIndexerBackward"); }else { indexer.runIndexerOff(); }
+       
       if (xboxcontroller.getXButton()) {
         turret.runTurret(.25);
         SmartDashboard.putString("MotorsTest", "runTurret");
