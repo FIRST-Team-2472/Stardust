@@ -5,24 +5,27 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /** System to make the robot climb */
 public class Climber {
-    private TalonSRX climber;
+    private TalonSRX climberR;
+    private TalonSRX climberL;
 
-
-
-    /**
-     * Sets the id
-     * @param ClimberRID This is the canbus id for the motor
-     */
-    public Climber (int ClimberRID) {
-        climber = new TalonSRX(ClimberRID);
-       
+    public Climber (int ClimberRID, int ClimberLID) {
+        climberR = new TalonSRX(ClimberRID);
+        climberL = new TalonSRX(ClimberLID);
     }
-    /**
-     * 
-     * @param speed
-     */
-    public void runClimber(double speed){
-        climber.set(ControlMode.PercentOutput, speed);
+
+    public void runClimber(double left, double right) {
+        runClimberL(left);
+        runClimberR(right);
     }
+
+    public void runClimberL(double speed) {
+        climberL.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void runClimberR(double speed){
+        climberR.set(ControlMode.PercentOutput, speed);
+    }
+
+
 
 }

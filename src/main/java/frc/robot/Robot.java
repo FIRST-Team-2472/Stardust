@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -35,8 +34,8 @@ public class Robot extends TimedRobot {
 
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
-  public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS, Constants.COLLECTOR_WHEELS_PUSH_FORWARD, Constants.COLLECTOR_WHEELS_PUSH_REVERSE);
-  public static final Climber climb = null;
+  public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS, Constants.PCMID, Constants.COLLECTOR_WHEEL_PUSH_FORWARD, Constants.COLLECTOR_WHEEL_PUSH_REVERSE);
+  public static final Climber climb = new Climber(Constants.CLIMBER_L, Constants.CLIMBER_R);
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
   public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
@@ -67,12 +66,13 @@ public class Robot extends TimedRobot {
 
   private void driveOverLineAuto(ActionQueue actions) {
     actions.clear();
-    actions.addAction(new DriveStraightTime(.5, 1.5));
+    actions.addAction(new DriveStraightTime(-0.5, 1.5));
   }
 
   private void shootBallAuto(ActionQueue actions) {
     actions.clear();
     actionQueue.addAction(new Aim());
+    actionQueue.addAction(new Conveyor(1, .75));
     actionQueue.addAction(new StartShooter(1));
     actionQueue.addAction(new FeedBall());
     actionQueue.addAction(new FeedBall());
@@ -83,6 +83,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     driveOverLineAuto(actionQueue);
+    actionQueue.addAction(new PushFrontWheels());
+    shootBallAuto(actionQueue);
   }
 
   @Override
@@ -102,18 +104,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    if (limelight.isTargetSpotted() && !teleopShooting) {
-      teleopShooting = true;
+    if (limelight.isTargetSpotted() && teleopShooting) {
+      teleopShooting = false;
       shootBallAuto(teleopActions);
     }
-    if (teleopShooting) {
-      xboxcontroller.setRumble(RumbleType.kLeftRumble, 1);
-      if (teleopActions.step()) {
-        // get that babe done
-        teleopShooting = false;
-      }
+    if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
+      teleopShooting = true;
     }
-    if (xboxcontroller.getRawButton(8)) {
+    if (xboxcontroller.getBButtonPressed()) {
       teleopShooting = false;
       teleopActions.abort();
     }
@@ -150,10 +148,18 @@ public class Robot extends TimedRobot {
     // NOTE: should probably have another control to prevent misfires since this can
     // only be done once per match
     if (joysticks2.getRawButton(3) && joysticks.getRawButton(3)) {
-      climb.runClimber(1);
+      climb.runClimber(1, 1);
     } else {
-      climb.runClimber(0);
+      climb.runClimber(0, 0);
     }
+  
+    if (joysticks2.getRawButton(2) && joysticks.getRawButton(2)) {
+      climb.runClimber(-1, -1);
+    } else {
+      climb.runClimber(0, 0);
+    }
+
+    teleopActions.step();
   }
 
   @Override
@@ -231,35 +237,65 @@ public class Robot extends TimedRobot {
         collector.runConveyor(0);
 
       }
-      
-       if (xboxcontroller.getBButton()) {
-       indexer.runIndexerForward(); SmartDashboard.putString("MotorsTest",
-       "runIndexerForward"); }else if(xboxcontroller.getYButton()) {
-       indexer.runIndexerBackward(); SmartDashboard.putString("MotorsTest",
-       "runIndexerBackward"); }else { indexer.runIndexerOff(); }
-       
       if (xboxcontroller.getXButton()) {
         turret.runTurret(.25);
         SmartDashboard.putString("MotorsTest", "runTurret");
       } else {
         turret.runTurret(0);
       }
-      break;
-    case 2:
       if (xboxcontroller.getAButton()) {
         shooter.runFlyWheel(.25);
         SmartDashboard.putString("MotorsTest", "runShooter");
       } else {
         shooter.runFlyWheel(0);
       }
+      break;
+    case 2:
+      if (xboxcontroller.getAButton()) {
+        climb.runClimberL(.25);
+        SmartDashboard.putString("MotorsTest", "runClimberLeft");
+      }
+      if (xboxcontroller.getXButton()) {
+        climb.runClimberL(-.25);
+        SmartDashboard.putString("MotorsTest", "runClimberLeft");
+      }
+      if (!xboxcontroller.getXButton() && !xboxcontroller.getAButton()) {
+        climb.runClimberL(0);
+      } 
       if (xboxcontroller.getYButton()) {
-        climb.runClimber(.25);
+        climb.runClimberR(.25);
         SmartDashboard.putString("MotorsTest", "runClimberRight");
-      } else {
-        climb.runClimber(0);
+      }
+      if (xboxcontroller.getBButton()) {
+        climb.runClimberR(-.25);
+        SmartDashboard.putString("MotorsTest", "runClimberRight");
+      }
+      if (!xboxcontroller.getBButton() && !xboxcontroller.getYButton()) {
+        climb.runClimberR(0);
       }
     case 3:
-
+      if (xboxcontroller.getAButton()) {
+        indexer.runIndexerForward();
+        SmartDashboard.putString("PistonTest", "runFeedPistonForward");
+      }
+      if (xboxcontroller.getBButton()) {
+        indexer.runIndexerBackward();
+        SmartDashboard.putString("PistonTest", "runFeedPistonBackward");
+      }
+      if (!xboxcontroller.getBButton() && !xboxcontroller.getAButton()) {
+        indexer.runIndexerOff();
+      }
+      if (xboxcontroller.getYButton()) {
+        collector.pushoutfrontwheel();
+        SmartDashboard.putString("PistonTest", "runFrontPistonForward");
+      }
+      if (xboxcontroller.getXButton()) {
+        collector.pushinfrontwheel();
+        SmartDashboard.putString("PistonTest", "runFrontPistonBackward");
+      }
+      if (!xboxcontroller.getXButton() && !xboxcontroller.getYButton()) {
+        collector.pushofffrontwheel();
+      }
     default:
     }
 

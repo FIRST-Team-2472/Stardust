@@ -11,21 +11,21 @@ public class Constants {
 
 	public static final int turret = 99;
 
-	public static final int shooterID = 13;
+	public static final int shooterID = 99;
 
 	public static final int COLLECTOR_CONVERYER = 99;
 	public static final int COLLECTOR_WHEELS = 99;
 
-	public static final int COLLECTOR_WHEELS_PUSH_FORWARD = 1;
-	public static final int COLLECTOR_WHEELS_PUSH_REVERSE = 2;
-
+	public static final int CLIMBER_L = 99;
+	public static final int CLIMBER_R = 99;
 	//Controllers 
 	public static final int jstickL = 1;
     public static final int jstickR = 0;
 	public static final int xboxcontroller = 2;
 	//Pistons
 	public static final int IndexerF = 1;
-	public static final int IndexerR = 0;
-	
-
+	public static final int IndexerR = 2;
+	public static final int PCMID = 3;
+	public static final int COLLECTOR_WHEEL_PUSH_FORWARD = 4;
+	public static final int COLLECTOR_WHEEL_PUSH_REVERSE = 5;
 }
