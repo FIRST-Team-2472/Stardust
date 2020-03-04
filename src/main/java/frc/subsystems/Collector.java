@@ -23,10 +23,10 @@ public class Collector {
      * @param frontWheelForwardID pcm channel ID for pushing out
      * @param frontWheelBackID pcm channel ID for pushing back in
      */
-    public Collector (int conveyorID, int frontWheelsID, int frontWheelForwardID, int frontWheelBackID) {
+    public Collector (int conveyorID, int frontWheelsID, int pcmID, int frontWheelForwardID, int frontWheelBackID) {
         conveyor = new TalonSRX(conveyorID);
         frontWheels = new TalonSRX(frontWheelsID);
-        frontWheelPush = new DoubleSolenoid(16, frontWheelForwardID, frontWheelBackID);
+        frontWheelPush = new DoubleSolenoid(pcmID, frontWheelForwardID, frontWheelBackID);
         conveyor.setInverted(true);
     }
 
