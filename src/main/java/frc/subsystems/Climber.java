@@ -5,27 +5,15 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /** System to make the robot climb */
 public class Climber {
-    private TalonSRX climberR;
-    private TalonSRX climberL;
+    private TalonSRX climber;
 
-    public Climber (int ClimberRID, int ClimberLID) {
-        climberR = new TalonSRX(ClimberRID);
-        climberL = new TalonSRX(ClimberLID);
+    public Climber (int ClimberID) {
+    
+        climber = new TalonSRX(ClimberID);
     }
 
-    public void runClimber(double left, double right) {
-        runClimberL(left);
-        runClimberR(right);
+    public void runClimber(double left){
+        climber.set(ControlMode.PercentOutput, left);
     }
-
-    public void runClimberL(double speed) {
-        climberL.set(ControlMode.PercentOutput, speed);
-    }
-
-    public void runClimberR(double speed){
-        climberR.set(ControlMode.PercentOutput, speed);
-    }
-
-
 
 }

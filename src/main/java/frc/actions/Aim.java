@@ -10,7 +10,7 @@ public class Aim implements Actionable {
 
 	@Override
 	public void startAction() {
-		SmartDashboard.putString("ActionName", "Aimming");
+		SmartDashboard.putString("ActionName", "Aiming");
 	}
 	
 	private static final double kP = .03;

@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
   public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS, Constants.PCMID, Constants.COLLECTOR_WHEEL_PUSH_FORWARD, Constants.COLLECTOR_WHEEL_PUSH_REVERSE);
-  public static final Climber climb = new Climber(Constants.CLIMBER_L, Constants.CLIMBER_R);
+  public static final Climber climb = new Climber(Constants.CLIMBER);
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
   public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
@@ -71,17 +71,18 @@ public class Robot extends TimedRobot {
 
   private void shootBallAuto(ActionQueue actions) {
     actions.clear();
-    actionQueue.addAction(new Aim());
-    actionQueue.addAction(new Conveyor(1, .75));
-    actionQueue.addAction(new StartShooter(1));
-    actionQueue.addAction(new FeedBall());
-    actionQueue.addAction(new FeedBall());
-    actionQueue.addAction(new FeedBall());
-    actionQueue.addAction(new StopShooter());
+    actions.addAction(new Aim());
+    actions.addAction(new Conveyor(1, .75));
+    actions.addAction(new StartShooter(1));
+    actions.addAction(new FeedBall());
+    actions.addAction(new FeedBall());
+    actions.addAction(new FeedBall());
+    actions.addAction(new StopShooter());
   }
 
   @Override
   public void autonomousInit() {
+    actionQueue.clear();
     driveOverLineAuto(actionQueue);
     actionQueue.addAction(new PushFrontWheels());
     shootBallAuto(actionQueue);
@@ -148,15 +149,15 @@ public class Robot extends TimedRobot {
     // NOTE: should probably have another control to prevent misfires since this can
     // only be done once per match
     if (joysticks2.getRawButton(3) && joysticks.getRawButton(3)) {
-      climb.runClimber(1, 1);
+      climb.runClimber(1);
     } else {
-      climb.runClimber(0, 0);
+      climb.runClimber(0);
     }
   
     if (joysticks2.getRawButton(2) && joysticks.getRawButton(2)) {
-      climb.runClimber(-1, -1);
+      climb.runClimber(-1);
     } else {
-      climb.runClimber(0, 0);
+      climb.runClimber(0);
     }
 
     teleopActions.step();
@@ -252,27 +253,17 @@ public class Robot extends TimedRobot {
       break;
     case 2:
       if (xboxcontroller.getAButton()) {
-        climb.runClimberL(.25);
+        climb.runClimber(.25);
         SmartDashboard.putString("MotorsTest", "runClimberLeft");
       }
       if (xboxcontroller.getXButton()) {
-        climb.runClimberL(-.25);
+        climb.runClimber(-.25);
         SmartDashboard.putString("MotorsTest", "runClimberLeft");
       }
       if (!xboxcontroller.getXButton() && !xboxcontroller.getAButton()) {
-        climb.runClimberL(0);
+        climb.runClimber(0);
       } 
-      if (xboxcontroller.getYButton()) {
-        climb.runClimberR(.25);
-        SmartDashboard.putString("MotorsTest", "runClimberRight");
-      }
-      if (xboxcontroller.getBButton()) {
-        climb.runClimberR(-.25);
-        SmartDashboard.putString("MotorsTest", "runClimberRight");
-      }
-      if (!xboxcontroller.getBButton() && !xboxcontroller.getYButton()) {
-        climb.runClimberR(0);
-      }
+  
     case 3:
       if (xboxcontroller.getAButton()) {
         indexer.runIndexerForward();
@@ -298,7 +289,5 @@ public class Robot extends TimedRobot {
       }
     default:
     }
-
   }
-
 }

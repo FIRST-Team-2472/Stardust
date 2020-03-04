@@ -16,8 +16,8 @@ public class Constants {
 	public static final int COLLECTOR_CONVERYER = 99;
 	public static final int COLLECTOR_WHEELS = 99;
 
-	public static final int CLIMBER_L = 99;
-	public static final int CLIMBER_R = 99;
+	public static final int CLIMBER = 99;
+
 	//Controllers 
 	public static final int jstickL = 1;
     public static final int jstickR = 0;
@@ -29,3 +29,4 @@ public class Constants {
 	public static final int COLLECTOR_WHEEL_PUSH_FORWARD = 4;
 	public static final int COLLECTOR_WHEEL_PUSH_REVERSE = 5;
 }
+//TODO get climber ids

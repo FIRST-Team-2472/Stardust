@@ -7,7 +7,7 @@ import frc.robot.Robot;
 public class PushFrontWheels extends TimerBase {
 
     public PushFrontWheels() {
-        super(.25);    
+        super(0.2);    
     }
 
     @Override
@@ -27,4 +27,5 @@ public class PushFrontWheels extends TimerBase {
         Robot.collector.pushofffrontwheel();
     }
 
+    //TODO fix dis boi happy
 }
