@@ -54,8 +54,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     SmartDashboard.putString("RobotState", "Robot On");
     compressor.setClosedLoopControl(true);
-    limelight.setPipeLine(3);
-    limelight.setLedMode(Limelight.LED_FORCE_OFF);
+    while (limelight.getPipeline() != 3) {
+      limelight.setPipeline(3);
+    }
+    limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
     limelight.setDriverCamMode(true);
   }
 
@@ -98,7 +100,7 @@ public class Robot extends TimedRobot {
     //loadBallsAuto(actionQueue);
     driveOverLineAuto(actionQueue);
     //shootBallAuto(actionQueue);
-    limelight.setPipeLine(Limelight.PIPELINE_DRIVER_CAM);
+    limelight.setPipeline(Limelight.PIPELINE_DRIVER_CAM);
     limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
     limelight.setDriverCamMode(false);
   }

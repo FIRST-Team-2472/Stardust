@@ -34,14 +34,12 @@ public class Limelight {
     }
 
     public double targetXAngleFromCenter() {
-        //return limelight.getEntry("tx").getDouble(Double.NaN);
-        return limelight.getEntry("ty").getDouble(Double.NaN);
+        return limelight.getEntry("tx").getDouble(Double.NaN);
 
     }
 
     public double targetYAngleFromCenter() {
-        //return limelight.getEntry("tx").getDouble(Double.NaN);
-        return limelight.getEntry("tx").getDouble(Double.NaN);
+        return limelight.getEntry("ty").getDouble(Double.NaN);
     }
 
     public double targetArea() {
@@ -72,24 +70,31 @@ public class Limelight {
         return limelight.getEntry("tvert").getDouble(Double.NaN);
     }
 
-    public double limelightPipeline() {
-        return limelight.getEntry("pipeline").getDouble(-1);
+    public int getLedMode() {
+        return (int)limelight.getEntry("ledMode").getNumber(-1);
     }
-
     public void setLedMode(int mode) {
-        limelight.getEntry("ledMode").setNumber(mode);
+        // This assert will never fail unless the api changes
+        assert limelight.getEntry("ledMode").setNumber(mode);
     }
 
     public void setDriverCamMode(boolean yes) {
+        // This assert will never fail unless the api changes
         assert limelight.getEntry("camMode").setNumber(yes ? 1 : 0 );
     }
 
-    public void setPipeLine(int pipelineMode) {
-        limelight.getEntry("pipeline").setNumber(pipelineMode);
+    public int getPipeline() {
+        return (int)limelight.getEntry("pipeline").getNumber(-1);
+    }
+    
+    public void setPipeline(int pipelineMode) {
+        // This assert will never fail unless the api changes
+        assert limelight.getEntry("pipeline").setNumber(pipelineMode);
     }
 
     public void setStream(int streamMode) {
-        limelight.getEntry("stream").setNumber(streamMode);
+        // This assert will never fail unless the api changes
+        assert limelight.getEntry("stream").setNumber(streamMode);
     }
 
 

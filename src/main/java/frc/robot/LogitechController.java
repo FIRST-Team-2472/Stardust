@@ -1,7 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
 
 public class LogitechController extends GenericHID {
 
@@ -63,12 +62,50 @@ public class LogitechController extends GenericHID {
         return this.getRawButtonPressed(3);
     }
 
+    public boolean getXButtonReleased() {
+        return this.getRawButtonReleased(1);
+    }
+
+    public boolean getYButtonReleased() {
+        return this.getRawButtonReleased(4);
+    }
+
+    public boolean getAButtonReleased() {
+        return this.getRawButtonReleased(2);
+    }
+
+    public boolean getBButtonReleased() {
+        return this.getRawButtonReleased(3);
+    }
+
     public boolean getBumper(Hand hand) {
         switch (hand) {
         case kLeft:
             return getRawButton(5);
         case kRight:
             return getRawButton(6);
+        default:
+            throw new IllegalArgumentException();
+        }
+
+    }
+    public boolean getBumperPressed(Hand hand) {
+        switch (hand) {
+        case kLeft:
+            return getRawButtonPressed(5);
+        case kRight:
+            return getRawButtonPressed(6);
+        default:
+            throw new IllegalArgumentException();
+        }
+
+    }
+    public boolean getBumperReleased(Hand hand) {
+        switch (hand) {
+        case kLeft:
+            return getRawButtonReleased(5);
+        case kRight:
+            return getRawButtonReleased(6);
         default:
             throw new IllegalArgumentException();
         }

@@ -107,6 +107,7 @@ public class Drive {
     /**
      * This will run the left side wheels of the robot and the right side wheels of
      * the robot at the given speeds
+     * @param left [-1.0, 1.0]
      */
     public void tankDrive(double left, double right) {
         runBackLeft(left * -1);
