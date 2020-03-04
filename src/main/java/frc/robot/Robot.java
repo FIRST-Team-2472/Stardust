@@ -7,13 +7,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
+import frc.actions.runners.JoinActions;
 import frc.actions.*;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
@@ -32,16 +33,17 @@ import com.analog.adis16470.frc.ADIS16470_IMU;
  */
 public class Robot extends TimedRobot {
 
-  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
+  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
-  public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS);
-  public static final Climber climb = null;
+  public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS, Constants.COLLECTOR_WHEEL_PUSH_FORWARD, Constants.COLLECTOR_WHEEL_PUSH_REVERSE);
+  public static final Climber climb = new Climber(Constants.CLIMBER);
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
   public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
-  private final Happytwig joysticks = new Happytwig(Constants.jstickR);
-  private final Happytwig joysticks2 = new Happytwig(Constants.jstickL);
-  private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
+  private final Happytwig rightJoystick = new Happytwig(Constants.jstickR);
+  private final Happytwig leftJoystick = new Happytwig(Constants.jstickL);
+  private final LogitechController xboxcontroller = new LogitechController(Constants.xboxcontroller);
+  private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
   // there has to be a better way to say the imu is disabled
   // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
@@ -50,40 +52,78 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    // TODO SMART Dashboard INIT here
     SmartDashboard.putString("RobotState", "Robot On");
+    compressor.setClosedLoopControl(true);
+    while (limelight.getPipeline() != 3) {
+      limelight.setPipeline(3);
+    }
+    limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
+    limelight.setDriverCamMode(true);
   }
+
   @Override
   public void robotPeriodic() {
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
   }
+
   private final ActionQueue actionQueue = new ActionQueue();
 
-  private void driveOverLineAuto(ActionQueue actions) {
+  private static void driveOverLineAuto(ActionQueue actions) {
     actions.clear();
-    actions.addAction(new DriveStraightTime(.5 , 1.5));
+    actions.addAction(new DriveStraightTime(-0.5, 1.5));
   }
 
-  private void shootBallAuto(ActionQueue actions) {
+  private static void shootBallAuto(ActionQueue actions) {
     actions.clear();
-    actionQueue.addAction(new Aim());
-    actionQueue.addAction(new StartShooter(1));
-    actionQueue.addAction(new FeedBall());
-    actionQueue.addAction(new FeedBall());
-    actionQueue.addAction(new FeedBall());
-    actionQueue.addAction(new StopShooter());
+    actions.addAction(new Aim());
+    actions.addAction(new Conveyor(1, .75));
+    actions.addAction(new StartShooter(1));
+    actions.addAction(new FeedBall());
+    actions.addAction(new FeedBall());
+    actions.addAction(new FeedBall());
+    actions.addAction(new StopShooter());
+  }
+
+  private static void loadBallsAuto(ActionQueue actions) {
+    actions.addAction(new DriveStraightTime(.5, 5));
+    actions.addAction(new DumpBalls(3));
+
   }
 
   @Override
   public void autonomousInit() {
-    SmartDashboard.putString("RobotState", "AutonomousEnabled");
+    actionQueue.clear();
+    //actionQueue.addAction(new JoinActions(new Wait(5), new DriveStraightTime(.25, 2)));
+    //actionQueue.addAction(new DriveStraightTime(.25,3));
+    //actionQueue.addAction(new DriveStraightTime(.5, 3));
+    //loadBallsAuto(actionQueue);
     driveOverLineAuto(actionQueue);
+    //shootBallAuto(actionQueue);
+    limelight.setPipeline(Limelight.PIPELINE_DRIVER_CAM);
+    limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
+    limelight.setDriverCamMode(false);
   }
+  
+  Preferences preferences = Preferences.getInstance();
 
   @Override
   public void autonomousPeriodic() {
+    //drive.driverFeet(99);
+    if (rightJoystick.getRawButtonPressed(1)) {
+      int p = preferences.getInt("kP", 2);
+      int i = preferences.getInt("kI", 0);
+      int d = preferences.getInt("kD", 0);
+      int f = preferences.getInt("kF", 1);
+      drive.setupMotionMagic(f, p, i, d, 8000, 1000);
+      SmartDashboard.putNumber("kP", p);
+      SmartDashboard.putNumber("kI", i);
+      SmartDashboard.putNumber("kD", d);
+      SmartDashboard.putNumber("kF", f);
+    }
+
     actionQueue.step();
+    SmartDashboard.putNumber("MotionMagicError", drive.driveError());
   }
 
   @Override
@@ -91,93 +131,98 @@ public class Robot extends TimedRobot {
     // TODO initalize smart dashboard values / set teleop state
     SmartDashboard.putString("RobotState", "TeleopEnabled");
   }
-  
 
   private final ActionQueue teleopActions = new ActionQueue();
   private boolean teleopShooting = false;
+
   @Override
   public void teleopPeriodic() {
 
-    if (limelight.isTargetSpotted() && !teleopShooting) {
-      teleopShooting = true;
+    if (limelight.isTargetSpotted() && teleopShooting) {
+      teleopShooting = false;
       shootBallAuto(teleopActions);
     }
-    if (teleopShooting) {
-      xboxcontroller.setRumble(RumbleType.kLeftRumble, 1);
-      if (teleopActions.step()) {
-        //get that babe done
-        teleopShooting = false;
-      }
+    if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
+      teleopShooting = true;
     }
-    if (xboxcontroller.getRawButton(8)) {
+    if (xboxcontroller.getBButtonPressed()) {
       teleopShooting = false;
       teleopActions.abort();
     }
 
-    drive.tankDrive(-joysticks2.getY(), -joysticks.getY());
-
-    // Real coooolector
-    collector.runConveyor(.75*-xboxcontroller.getY(Hand.kLeft));
-    collector.runFrontWheels(.75*-xboxcontroller.getY(Hand.kRight));
-
-    // FIXME what is the indexer?
-    /* not plugged in
-    if (xboxcontroller.getAButton()) {
-      indexer.runIndexerForward();
-    } else if (xboxcontroller.getXButton()) {
-      indexer.runIndexerBackward();
-    } else {
-      indexer.runIndexerOff();
-    }
-    */
-    // shooter control
-    if (xboxcontroller.getYButton()) {
-      shooter.runFlyWheel(1); // this should  be variable based on distance to the target
+    if (xboxcontroller.getXButton()) {
+      shooter.runFlyWheel(-1);
     } else {
       shooter.runFlyWheel(0);
     }
 
+    drive.tankDrive(leftJoystick.getY(), rightJoystick.getY());
+
+    // Real coooolector
+    collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
+    collector.runFrontWheels(-.5 * -xboxcontroller.getRawAxis(3));
+
+    if (xboxcontroller.getYButton()) {
+      indexer.runIndexerForward();
+    } else {
+      indexer.runIndexerBackward();
+    }
+
     // using the HAT switch?
-    if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
+    if (xboxcontroller.getRawButton(5)) {
+      collector.pushoutfrontwheel();
+    } else if (xboxcontroller.getRawButton(6)) {
+      collector.pushinfrontwheel();
+    } else {
+      collector.pushofffrontwheel();
+    }
+
+    /*if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > .6) {
       turret.runTurret(.25);
-    } else if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
+    } else if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > .6) {
       turret.runTurret(-.25);
     } else {
       turret.runTurret(0);
-    }
+    }*/
 
-    // NOTE: should probably have another control to prevent misfires since this can only be done once per match
-    if (joysticks2.getRawButton(3) && joysticks.getRawButton(3)) {
+    // NOTE: should probably have another control to prevent misfires since this can
+    // only be done once per match
+    if (leftJoystick.getRawButton(3) && rightJoystick.getRawButton(3)) {
       climb.runClimber(1);
+    } else if (leftJoystick.getRawButton(2) && rightJoystick.getRawButton(2)) {
+      climb.runClimber(-1);
     } else {
       climb.runClimber(0);
     }
+
+    teleopActions.step();
   }
 
   @Override
   public void testInit() {
+    /*
     // SMART Dashboard perfs
     final Preferences prefs = Preferences.getInstance();
     // FIXME give this a better name
     final double p = prefs.getDouble("PID p value", 0);
     SmartDashboard.putNumber("PID p value", p);
-    final double i = prefs.getDouble("PID i VALUE", 0);
+    final double i = prefs.getDouble("PID i value", 0);
     // FIXME give this a better name
     SmartDashboard.putNumber("PID i value", i);
-    final double f = prefs.getDouble("f", 0);
-    SmartDashboard.putNumber("f", f);
+    final double f = prefs.getDouble("PID f value", 0);
+    SmartDashboard.putNumber("PID f value", f);
     final int velocity = prefs.getInt("velocity", 0);
     SmartDashboard.putNumber("velocity", velocity);
     // FIXME give this a better name
-    final double d = prefs.getDouble("d", 0);
-    SmartDashboard.putNumber("d", d);
+    final double d = prefs.getDouble("PID d value", 0);
+    SmartDashboard.putNumber("PID d value", d);
     final int acceleration = prefs.getInt("acceleration", 0);
     SmartDashboard.putNumber("acceleration", acceleration);
 
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
+    */
+    // TODO initalize the PID Test state
 
-    //TODO initalize the PID Test state
-    
   }
 
   int teststate = 0;
@@ -185,11 +230,12 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
 
-    if (joysticks.getRawButtonPressed(1)) {
+    if (rightJoystick.getRawButtonPressed(1)) {
       teststate += 1;
-      if (teststate == 3) {
+      if (teststate > 3) {
         teststate = 0;
       }
+      System.out.println(teststate);
     }
     SmartDashboard.putNumber("teststate", teststate);
     switch (teststate) {
@@ -221,46 +267,68 @@ public class Robot extends TimedRobot {
         drive.runFrontRight(0);
       }
       break;
-      case 1:
+    case 1:
       if (xboxcontroller.getAButton()) {
-        collector.runConveyor(.25);
+        collector.runConveyor(.65);
         SmartDashboard.putString("MotorsTest", "runCollector");
-      }else {
+      } else {
         collector.runConveyor(0);
+
       }
-      /* not plugged in
       if (xboxcontroller.getBButton()) {
-        indexer.runIndexerForward();
-        SmartDashboard.putString("MotorsTest", "runIndexerForward");
-      }else if(xboxcontroller.getYButton()) {
-        indexer.runIndexerBackward();
-        SmartDashboard.putString("MotorsTest", "runIndexerBackward");
-      }else {
-        indexer.runIndexerOff();
+        collector.runFrontWheels(-.25);
+        SmartDashboard.putString("MotorsTest", "runotherth9ingageaefawef");
+      } else {
+        collector.runFrontWheels(0);
       }
-      */
       if (xboxcontroller.getXButton()) {
         turret.runTurret(.25);
         SmartDashboard.putString("MotorsTest", "runTurret");
-      }else {
+      } else {
         turret.runTurret(0);
       }
-      break;
-      case 2:
-      if (xboxcontroller.getAButton()) {
+      if (xboxcontroller.getYButton()) {
         shooter.runFlyWheel(.25);
         SmartDashboard.putString("MotorsTest", "runShooter");
       } else {
         shooter.runFlyWheel(0);
       }
-      if (xboxcontroller.getYButton()) {
+      break;
+    case 2:
+      if (xboxcontroller.getAButton()) {
         climb.runClimber(.25);
-        SmartDashboard.putString("MotorsTest", "runClimberRight");
-      } else {
-        climb.runClimber(0);
+        SmartDashboard.putString("MotorsTest", "runClimber");
       }
+      if (xboxcontroller.getXButton()) {
+        climb.runClimber(-.25);
+        SmartDashboard.putString("MotorsTest", "runClimber");
+      }
+      if (!xboxcontroller.getXButton() && !xboxcontroller.getAButton()) {
+        climb.runClimber(0);
+      } 
     case 3:
-
+      if (xboxcontroller.getAButton()) {
+        indexer.runIndexerForward();
+        SmartDashboard.putString("PistonTest", "runFeedPistonForward");
+      }
+      if (xboxcontroller.getBButton()) {
+        indexer.runIndexerBackward();
+        SmartDashboard.putString("PistonTest", "runFeedPistonBackward");
+      }
+      if (!xboxcontroller.getBButton() && !xboxcontroller.getAButton()) {
+        indexer.runIndexerOff();
+      }
+      if (xboxcontroller.getYButton()) {
+        collector.pushoutfrontwheel();
+        SmartDashboard.putString("PistonTest", "runFrontPistonForward");
+      }
+      if (xboxcontroller.getXButton()) {
+        collector.pushinfrontwheel();
+        SmartDashboard.putString("PistonTest", "runFrontPistonBackward");
+      }
+      if (!xboxcontroller.getXButton() && !xboxcontroller.getYButton()) {
+        collector.pushofffrontwheel();
+      }
     default:
     }
 

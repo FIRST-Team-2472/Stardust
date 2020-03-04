@@ -2,6 +2,7 @@ package frc.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 
@@ -19,13 +20,13 @@ public class Drive {
         frontRight = new TalonSRX(frontrightID);
 
         // Not slaved for testing
-        //backLeft.follow(frontLeft);
-        //backLeft.setInverted(InvertType.FollowMaster);
-        //backRight.follow(frontRight);
-        //backRight.setInverted(InvertType.FollowMaster);
+        backLeft.follow(frontLeft);
+        backLeft.setInverted(InvertType.FollowMaster);
+        backRight.follow(frontRight);
+        backRight.setInverted(InvertType.FollowMaster);
 
 
-        frontRight.setInverted(true);
+        frontRight.setInverted(false);
         
 
         //setupMotionMagic(0, 0, 0, 0, 500, 100);
@@ -91,22 +92,26 @@ public class Drive {
 
     }
 
-    // TODO Add actual value
-    public static final int COUNT_PER_METER = 1;
+    public static final int COUNTS_PER_FOOT = 5215;
 
-    public void driverMeters(double meters) {
+    public void driverFeet(double meters) {
+        System.out.println("alskjfawleijafweofijwef");
+        frontLeft.set(ControlMode.MotionMagic, meters * COUNTS_PER_FOOT * 99999);
+        frontRight.set(ControlMode.MotionMagic, meters * COUNTS_PER_FOOT * 99999);
+    }
 
-        frontLeft.set(ControlMode.MotionMagic, meters * COUNT_PER_METER);
-        frontRight.set(ControlMode.MotionMagic, meters * COUNT_PER_METER);
+    public int driveError() {
+        return frontLeft.getClosedLoopError();
     }
 
     /**
      * This will run the left side wheels of the robot and the right side wheels of
      * the robot at the given speeds
+     * @param left [-1.0, 1.0]
      */
     public void tankDrive(double left, double right) {
-        runBackLeft(left);
-        runFrontLeft(left);
+        runBackLeft(left * -1);
+        runFrontLeft(left * -1);
         runBackRight(right);
         runFrontRight(right);
     }

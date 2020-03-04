@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.TimerBase;
 import frc.robot.Robot;
 
-//sawyers a nerd
-
 public class StartShooter extends TimerBase {
 
 
@@ -22,7 +20,7 @@ public class StartShooter extends TimerBase {
 
 	@Override
 	public void periodic() {
-        Robot.shooter.runFlyWheel(1);
+        Robot.shooter.runFlyWheel(-1);
 	}
 
 	@Override

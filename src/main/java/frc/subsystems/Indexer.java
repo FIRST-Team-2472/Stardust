@@ -6,7 +6,7 @@ public class Indexer {
     private DoubleSolenoid Indexer;
 
     public Indexer(int IndexerID, int IndexerID2) {
-        Indexer = new DoubleSolenoid(IndexerID, IndexerID2);
+        Indexer = new DoubleSolenoid(16, IndexerID, IndexerID2);
     }
 
     public void runIndexerForward() {

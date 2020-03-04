@@ -53,7 +53,7 @@ public class ActionQueue {
 				
 				steps.remove();
 				action = steps.element();
-				
+				System.out.println("named: " +  action.getClass().getSimpleName());
 				SmartDashboard.putString("ActionName", action.getClass().getSimpleName());
 				// Action may override Action name if they are more then their class name
 				action.startAction();
