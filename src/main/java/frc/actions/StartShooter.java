@@ -20,7 +20,7 @@ public class StartShooter extends TimerBase {
 
 	@Override
 	public void periodic() {
-        Robot.shooter.runFlyWheel(1);
+        Robot.shooter.runFlyWheel(-1);
 	}
 
 	@Override
