@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
+import frc.actions.runners.ActionQueueBuilder;
 import frc.actions.runners.JoinActions;
 import frc.actions.*;
 import frc.subsystems.Climber;
@@ -66,34 +67,35 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
   }
+  /**
+    This is the autonomus that will be done
+    Look in autonomu init of it is overridden
+  **/
+  private ActionQueue actionQueue = driveOverLineAuto;
 
-  private final ActionQueue actionQueue = new ActionQueue();
+  private static final ActionQueue driveOverLineAuto = new ActionQueueBuilder()
+    .add(new DriveStraightTime(-0.5, 1.5))
+	.build();
 
-  private static void driveOverLineAuto(ActionQueue actions) {
-    actions.clear();
-    actions.addAction(new DriveStraightTime(-0.5, 1.5));
-  }
-
-  private static void shootBallAuto(ActionQueue actions) {
-    actions.clear();
-    actions.addAction(new Aim());
-    actions.addAction(new Conveyor(1, .75));
-    actions.addAction(new StartShooter(1));
-    actions.addAction(new FeedBall());
-    actions.addAction(new FeedBall());
-    actions.addAction(new FeedBall());
-    actions.addAction(new StopShooter());
-  }
+  private static final ActionQueue shootBallAuto = new ActionQueueBuilder()
+    .add(new Aim())
+    .add(new Conveyor(1, .75))
+    .add(new StartShooter(1))
+    .add(new FeedBall())
+    .add(new FeedBall())
+    .add(new FeedBall())
+    .add(new StopShooter())
+	.build();
 
   @Override
   public void autonomousInit() {
-    actionQueue.clear();
-    //actionQueue.addAction(new JoinActions(new Wait(5), new DriveStraightTime(.25, 2)));
-    //actionQueue.addAction(new DriveStraightTime(.25,3));
-    //actionQueue.addAction(new DriveStraightTime(.5, 3));
-    //loadBallsAuto(actionQueue);
-    driveOverLineAuto(actionQueue);
-    //shootBallAuto(actionQueue);
+    actionQueue.reset();
+
+    //actionQueue = new actionQueueBuilder().add(new JoinActions(new Wait(5), new DriveStraightTime(.25, 2)));
+    //.add(new DriveStraightTime(.25,3))
+    //.add(new DriveStraightTime(.5, 3))
+    //.build();
+
     limelight.setPipeline(Limelight.PIPELINE_DRIVER_CAM);
     limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
     limelight.setDriverCamMode(false);
