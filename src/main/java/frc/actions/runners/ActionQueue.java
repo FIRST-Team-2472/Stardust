@@ -8,27 +8,62 @@
 package frc.actions.runners;
 
 import java.util.ArrayDeque;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ActionQueue {
+
+	private final List<Actionable> origActions;
 	
 	private final Queue<Actionable> steps;
 	
+	/** Flag for printing */
 	boolean done = true;
 	
+	/**
+		Making your own ActionQueue manualy is bad and error prone.
+		Please use the Builder
+		@see frc.actions.runners.ActionQueueBuilder
+	**/
+	@Deprecated
 	public ActionQueue() {
 		steps = new ArrayDeque<Actionable>();
+		origActions = List.of();
 		addAction(new NullAction());
 	}
 
+	/**
+		Package private consstructor used by ActionQueueBuilder
+	**/
+	ActionQueue(List<Actionable> actions) {
+		origActions = actions;
+		steps = new ArrayDeque<Actionable>(actions);
+	}
+
+	public void reset() {
+		steps.clear();
+		steps.addAll(origActions);
+	}
+
+	/**
+		If you created this class with the builder use {@link reset()} 
+		to reset the queue
+	**/
+	@Deprecated
 	public void clear() {
 		steps.clear();
 		addAction(new NullAction());
 	}
 	
+	/**
+		Making your own ActionQueue manualy is bad and error prone.
+		Please use the Builder
+		@see frc.actions.runners.ActionQueueBuilder
+	**/
+	@Deprecated
 	public void addAction(Actionable action) {
 		steps.add(action);
 	}
