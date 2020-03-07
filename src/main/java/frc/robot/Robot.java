@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("RobotState", "TeleopEnabled");
   }
 
-  private final ActionQueue teleopActions = new ActionQueue();
+  private final ActionQueue teleopActions = shootBallAuto;
   private boolean teleopShooting = false;
 
   @Override
@@ -136,7 +136,7 @@ public class Robot extends TimedRobot {
 
     if (limelight.isTargetSpotted() && teleopShooting) {
       teleopShooting = false;
-      shootBallAuto(teleopActions);
+      teleopActions.reset();
     }
     if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
       teleopShooting = true;
