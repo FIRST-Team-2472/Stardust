@@ -8,12 +8,15 @@
 package frc.actions.runners;
 
 import java.util.ArrayDeque;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ActionQueue {
+
+	private final List<Actionable> origActions;
 	
 	private final Queue<Actionable> steps;
 	
@@ -21,7 +24,18 @@ public class ActionQueue {
 	
 	public ActionQueue() {
 		steps = new ArrayDeque<Actionable>();
+		origActions = List.of();
 		addAction(new NullAction());
+	}
+
+	public ActionQueue(List<Actionable> actions) {
+		origActions = actions;
+		steps = new ArrayDeque<Actionable>(actions);
+	}
+
+	public void reset() {
+		steps.clear();
+		steps.addAll(origActions);
 	}
 
 	public void clear() {
