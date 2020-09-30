@@ -116,7 +116,7 @@ public class Drive {
         runFrontRight(right);
     }
 
-    /** Run the back left moter at the given speed */
+    /** Run the back left motor at the given speed */
     public void runBackLeft(double speed) {
         backLeft.set(ControlMode.PercentOutput, speed);
     }
