@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -23,6 +24,7 @@ import frc.subsystems.Shooter;
 import frc.subsystems.Turret;
 import frc.subsystems.Collector;
 import com.analog.adis16470.frc.ADIS16470_IMU;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -69,12 +71,12 @@ public class Robot extends TimedRobot {
 
   private final ActionQueue actionQueue = new ActionQueue();
 
-  private static void driveOverLineAuto(ActionQueue actions) {
+  private static void driveOverLineAuto(final ActionQueue actions) {
     actions.clear();
     actions.addAction(new DriveStraightTime(-0.5, 1.5));
   }
 
-  private static void shootBallAuto(ActionQueue actions) {
+  private static void shootBallAuto(final ActionQueue actions) {
     actions.clear();
     actions.addAction(new Aim());
     actions.addAction(new Conveyor(1, .75));
@@ -105,10 +107,10 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     //drive.driverFeet(99);
     if (rightJoystick.getRawButtonPressed(1)) {
-      int p = preferences.getInt("kP", 2);
-      int i = preferences.getInt("kI", 0);
-      int d = preferences.getInt("kD", 0);
-      int f = preferences.getInt("kF", 1);
+      final int p = preferences.getInt("kP", 2);
+      final int i = preferences.getInt("kI", 0);
+      final int d = preferences.getInt("kD", 0);
+      final int f = preferences.getInt("kF", 1);
       drive.setupMotionMagic(f, p, i, d, 8000, 1000);
       SmartDashboard.putNumber("kP", p);
       SmartDashboard.putNumber("kI", i);
@@ -154,7 +156,7 @@ public class Robot extends TimedRobot {
 
     // Real coooolector
     collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
-    collector.runFrontWheels(-.5 * -xboxcontroller.getRawAxis(3));
+    collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
 
     if (xboxcontroller.getYButton()) {
       indexer.runIndexerForward();
@@ -194,6 +196,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+
     /*
     // SMART Dashboard perfs
     final Preferences prefs = Preferences.getInstance();
@@ -216,10 +219,12 @@ public class Robot extends TimedRobot {
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
     */
     // TODO initalize the PID Test state
-
-  }
+ }
+  
 
   int teststate = 0;
+  public double suggestKF = 0;
+
 
   @Override
   public void testPeriodic() {
@@ -324,6 +329,14 @@ public class Robot extends TimedRobot {
         collector.pushofffrontwheel();
       }
     default:
+    }
+  if (rightJoystick.getRawButton(2)) {
+      shooter.runFlyWheel(.75);
+      suggestKF = .75 * 1023 / shooter.runSensorVelocity();
+      System.out.print("Suggested kF: ");
+      System.out.println(suggestKF);
+  }else {
+      shooter.runFlyWheel(0);
     }
   }
 }
