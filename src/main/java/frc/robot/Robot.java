@@ -49,6 +49,7 @@ public class Robot extends TimedRobot {
   public static Timer timer;
   // there has to be a better way to say the imu is disabled
   // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
+  // weeeeeeeeeeeeeeeee
   public static final ADIS16470_IMU imu = null;
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
 
