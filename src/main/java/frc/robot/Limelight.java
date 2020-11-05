@@ -84,7 +84,7 @@ public class Limelight {
     }
 
     public int getPipeline() {
-        return (int)limelight.getEntry("pipeline").getNumber(-1);
+        return (int)limelight.getEntry("pipeline").getDouble(-1);
     }
     
     public void setPipeline(int pipelineMode) {

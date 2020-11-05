@@ -7,13 +7,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import frc.robot.Robot;
 
 public class Shooter {
-  private TalonSRX flyWheel;
+  private final TalonSRX flyWheel;
 
-    public Shooter(int FlyWheelID) {
+    public Shooter(final int FlyWheelID) {
         flyWheel = new TalonSRX(FlyWheelID);
+        
     }
 
-    public void setupMotionMagic(double f, double p, double i, double d, int velocity, int acceleration) {
+    public void setupMotionMagic(final double f, final double p, final double i, final double d, final int velocity, final int acceleration) {
       // frontRight.setInverted(true);
       // backRight.setInverted(true);
 
@@ -45,7 +46,7 @@ public class Shooter {
       flyWheel.config_kF(0, f);
     }
 
-    public void runFlyWheel(double speed) {
+    public void runFlyWheel(final double speed) {
       flyWheel.set(ControlMode.PercentOutput, speed);    
     }
 
@@ -53,6 +54,9 @@ public class Shooter {
       flyWheel.set(ControlMode.PercentOutput, Robot.limelight.distanceCM()  /* TODO make speed of flywheel effected by distance from target*/);
     }
 
+    public double runSensorVelocity() {
+      return flyWheel.getSelectedSensorVelocity();
+    }
     // TODO Write a set RPM method
     
 }
