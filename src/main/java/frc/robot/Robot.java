@@ -32,7 +32,7 @@ import com.analog.adis16470.frc.ADIS16470_IMU;
  * project.
  */
 public class Robot extends TimedRobot {
-
+//do we have popcorn?
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
   public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS, Constants.PCMID, Constants.COLLECTOR_WHEEL_PUSH_FORWARD, Constants.COLLECTOR_WHEEL_PUSH_REVERSE);

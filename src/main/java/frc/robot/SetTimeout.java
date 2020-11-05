@@ -5,9 +5,9 @@ public class SetTimeout {
         new Thread(() -> {
             try {
                 Thread.sleep((long) (1000 * seconds));
-            } catch (Exception e) {
+            } catch (InterruptedException e) {
             }
             r.run();
-        });
+        }).start();
     }
 }
