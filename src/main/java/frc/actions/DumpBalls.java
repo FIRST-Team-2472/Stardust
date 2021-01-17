@@ -13,12 +13,12 @@ public class DumpBalls extends TimerBase {
     public void startAction() {
         super.startAction();
         SmartDashboard.putString("ActionName", "Collecting");
-        Robot.collector.runConveyor(1);
+        Robot.collector.runConveyor(.7);
     }
 	public void periodic() {
     }
 	
 	public void endAction() {
-        Robot.collector.runConveyor(0);
+        Robot.collector.runFrontWheels(0);
     }
 }

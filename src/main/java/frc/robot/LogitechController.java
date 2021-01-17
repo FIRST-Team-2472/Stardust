@@ -6,7 +6,6 @@ public class LogitechController extends GenericHID {
 
     public LogitechController(int port) {
         super(port);
-        //sawyer did you make this cause its bad just like you
     }
 
     @Override

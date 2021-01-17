@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
-import frc.actions.runners.JoinActions;
 import frc.actions.*;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
@@ -44,7 +43,7 @@ public class Robot extends TimedRobot {
   public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
   private final Happytwig rightJoystick = new Happytwig(Constants.jstickR);
   private final Happytwig leftJoystick = new Happytwig(Constants.jstickL);
-  private final LogitechController xboxcontroller = new LogitechController(Constants.xboxcontroller);
+  private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
   private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
   // there has to be a better way to say the imu is disabled
@@ -57,10 +56,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     SmartDashboard.putString("RobotState", "Robot On");
     compressor.setClosedLoopControl(true);
+    /*
     while (limelight.getPipeline() != 3) {
       limelight.setPipeline(3);
     }
-    limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
+    */
+    limelight.setLedMode(Limelight.LED_FORCE_OFF);
     limelight.setDriverCamMode(true);
   }
 
@@ -72,12 +73,12 @@ public class Robot extends TimedRobot {
 
   private final ActionQueue actionQueue = new ActionQueue();
 
-  private static void driveOverLineAuto(final ActionQueue actions) {
+  private void driveOverLineAuto(ActionQueue actions) {
     actions.clear();
     actions.addAction(new DriveStraightTime(-0.5, 1.5));
   }
 
-  private static void shootBallAuto(final ActionQueue actions) {
+  private void shootBallAuto(ActionQueue actions) {
     actions.clear();
     actions.addAction(new Aim());
     actions.addAction(new Conveyor(1, .75));
@@ -87,17 +88,21 @@ public class Robot extends TimedRobot {
     actions.addAction(new FeedBall());
     actions.addAction(new StopShooter());
   }
-// hi
+
+  private void loadBallsAuto(ActionQueue actions) {
+    actions.addAction(new DriveStraightTime(.5, 5));
+    actions.addAction(new DumpBalls(3));
+
+  }
+
   @Override
   public void autonomousInit() {
-    actionQueue.clear();
-    //actionQueue.addAction(new JoinActions(new Wait(5), new DriveStraightTime(.25, 2)));
-    //actionQueue.addAction(new DriveStraightTime(.25,3));
-    //actionQueue.addAction(new DriveStraightTime(.5, 3));
-    //loadBallsAuto(actionQueue);
-    driveOverLineAuto(actionQueue);
+    //driveOverLineAuto(actionQueue);
+    loadBallsAuto(actionQueue);
+    //actionQueue.addAction(new DriveDistance(555));
+    //actionQueue.addAction(new PushFrontWheels());
     //shootBallAuto(actionQueue);
-    limelight.setPipeline(Limelight.PIPELINE_DRIVER_CAM);
+    //limelight.setPipeline(Limelight.PIPELINE_DRIVER_CAM);
     limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
     limelight.setDriverCamMode(false);
   }
@@ -166,27 +171,31 @@ public class Robot extends TimedRobot {
     }
 
     // using the HAT switch?
-    if (xboxcontroller.getRawButton(5)) {
+    if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       collector.pushoutfrontwheel();
-    } else if (xboxcontroller.getRawButton(6)) {
+    } else if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
       collector.pushinfrontwheel();
     } else {
       collector.pushofffrontwheel();
     }
 
-    /*if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > .6) {
+    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > .6) {
       turret.runTurret(.25);
     } else if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > .6) {
       turret.runTurret(-.25);
     } else {
       turret.runTurret(0);
-    }*/
+    }
 
     // NOTE: should probably have another control to prevent misfires since this can
     // only be done once per match
     if (leftJoystick.getRawButton(3) && rightJoystick.getRawButton(3)) {
       climb.runClimber(1);
-    } else if (leftJoystick.getRawButton(2) && rightJoystick.getRawButton(2)) {
+    } else {
+      climb.runClimber(0);
+    }
+  
+    if (leftJoystick.getRawButton(2) && rightJoystick.getRawButton(2)) {
       climb.runClimber(-1);
     } else {
       climb.runClimber(0);
@@ -197,8 +206,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-
-    /*
     // SMART Dashboard perfs
     final Preferences prefs = Preferences.getInstance();
     // FIXME give this a better name
@@ -218,7 +225,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("acceleration", acceleration);
 
     Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
-    */
+
     // TODO initalize the PID Test state
  }
   
