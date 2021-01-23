@@ -273,7 +273,7 @@ public class Robot extends TimedRobot {
       }
       if (xboxcontroller.getBButton()) {
         collector.runFrontWheels(-.25);
-        SmartDashboard.putString("MotorsTest", "runotherth9ingageaefawef");
+        SmartDashboard.putString("MotorsTest", "runotherthing");
       } else {
         collector.runFrontWheels(0);
       }
