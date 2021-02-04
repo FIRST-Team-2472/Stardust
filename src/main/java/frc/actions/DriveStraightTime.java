@@ -21,13 +21,13 @@ public class DriveStraightTime extends TimerBase {
 
     @Override
     public void periodic() {
-        Robot.drive.tankDrive(speed, speed);
+        Robot.drive.tankDriveVelocity(speed, speed);
 
     }
 
     @Override
     public void endAction() {
-        Robot.drive.tankDrive(0, 0);
+        Robot.drive.tankDriveVelocity(0, 0);
 
     }
 

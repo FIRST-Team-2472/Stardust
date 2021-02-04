@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Stardust (in project Stardust)",
+    "file": "C:\\Users\\2472\\Documents\\projects\\Stardust\\build\\libs\\Stardust.jar",
+    "extensions": [
+      "C:\\Users\\2472\\Documents\\projects\\Stardust\\build\\tmp\\expandedArchives\\halsim_gui-2020.3.2-windowsx86-64.zip_45369a593bb959ce657791ae7ab7334a\\windows\\x86-64\\shared\\halsim_gui.dll"
+    ],
+    "librarydir": "C:\\Users\\2472\\Documents\\projects\\Stardust\\build\\tmp\\jniExtractDir",
+    "mainclass": "frc.robot.Main"
+  }
+]

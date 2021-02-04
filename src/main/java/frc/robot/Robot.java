@@ -63,6 +63,7 @@ public class Robot extends TimedRobot {
     */
     limelight.setLedMode(Limelight.LED_FORCE_OFF);
     limelight.setDriverCamMode(true);
+
   }
 
   @Override
@@ -97,22 +98,32 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    updateSmartDashboard();
+    drive.zeroCounters();
+    //Full speed = 6250 pulse per 1/10th of a second
+      //int leftSpeed = drive.getLeftSpeed();
+      //int rightSpeed = drive.getRightSpeed();
+      //SmartDashboard.putNumber("Left Speed:", leftSpeed);
+      //SmartDashboard.putNumber("Right Speed:", rightSpeed);}
     //driveOverLineAuto(actionQueue);
-    loadBallsAuto(actionQueue);
+    //loadBallsAuto(actionQueue);
     //actionQueue.addAction(new DriveDistance(555));
     //actionQueue.addAction(new PushFrontWheels());
     //shootBallAuto(actionQueue);
     //limelight.setPipeline(Limelight.PIPELINE_DRIVER_CAM);
-    limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
-    limelight.setDriverCamMode(false);
-  }
+    //limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
+    //limelight.setDriverCamMode(false);
+   }
   
   Preferences preferences = Preferences.getInstance();
 
   @Override
   public void autonomousPeriodic() {
+    updateSmartDashboard();
+  drive.tankDriveVelocity(1, 1);
+    return;
     //drive.driverFeet(99);
-    if (rightJoystick.getRawButtonPressed(1)) {
+    /*if (rightJoystick.getRawButtonPressed(1)) {
       final int p = preferences.getInt("kP", 2);
       final int i = preferences.getInt("kI", 0);
       final int d = preferences.getInt("kD", 0);
@@ -122,14 +133,19 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("kI", i);
       SmartDashboard.putNumber("kD", d);
       SmartDashboard.putNumber("kF", f);
-    }
+      SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
+      SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
+    }*/
 
-    actionQueue.step();
-    SmartDashboard.putNumber("MotionMagicError", drive.driveError());
+    //actionQueue.step();
+    //SmartDashboard.putNumber("MotionMagicError", drive.driveError());
   }
 
   @Override
   public void teleopInit() {
+    updateSmartDashboard();
+    compressor.setClosedLoopControl(true);
+    drive.zeroCounters();
     // TODO initalize smart dashboard values / set teleop state
     SmartDashboard.putString("RobotState", "TeleopEnabled");
   }
@@ -139,6 +155,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+
+    SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
+    SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
+
+    SmartDashboard.putNumber("LeftError", drive.leftDriveError());
+    SmartDashboard.putNumber("RightError", drive.rightDriveError());
+
+    SmartDashboard.putNumber("Left Speed:", drive.getLeftSpeed());
+    SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
+
+    SmartDashboard.putNumber("RightDesired", drive.desiredRight);
+    SmartDashboard.putNumber("RightDesired", drive.desiredLeft);
 
     if (limelight.isTargetSpotted() && teleopShooting) {
       teleopShooting = false;
@@ -158,7 +186,7 @@ public class Robot extends TimedRobot {
       shooter.runFlyWheel(0);
     }
 
-    drive.tankDrive(leftJoystick.getY(), rightJoystick.getY());
+    drive.tankDriveVelocity(leftJoystick.getY(), rightJoystick.getY());
 
     // Real coooolector
     collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
@@ -236,10 +264,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    //Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
 
     if (rightJoystick.getRawButtonPressed(1)) {
+      while(rightJoystick.getRawButtonPressed(1) ) {
+      }
       teststate += 1;
-      if (teststate > 3) {
+      if (teststate > 4) {
         teststate = 0;
       }
       System.out.println(teststate);
@@ -256,16 +287,16 @@ public class Robot extends TimedRobot {
         drive.runBackLeft(0);
       }
       if (xboxcontroller.getBButton()) {
-        drive.runBackRight(.25);
+        drive.runBackRightPower(.25);
         SmartDashboard.putString("MotorsTest", "runBackRight");
       } else {
-        drive.runBackRight(0);
+        drive.runBackRightPower(0);
       }
       if (xboxcontroller.getYButton()) {
-        drive.runFrontLeft(.25);
+        drive.runFrontLeftPower(.25);
         SmartDashboard.putString("MotorsTest", "runFrontLeft");
       } else {
-        drive.runFrontLeft(0);
+        drive.runFrontLeftPower(0);
       }
       if (xboxcontroller.getXButton()) {
         drive.runFrontRight(.25);
@@ -313,6 +344,7 @@ public class Robot extends TimedRobot {
       if (!xboxcontroller.getXButton() && !xboxcontroller.getAButton()) {
         climb.runClimber(0);
       } 
+      break;
     case 3:
       if (xboxcontroller.getAButton()) {
         indexer.runIndexerForward();
@@ -336,6 +368,17 @@ public class Robot extends TimedRobot {
       if (!xboxcontroller.getXButton() && !xboxcontroller.getYButton()) {
         collector.pushofffrontwheel();
       }
+      break;
+      case 4:
+      
+      drive.tankDriveVelocity(1, 1);
+      int leftSpeed = drive.getLeftSpeed();
+      int rightSpeed = drive.getRightSpeed();
+      SmartDashboard.putNumber("Left Speed:", leftSpeed);
+      SmartDashboard.putNumber("Right Speed:", rightSpeed);
+      
+      break;
+
     default:
     }
   if (rightJoystick.getRawButton(2)) {
@@ -346,5 +389,42 @@ public class Robot extends TimedRobot {
   }else {
       shooter.runFlyWheel(0);
     }
+  }
+  public void updateSmartDashboard(){
+    SmartDashboard.putNumber("Left Speed:", drive.getLeftSpeed());
+    SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
+        // SMART Dashboard perfs
+        final Preferences prefs = Preferences.getInstance();
+        // FIXME give this a better name
+        final double p = prefs.getDouble("PID p value", 0);
+        SmartDashboard.putNumber("PID p value", p);
+        final double i = prefs.getDouble("PID i value", 0);
+        // FIXME give this a better name
+        SmartDashboard.putNumber("PID i value", i);
+        final double f = prefs.getDouble("PID f value", 0);
+        SmartDashboard.putNumber("PID f value", f);
+        final int velocity = prefs.getInt("velocity", 0);
+        SmartDashboard.putNumber("velocity", velocity);
+        // FIXME give this a better name
+        final double d = prefs.getDouble("PID d value", 0);
+        SmartDashboard.putNumber("PID d value", d);
+        final int acceleration = prefs.getInt("acceleration", 0);
+        SmartDashboard.putNumber("acceleration", acceleration);
+        SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
+        SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
+        SmartDashboard.putString("RobotState", "TeleopEnabled");
+        SmartDashboard.putNumber("kP", p);
+      SmartDashboard.putNumber("kI", i);
+      SmartDashboard.putNumber("kD", d);
+      SmartDashboard.putNumber("kF", f);
+      SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
+      SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
+      SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
+      SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
+      SmartDashboard.putString("RobotState", "Robot On");
+      SmartDashboard.putNumber("LeftError", drive.leftDriveError());
+      SmartDashboard.putNumber("RightError", drive.rightDriveError());
+      SmartDashboard.putNumber("RightDesired", drive.desiredRight);
+      SmartDashboard.putNumber("RightDesired", drive.desiredLeft);
   }
 }

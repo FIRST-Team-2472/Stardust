@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class Drive {
 
@@ -12,6 +14,8 @@ public class Drive {
     private TalonSRX backRight;
     private TalonSRX frontLeft;
     private TalonSRX frontRight;
+    public int desiredLeft;
+    public int desiredRight;
 
     public Drive(int backleftID, int backrightID, int frontleftID, int frontrightID) {
         backLeft = new TalonSRX(backleftID);
@@ -19,76 +23,97 @@ public class Drive {
         frontLeft = new TalonSRX(frontleftID);
         frontRight = new TalonSRX(frontrightID);
 
+        frontLeft.config_kP(0, 0);
+        frontLeft.config_kI(0, 0);
+        frontLeft.config_kD(0, 0);
+        frontLeft.config_kF(0, .164);
+
+
+        backRight.config_kP(0, 0);
+        backRight.config_kI(0, 0);
+        backRight.config_kD(0, 0);
+        backRight.config_kF(0, .164);
+
+        SmartDashboard.putNumber("KP", 0);
+        SmartDashboard.putNumber("KI", 0);
+        SmartDashboard.putNumber("KD", 0);
+        SmartDashboard.putNumber("KF", .164);
+
         // Not slaved for testing
         backLeft.follow(frontLeft);
-        backLeft.setInverted(InvertType.FollowMaster);
-        backRight.follow(frontRight);
-        backRight.setInverted(InvertType.FollowMaster);
+        //backLeft.setInverted(InvertType.FollowMaster);
+        frontRight.follow(backRight);
+        //backRight.setInverted(InvertType.FollowMaster);
 
 
         frontRight.setInverted(false);
-        
 
-        //setupMotionMagic(0, 0, 0, 0, 500, 100);
+        //encoders
+        
+        backRight.setSensorPhase(true);  // correct encoder to motor direction
+     
+        // Tell the talon that he has a quad encoder
+        backRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+       
+        // Set minimum output (closed loop)  to 0 for now
+        backRight.configNominalOutputForward(0, 30);
+        backRight.configNominalOutputReverse(0, 30);
+        
+        // Set maximum forward and backward to full speed
+        backRight.configPeakOutputForward(1, 30);
+        backRight.configPeakOutputReverse(-1, 30);
+    
+        // Motion magic cruise (max speed) is 100 counts per 100 ms
+            backRight.configMotionCruiseVelocity(500, 30);
+    
+        // Motion magic acceleration is 50 counts
+            backRight.configMotionAcceleration(100, 30);
+    
+            // Zero the sensor once on robot boot up 
+            backRight.setSelectedSensorPosition(0, 0, 30);
+
+//other side
+
+            frontLeft.setSensorPhase(true);  // correct encoder to motor direction
+
+            // Tell the talon that he has a quad encoder
+            frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+           
+            // Set minimum output (closed loop)  to 0 for now
+            frontLeft.configNominalOutputForward(0, 30);
+            frontLeft.configNominalOutputReverse(0, 30);
+            
+            // Set maximum forward and backward to full speed
+            frontLeft.configPeakOutputForward(1, 30);
+            frontLeft.configPeakOutputReverse(-1, 30);
+        
+            // Motion magic cruise (max speed) is 100 counts per 100 ms
+                frontLeft.configMotionCruiseVelocity(500, 30);
+        
+            // Motion magic acceleration is 50 counts
+                frontLeft.configMotionAcceleration(100, 30);
+        
+                // Zero the sensor once on robot boot up 
+                frontLeft.setSelectedSensorPosition(0, 0, 30);
+        
+        
+                //setupMotionMagic(0, 0, 0, 0, 500, 100);
 
     }
 
     public void setupMotionMagic(double f, double p, double i, double d, int velocity, int acceleration) {
-        // frontRight.setInverted(true);
-        // backRight.setInverted(true);
 
-        frontLeft.configFactoryDefault();
-
-        // Tell the talon that he has a quad encoder
-        frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
-
-        // Set minimum output (closed loop) to 0 for now
-        frontLeft.configNominalOutputForward(0, 30);
-        frontLeft.configNominalOutputReverse(0, 30);
-
-        // Set maximum forward and backward to full speed
-        frontLeft.configPeakOutputForward(1, 30);
-        frontLeft.configPeakOutputReverse(-1, 30);
-
-        // Motion magic cruise (max speed) is 100 counts per 100 ms
-        frontLeft.configMotionCruiseVelocity(velocity, 30);
-
-        // Motion magic acceleration is 50 counts
-        frontLeft.configMotionAcceleration(acceleration, 30);
-
-        // Zero the sensor once on robot boot up
-        frontLeft.setSelectedSensorPosition(0, 0, 30);
 
         frontLeft.config_kP(0, p);
         frontLeft.config_kI(0, i);
         frontLeft.config_kD(0, d);
         frontLeft.config_kF(0, f);
 
-        frontRight.configFactoryDefault();
-        // Tell the talon that he has a quad encoder
-        frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
 
-        // Set minimum output (closed loop) to 0 for now
-        frontRight.configNominalOutputForward(0, 30);
-        frontRight.configNominalOutputReverse(0, 30);
-
-        // Set maximum forward and backward to full speed
-        frontRight.configPeakOutputForward(1, 30);
-        frontRight.configPeakOutputReverse(-1, 30);
-
-        // Motion magic cruise (max speed) is 100 counts per 100 ms
-        frontRight.configMotionCruiseVelocity(velocity, 30);
-
-        // Motion magic acceleration is 50 counts
-        frontRight.configMotionAcceleration(acceleration, 30);
-
-        // Zero the sensor once on robot boot up
-        frontRight.setSelectedSensorPosition(0, 0, 30);
-
-        frontRight.config_kP(0, p);
-        frontRight.config_kI(0, i);
-        frontRight.config_kD(0, d);
-        frontRight.config_kF(0, f);
+        backRight.config_kP(0, p);
+        backRight.config_kI(0, i);
+        backRight.config_kD(0, d);
+        backRight.config_kF(0, f);
 
     }
 
@@ -100,8 +125,12 @@ public class Drive {
         frontRight.set(ControlMode.MotionMagic, meters * COUNTS_PER_FOOT * 99999);
     }
 
-    public int driveError() {
-        return frontLeft.getClosedLoopError();
+    public int leftDriveError() {
+        return desiredLeft - getLeftSpeed();
+    }
+    
+    public int rightDriveError() {
+        return desiredRight - getRightSpeed();
     }
 
     /**
@@ -109,27 +138,72 @@ public class Drive {
      * the robot at the given speeds
      * @param left [-1.0, 1.0]
      */
-    public void tankDrive(double left, double right) {
-        runBackLeft(left * -1);
-        runFrontLeft(left * -1);
-        runBackRight(right);
-        runFrontRight(right);
+    public void tankDrivePowerVelocity(double left, double right) {
+        //runBackLeft(left * -1);
+        runFrontLeftVelocity(left * -1);
+        runBackRightVelocity(right);
+        //runFrontRight(right);
     }
 
+    public void tankDrivePower(double left, double right) {
+        //runBackLeft(left * -1);
+        runFrontLeftPower(left * -1);
+        runBackRightPower(right);
+        //runFrontRight(right);
+    }
+
+    public void tankDriveVelocity(double left, double right) {
+        //runBackLeft(left * -1);
+        runFrontLeftVelocity(left * -1);
+        runBackRightVelocity(right);
+        //runFrontRight(right);
+    }
     /** Run the back left moter at the given speed */
     public void runBackLeft(double speed) {
-        backLeft.set(ControlMode.PercentOutput, speed);
+        backLeft.set(ControlMode.Velocity, speed * 300);
     }
 
-    public void runBackRight(double speed) {
+    public void runBackRightVelocity(double speed) {
+        backRight.set(ControlMode.Velocity, speed * 6250);
+        desiredRight = (int)speed * 6250;
+    }
+
+    public void runFrontLeftVelocity(double speed) {
+        frontLeft.set(ControlMode.Velocity, speed * 6250);
+        desiredLeft = (int)speed * 6250;
+    }
+//Just for testing.
+    public void runFrontRight(double speed) {
+        frontRight.set(ControlMode.Velocity, speed * 300);
+        
+    }
+
+    public void runBackRightPower(double speed) {
         backRight.set(ControlMode.PercentOutput, speed);
     }
 
-    public void runFrontLeft(double speed) {
+    public void runFrontLeftPower(double speed) {
         frontLeft.set(ControlMode.PercentOutput, speed);
     }
 
-    public void runFrontRight(double speed) {
-        frontRight.set(ControlMode.PercentOutput, speed);
+    public int getRightSpeed() {
+        return backRight.getSelectedSensorVelocity();
+    }
+
+    public int getLeftSpeed() {
+        return frontLeft.getSelectedSensorVelocity();
+    }
+
+    public int getLeftDistance() {
+        return frontLeft.getSelectedSensorPosition();
+    }
+
+    public int getRightDistance(){
+        return backRight.getSelectedSensorPosition();
+    }
+
+    public void zeroCounters(){
+        backRight.setSelectedSensorPosition(0);
+        frontLeft.setSelectedSensorPosition(0);
     }
 }

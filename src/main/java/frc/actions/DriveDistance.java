@@ -23,15 +23,17 @@ public class DriveDistance implements Actionable {
     @Override
     public void periodic() {
         Robot.drive.driverFeet(feet);
+       // SmartDashboard.putString("DistanceDriven", feet);
     }
 
     @Override
     public void endAction() {
-        Robot.drive.tankDrive(0, 0);
+        Robot.drive.tankDriveVelocity(0, 0);
     }
 
     @Override
     public boolean isFinished() {
-        return Robot.drive.driveError() < 500;
+        return Robot.drive.leftDriveError() < 500;
+        //return Robot.drive.rightDriveError() < 500;
     }
 }

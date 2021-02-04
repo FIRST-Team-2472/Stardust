@@ -29,12 +29,12 @@ public class TurnRobot implements Actionable {
         */
         double error =  angle - Robot.imu.getAngle();
         double kP = .5;
-        Robot.drive.tankDrive(error*kP, error*-kP);
+        Robot.drive.tankDriveVelocity(error*kP, error*-kP);
     }
 
     @Override
     public void endAction() {
-        Robot.drive.tankDrive(0, 0);
+        Robot.drive.tankDriveVelocity(0, 0);
     }
 
     @Override
