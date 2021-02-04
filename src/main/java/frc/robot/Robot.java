@@ -166,7 +166,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
 
     SmartDashboard.putNumber("RightDesired", drive.desiredRight);
-    SmartDashboard.putNumber("RightDesired", drive.desiredLeft);
+    SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
 
     if (limelight.isTargetSpotted() && teleopShooting) {
       teleopShooting = false;
@@ -425,6 +425,6 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("LeftError", drive.leftDriveError());
       SmartDashboard.putNumber("RightError", drive.rightDriveError());
       SmartDashboard.putNumber("RightDesired", drive.desiredRight);
-      SmartDashboard.putNumber("RightDesired", drive.desiredLeft);
+      SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
   }
 }

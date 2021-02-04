@@ -14,8 +14,8 @@ public class Drive {
     private TalonSRX backRight;
     private TalonSRX frontLeft;
     private TalonSRX frontRight;
-    public int desiredLeft;
-    public int desiredRight;
+    public double desiredLeft;
+    public double desiredRight;
 
     public Drive(int backleftID, int backrightID, int frontleftID, int frontrightID) {
         backLeft = new TalonSRX(backleftID);
@@ -23,9 +23,9 @@ public class Drive {
         frontLeft = new TalonSRX(frontleftID);
         frontRight = new TalonSRX(frontrightID);
 
-        frontLeft.config_kP(0, 0);
+        frontLeft.config_kP(0, 0.005);
         frontLeft.config_kI(0, 0);
-        frontLeft.config_kD(0, 0);
+        frontLeft.config_kD(0, 0.05);
         frontLeft.config_kF(0, .164);
 
 
@@ -125,12 +125,23 @@ public class Drive {
         frontRight.set(ControlMode.MotionMagic, meters * COUNTS_PER_FOOT * 99999);
     }
 
+    
+    public void runBackRightVelocity(double speed) {
+        backRight.set(ControlMode.Velocity, speed * 6250);
+        desiredRight = (double)speed * 6250;
+    }
+
+    public void runFrontLeftVelocity(double speed) {
+        frontLeft.set(ControlMode.Velocity, speed * 6250);
+        desiredLeft = (double)speed * 6250;
+    }
+
     public int leftDriveError() {
-        return desiredLeft - getLeftSpeed();
+        return (int)desiredLeft - getLeftSpeed();
     }
     
     public int rightDriveError() {
-        return desiredRight - getRightSpeed();
+        return (int)desiredRight - getRightSpeed();
     }
 
     /**
@@ -163,15 +174,6 @@ public class Drive {
         backLeft.set(ControlMode.Velocity, speed * 300);
     }
 
-    public void runBackRightVelocity(double speed) {
-        backRight.set(ControlMode.Velocity, speed * 6250);
-        desiredRight = (int)speed * 6250;
-    }
-
-    public void runFrontLeftVelocity(double speed) {
-        frontLeft.set(ControlMode.Velocity, speed * 6250);
-        desiredLeft = (int)speed * 6250;
-    }
 //Just for testing.
     public void runFrontRight(double speed) {
         frontRight.set(ControlMode.Velocity, speed * 300);
@@ -191,7 +193,7 @@ public class Drive {
     }
 
     public int getLeftSpeed() {
-        return frontLeft.getSelectedSensorVelocity();
+        return frontLeft.getSelectedSensorVelocity()*-1;
     }
 
     public int getLeftDistance() {
