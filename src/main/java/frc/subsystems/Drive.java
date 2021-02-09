@@ -29,15 +29,15 @@ public class Drive {
         frontLeft.config_kF(0, .164);
 
 
-        backRight.config_kP(0, 0.005);
+        backRight.config_kP(0, 0);
         backRight.config_kI(0, 0);
-        backRight.config_kD(0, 0.05);
+        backRight.config_kD(0, 0);
         backRight.config_kF(0, .164);
- 
+
         SmartDashboard.putNumber("KP", 0);
         SmartDashboard.putNumber("KI", 0);
         SmartDashboard.putNumber("KD", 0);
-        SmartDashboard.putNumber("KF", 0);
+        SmartDashboard.putNumber("KF", .164);
 
         // Not slaved for testing
         backLeft.follow(frontLeft);
@@ -46,7 +46,7 @@ public class Drive {
         //backRight.setInverted(InvertType.FollowMaster);
 
 
-        //frontRight.setInverted(false);
+        frontRight.setInverted(false);
 
         //encoders
         
@@ -64,10 +64,10 @@ public class Drive {
         backRight.configPeakOutputReverse(-1, 30);
     
         // Motion magic cruise (max speed) is 100 counts per 100 ms
-            backRight.configMotionCruiseVelocity(200, 30);
+            backRight.configMotionCruiseVelocity(500, 30);
     
         // Motion magic acceleration is 50 counts
-            backRight.configMotionAcceleration(3000, 30);
+            backRight.configMotionAcceleration(100, 30);
     
             // Zero the sensor once on robot boot up 
             backRight.setSelectedSensorPosition(0, 0, 30);
@@ -88,10 +88,10 @@ public class Drive {
             frontLeft.configPeakOutputReverse(-1, 30);
         
             // Motion magic cruise (max speed) is 100 counts per 100 ms
-                frontLeft.configMotionCruiseVelocity(200, 30);
+                frontLeft.configMotionCruiseVelocity(500, 30);
         
             // Motion magic acceleration is 50 counts
-                frontLeft.configMotionAcceleration(3000, 30);
+                frontLeft.configMotionAcceleration(100, 30);
         
                 // Zero the sensor once on robot boot up 
                 frontLeft.setSelectedSensorPosition(0, 0, 30);
@@ -137,7 +137,7 @@ public class Drive {
     }
 
     public int leftDriveError() {
-        return (int)desiredLeft - getLeftSpeed() * -1;
+        return (int)desiredLeft - getLeftSpeed();
     }
     
     public int rightDriveError() {
@@ -193,7 +193,7 @@ public class Drive {
     }
 
     public int getLeftSpeed() {
-        return frontLeft.getSelectedSensorVelocity();
+        return frontLeft.getSelectedSensorVelocity()*-1;
     }
 
     public int getLeftDistance() {
@@ -202,11 +202,6 @@ public class Drive {
 
     public int getRightDistance(){
         return backRight.getSelectedSensorPosition();
-    }
-
-    public void tankDriveMotionMagic(int targetPosR, int targetPosL){
-        backRight.set(ControlMode.MotionMagic, targetPosR);
-        frontLeft.set(ControlMode.MotionMagic, targetPosL);
     }
 
     public void zeroCounters(){
