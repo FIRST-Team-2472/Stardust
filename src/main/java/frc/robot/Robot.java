@@ -22,7 +22,7 @@ import frc.subsystems.Indexer;
 import frc.subsystems.Shooter;
 import frc.subsystems.Turret;
 import frc.subsystems.Collector;
-import com.analog.adis16470.frc.ADIS16470_IMU;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.AnalogInput;
 
@@ -48,10 +48,7 @@ public class Robot extends TimedRobot {
   private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
   public AnalogInput pressure = new AnalogInput(0);
-  // there has to be a better way to say the imu is disabled
-  // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
-  // weeeeeeeeeeeeeeeee
-  public static final ADIS16470_IMU imu = null;
+  public PigeonIMU pigeon = new PigeonIMU(2);
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
 
   @Override
@@ -101,10 +98,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    pigeon.setFusedHeading(0.0, 30);
     drive.zeroCounters();
     actionQueue.clear();
     updateSmartDashboard();
-    actionQueue.addAction(new DriveDistance());
+    actionQueue.addAction(new DriveDistance(5));
     //Full speed = 6250 pulse per 1/10th of a second
       //int leftSpeed = drive.getLeftSpeed();
       //int rightSpeed = drive.getRightSpeed();
@@ -147,6 +145,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    pigeon.setFusedHeading(0.0, 30);
     updateSmartDashboard();
     compressor.setClosedLoopControl(true);
     drive.zeroCounters();

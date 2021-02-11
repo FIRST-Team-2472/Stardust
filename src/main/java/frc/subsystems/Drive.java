@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,6 +17,7 @@ public class Drive {
     private TalonSRX frontRight;
     public double desiredLeft;
     public double desiredRight;
+    public PigeonIMU pigeon = new PigeonIMU(2);
 
     public Drive(int backleftID, int backrightID, int frontleftID, int frontrightID) {
         backLeft = new TalonSRX(backleftID);
@@ -68,15 +70,9 @@ public class Drive {
         backRight.configPeakOutputReverse(-1, 30);
     
         // Motion magic cruise (max speed) is 100 counts per 100 ms
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
             backRight.configMotionCruiseVelocity(500, 30);
-=======
             backRight.configMotionCruiseVelocity(3000, 30);
->>>>>>> Stashed changes
-=======
             backRight.configMotionCruiseVelocity(3000, 30);
->>>>>>> Stashed changes
     
         // Motion magic acceleration is 50 counts
             backRight.configMotionAcceleration(100, 30);
@@ -100,15 +96,12 @@ public class Drive {
             frontLeft.configPeakOutputReverse(-1, 30);
         
             // Motion magic cruise (max speed) is 100 counts per 100 ms
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
                 frontLeft.configMotionCruiseVelocity(500, 30);
-=======
+
                 frontLeft.configMotionCruiseVelocity(3000, 30);
->>>>>>> Stashed changes
-=======
+
                 frontLeft.configMotionCruiseVelocity(3000, 30);
->>>>>>> Stashed changes
         
             // Motion magic acceleration is 50 counts
                 frontLeft.configMotionAcceleration(100, 30);
@@ -231,9 +224,38 @@ public class Drive {
         frontLeft.set(ControlMode.MotionMagic, targetPosL);
     }
 
->>>>>>> Stashed changes
     public void zeroCounters(){
         backRight.setSelectedSensorPosition(0);
         frontLeft.setSelectedSensorPosition(0);
+    }
+
+    public void DoPigeon(){
+        PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
+    
+        PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+
+        double [] xyz_dps = new double [3];
+
+        /* grab some input data from Pigeon and gamepad*/
+
+        pigeon.getGeneralStatus(genStatus);
+
+        pigeon.getRawGyro(xyz_dps);
+
+        pigeon.getFusedHeading(fusionStatus);
+
+    double currentAngle = fusionStatus.heading;
+
+        boolean angleIsGood = (pigeon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
+
+    double currentAngularRate = xyz_dps[2];
+    
+    SmartDashboard.putBoolean("AngleGood", angleIsGood);
+    SmartDashboard.putNumber("Angle", currentAngle);
+    SmartDashboard.putNumber("Rate", currentAngularRate);
+    
+
+
+
     }
 }
