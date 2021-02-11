@@ -47,7 +47,12 @@ public class Drive {
 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         frontRight.setInverted(false);
+=======
+        frontLeft.setInverted(true);
+        backRight.setInverted(false);
+>>>>>>> Stashed changes
 =======
         frontLeft.setInverted(true);
         backRight.setInverted(false);
@@ -70,7 +75,11 @@ public class Drive {
     
         // Motion magic cruise (max speed) is 100 counts per 100 ms
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             backRight.configMotionCruiseVelocity(500, 30);
+=======
+            backRight.configMotionCruiseVelocity(3000, 30);
+>>>>>>> Stashed changes
 =======
             backRight.configMotionCruiseVelocity(3000, 30);
 >>>>>>> Stashed changes
@@ -98,7 +107,11 @@ public class Drive {
         
             // Motion magic cruise (max speed) is 100 counts per 100 ms
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 frontLeft.configMotionCruiseVelocity(500, 30);
+=======
+                frontLeft.configMotionCruiseVelocity(3000, 30);
+>>>>>>> Stashed changes
 =======
                 frontLeft.configMotionCruiseVelocity(3000, 30);
 >>>>>>> Stashed changes
@@ -216,7 +229,10 @@ public class Drive {
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
     public void setRightDistance(int dis) {
         backRight.setSelectedSensorPosition(dis);
     }
