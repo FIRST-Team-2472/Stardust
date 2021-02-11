@@ -46,7 +46,12 @@ public class Drive {
         //backRight.setInverted(InvertType.FollowMaster);
 
 
+<<<<<<< Updated upstream
         frontRight.setInverted(false);
+=======
+        frontLeft.setInverted(true);
+        backRight.setInverted(false);
+>>>>>>> Stashed changes
 
         //encoders
         
@@ -64,7 +69,11 @@ public class Drive {
         backRight.configPeakOutputReverse(-1, 30);
     
         // Motion magic cruise (max speed) is 100 counts per 100 ms
+<<<<<<< Updated upstream
             backRight.configMotionCruiseVelocity(500, 30);
+=======
+            backRight.configMotionCruiseVelocity(3000, 30);
+>>>>>>> Stashed changes
     
         // Motion magic acceleration is 50 counts
             backRight.configMotionAcceleration(100, 30);
@@ -88,7 +97,11 @@ public class Drive {
             frontLeft.configPeakOutputReverse(-1, 30);
         
             // Motion magic cruise (max speed) is 100 counts per 100 ms
+<<<<<<< Updated upstream
                 frontLeft.configMotionCruiseVelocity(500, 30);
+=======
+                frontLeft.configMotionCruiseVelocity(3000, 30);
+>>>>>>> Stashed changes
         
             // Motion magic acceleration is 50 counts
                 frontLeft.configMotionAcceleration(100, 30);
@@ -149,12 +162,6 @@ public class Drive {
      * the robot at the given speeds
      * @param left [-1.0, 1.0]
      */
-    public void tankDrivePowerVelocity(double left, double right) {
-        //runBackLeft(left * -1);
-        runFrontLeftVelocity(left * -1);
-        runBackRightVelocity(right);
-        //runFrontRight(right);
-    }
 
     public void tankDrivePower(double left, double right) {
         //runBackLeft(left * -1);
@@ -200,10 +207,26 @@ public class Drive {
         return frontLeft.getSelectedSensorPosition();
     }
 
+    public void setLeftDistance(int dis) {
+        frontLeft.setSelectedSensorPosition(dis);
+    }
+
     public int getRightDistance(){
         return backRight.getSelectedSensorPosition();
     }
 
+<<<<<<< Updated upstream
+=======
+    public void setRightDistance(int dis) {
+        backRight.setSelectedSensorPosition(dis);
+    }
+
+    public void tankDriveMotionMagic(int targetPosR, int targetPosL){
+        backRight.set(ControlMode.MotionMagic, targetPosR);
+        frontLeft.set(ControlMode.MotionMagic, targetPosL);
+    }
+
+>>>>>>> Stashed changes
     public void zeroCounters(){
         backRight.setSelectedSensorPosition(0);
         frontLeft.setSelectedSensorPosition(0);

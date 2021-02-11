@@ -18,6 +18,13 @@ public class DriveDistance implements Actionable {
     @Override
     public void startAction() {
         SmartDashboard.putString("ActionName", "DriveDistance");
+<<<<<<< Updated upstream
+=======
+        Robot.drive.setRightDistance(0);
+        Robot.drive.setLeftDistance(0);
+        Robot.drive.tankDriveMotionMagic(10000, 10000);
+        System.out.println("Drive Start");
+>>>>>>> Stashed changes
     }
 
     @Override
