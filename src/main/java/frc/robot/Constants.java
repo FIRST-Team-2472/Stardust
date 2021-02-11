@@ -13,10 +13,10 @@ public class Constants {
 
 	public static final int shooterID = 11;
 
-	public static final int COLLECTOR_CONVERYER = 14;
+	public static final int COLLECTOR_CONVERYER = 12;
 	public static final int COLLECTOR_WHEELS = 15;
 
-	public static final int CLIMBER = 12;
+	public static final int CLIMBER = 14;
 	//Controllers 
 	public static final int jstickL = 1;
     public static final int jstickR = 0;

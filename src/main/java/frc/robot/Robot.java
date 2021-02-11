@@ -168,6 +168,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("RightDesired", drive.desiredRight);
     SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
 
+    //drive.tankDrivePower(0.5, 0.5);
+
     if (limelight.isTargetSpotted() && teleopShooting) {
       teleopShooting = false;
       shootBallAuto(teleopActions);
