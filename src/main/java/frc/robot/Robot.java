@@ -24,6 +24,7 @@ import frc.subsystems.Turret;
 import frc.subsystems.Collector;
 import com.analog.adis16470.frc.ADIS16470_IMU;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -46,6 +47,7 @@ public class Robot extends TimedRobot {
   private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
   private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
+  public AnalogInput pressure = new AnalogInput(0);
   // there has to be a better way to say the imu is disabled
   // public static final ADIS16470_IMU imu = new ADIS16470_IMU();
   // weeeeeeeeeeeeeeeee
@@ -96,10 +98,13 @@ public class Robot extends TimedRobot {
 
   }
 
+
   @Override
   public void autonomousInit() {
-    updateSmartDashboard();
     drive.zeroCounters();
+    actionQueue.clear();
+    updateSmartDashboard();
+    actionQueue.addAction(new DriveDistance());
     //Full speed = 6250 pulse per 1/10th of a second
       //int leftSpeed = drive.getLeftSpeed();
       //int rightSpeed = drive.getRightSpeed();
@@ -120,8 +125,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     updateSmartDashboard();
-  drive.tankDriveVelocity(1, 1);
-    return;
+  
     //drive.driverFeet(99);
     /*if (rightJoystick.getRawButtonPressed(1)) {
       final int p = preferences.getInt("kP", 2);
@@ -137,7 +141,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
     }*/
 
-    //actionQueue.step();
+    actionQueue.step();
     //SmartDashboard.putNumber("MotionMagicError", drive.driveError());
   }
 
@@ -155,7 +159,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-
+updateSmartDashboard();
     SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
     SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
 
@@ -427,6 +431,10 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("LeftError", drive.leftDriveError());
       SmartDashboard.putNumber("RightError", drive.rightDriveError());
       SmartDashboard.putNumber("RightDesired", drive.desiredRight);
-      SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
+      SmartDashboard.putNumber("Desired", drive.desiredLeft);
+      //SmartDashboard.putNumber("Raw Pressure", pressure.getValue());
+      SmartDashboard.putNumber("Raw Pressure", pressure.getAverageValue());
+      SmartDashboard.putNumber("PSI", (pressure.getAverageValue()-400)*(70.0/1250.0));
+
   }
 }

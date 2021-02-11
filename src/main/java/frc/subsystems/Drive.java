@@ -46,17 +46,11 @@ public class Drive {
         //backRight.setInverted(InvertType.FollowMaster);
 
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
         frontRight.setInverted(false);
-=======
+
         frontLeft.setInverted(true);
         backRight.setInverted(false);
->>>>>>> Stashed changes
-=======
-        frontLeft.setInverted(true);
-        backRight.setInverted(false);
->>>>>>> Stashed changes
 
         //encoders
         
@@ -74,15 +68,13 @@ public class Drive {
         backRight.configPeakOutputReverse(-1, 30);
     
         // Motion magic cruise (max speed) is 100 counts per 100 ms
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
             backRight.configMotionCruiseVelocity(500, 30);
-=======
+
             backRight.configMotionCruiseVelocity(3000, 30);
->>>>>>> Stashed changes
-=======
+
             backRight.configMotionCruiseVelocity(3000, 30);
->>>>>>> Stashed changes
+
     
         // Motion magic acceleration is 50 counts
             backRight.configMotionAcceleration(100, 30);
@@ -106,15 +98,13 @@ public class Drive {
             frontLeft.configPeakOutputReverse(-1, 30);
         
             // Motion magic cruise (max speed) is 100 counts per 100 ms
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
                 frontLeft.configMotionCruiseVelocity(500, 30);
-=======
+
                 frontLeft.configMotionCruiseVelocity(3000, 30);
->>>>>>> Stashed changes
-=======
+
                 frontLeft.configMotionCruiseVelocity(3000, 30);
->>>>>>> Stashed changes
+
         
             // Motion magic acceleration is 50 counts
                 frontLeft.configMotionAcceleration(100, 30);
@@ -228,11 +218,7 @@ public class Drive {
         return backRight.getSelectedSensorPosition();
     }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
+
     public void setRightDistance(int dis) {
         backRight.setSelectedSensorPosition(dis);
     }
@@ -242,7 +228,7 @@ public class Drive {
         frontLeft.set(ControlMode.MotionMagic, targetPosL);
     }
 
->>>>>>> Stashed changes
+
     public void zeroCounters(){
         backRight.setSelectedSensorPosition(0);
         frontLeft.setSelectedSensorPosition(0);
