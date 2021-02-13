@@ -158,7 +158,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("RightDesired", drive.desiredRight);
     SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
 
-
+    //runs the IMU(Pigeon), and related things
+    drive.DoPigeon();
 
     if (limelight.isTargetSpotted() && teleopShooting) {
       teleopShooting = false;
@@ -367,6 +368,8 @@ public class Robot extends TimedRobot {
       shooter.runFlyWheel(0);
     }
   }
+
+  //run this to set all smart dashboard values
   public void updateSmartDashboard(){
     SmartDashboard.putNumber("Left Speed:", drive.getLeftSpeed());
     SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
