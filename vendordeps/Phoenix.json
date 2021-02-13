@@ -1,28 +1,46 @@
 {
     "fileName": "Phoenix.json",
     "name": "CTRE-Phoenix",
+<<<<<<< Updated upstream
     "version": "5.17.3",
     "uuid": "ab676553-b602-441f-a38d-f1296eff6537",
     "mavenUrls": [
         "http://devsite.ctr-electronics.com/maven/release/"
     ],
     "jsonUrl": "http://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json",
+=======
+    "version": "5.19.4",
+    "uuid": "ab676553-b602-441f-a38d-f1296eff6537",
+    "mavenUrls": [
+        "https://devsite.ctr-electronics.com/maven/release/"
+    ],
+    "jsonUrl": "https://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json",
+>>>>>>> Stashed changes
     "javaDependencies": [
         {
             "groupId": "com.ctre.phoenix",
             "artifactId": "api-java",
+<<<<<<< Updated upstream
             "version": "5.17.3"
+=======
+            "version": "5.19.4"
+>>>>>>> Stashed changes
         },
         {
             "groupId": "com.ctre.phoenix",
             "artifactId": "wpiapi-java",
+<<<<<<< Updated upstream
             "version": "5.17.3"
+=======
+            "version": "5.19.4"
+>>>>>>> Stashed changes
         }
     ],
     "jniDependencies": [
         {
             "groupId": "com.ctre.phoenix",
             "artifactId": "cci",
+<<<<<<< Updated upstream
             "version": "5.17.3",
             "isJar": false,
             "skipInvalidPlatforms": true,
@@ -48,10 +66,24 @@
             "groupId": "com.ctre.phoenix",
             "artifactId": "canutils",
             "version": "5.17.3",
+=======
+            "version": "5.19.4",
+            "isJar": false,
+            "skipInvalidPlatforms": true,
+            "validPlatforms": [
+                "linuxathena"
+            ]
+        },
+        {
+            "groupId": "com.ctre.phoenix.sim",
+            "artifactId": "cci-sim",
+            "version": "5.19.4",
+>>>>>>> Stashed changes
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
                 "windowsx86-64",
+<<<<<<< Updated upstream
                 "linuxx86-64"
             ]
         },
@@ -59,10 +91,21 @@
             "groupId": "com.ctre.phoenix",
             "artifactId": "platform-stub",
             "version": "5.17.3",
+=======
+                "linuxx86-64",
+                "osxx86-64"
+            ]
+        },
+        {
+            "groupId": "com.ctre.phoenix.sim",
+            "artifactId": "simTalonSRX",
+            "version": "5.19.4",
+>>>>>>> Stashed changes
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
                 "windowsx86-64",
+<<<<<<< Updated upstream
                 "linuxx86-64"
             ]
         },
@@ -76,6 +119,22 @@
                 "linuxathena",
                 "windowsx86-64",
                 "linuxx86-64"
+=======
+                "linuxx86-64",
+                "osxx86-64"
+            ]
+        },
+        {
+            "groupId": "com.ctre.phoenix.sim",
+            "artifactId": "simVictorSPX",
+            "version": "5.19.4",
+            "isJar": false,
+            "skipInvalidPlatforms": true,
+            "validPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxx86-64"
+>>>>>>> Stashed changes
             ]
         }
     ],
@@ -83,7 +142,11 @@
         {
             "groupId": "com.ctre.phoenix",
             "artifactId": "wpiapi-cpp",
+<<<<<<< Updated upstream
             "version": "5.17.3",
+=======
+            "version": "5.19.4",
+>>>>>>> Stashed changes
             "libName": "CTRE_Phoenix_WPI",
             "headerClassifier": "headers",
             "sharedLibrary": false,
@@ -91,13 +154,22 @@
             "binaryPlatforms": [
                 "linuxathena",
                 "windowsx86-64",
+<<<<<<< Updated upstream
                 "linuxx86-64"
+=======
+                "linuxx86-64",
+                "osxx86-64"
+>>>>>>> Stashed changes
             ]
         },
         {
             "groupId": "com.ctre.phoenix",
             "artifactId": "api-cpp",
+<<<<<<< Updated upstream
             "version": "5.17.3",
+=======
+            "version": "5.19.4",
+>>>>>>> Stashed changes
             "libName": "CTRE_Phoenix",
             "headerClassifier": "headers",
             "sharedLibrary": false,
@@ -105,27 +177,58 @@
             "binaryPlatforms": [
                 "linuxathena",
                 "windowsx86-64",
+<<<<<<< Updated upstream
                 "linuxx86-64"
+=======
+                "linuxx86-64",
+                "osxx86-64"
+>>>>>>> Stashed changes
             ]
         },
         {
             "groupId": "com.ctre.phoenix",
             "artifactId": "cci",
+<<<<<<< Updated upstream
             "version": "5.17.3",
+=======
+            "version": "5.19.4",
+>>>>>>> Stashed changes
             "libName": "CTRE_PhoenixCCI",
             "headerClassifier": "headers",
             "sharedLibrary": false,
             "skipInvalidPlatforms": true,
             "binaryPlatforms": [
+<<<<<<< Updated upstream
                 "linuxathena",
                 "windowsx86-64",
                 "linuxx86-64"
+=======
+                "linuxathena"
+            ]
+        },
+        {
+            "groupId": "com.ctre.phoenix.sim",
+            "artifactId": "cci-sim",
+            "version": "5.19.4",
+            "libName": "CTRE_PhoenixCCISim",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxx86-64"
+>>>>>>> Stashed changes
             ]
         },
         {
             "groupId": "com.ctre.phoenix",
             "artifactId": "diagnostics",
+<<<<<<< Updated upstream
             "version": "5.17.3",
+=======
+            "version": "5.19.4",
+>>>>>>> Stashed changes
             "libName": "CTRE_PhoenixDiagnostics",
             "headerClassifier": "headers",
             "sharedLibrary": false,
@@ -133,39 +236,67 @@
             "binaryPlatforms": [
                 "linuxathena",
                 "windowsx86-64",
+<<<<<<< Updated upstream
                 "linuxx86-64"
+=======
+                "linuxx86-64",
+                "osxx86-64"
+>>>>>>> Stashed changes
             ]
         },
         {
             "groupId": "com.ctre.phoenix",
             "artifactId": "canutils",
+<<<<<<< Updated upstream
             "version": "5.17.3",
+=======
+            "version": "5.19.4",
+>>>>>>> Stashed changes
             "libName": "CTRE_PhoenixCanutils",
             "headerClassifier": "headers",
             "sharedLibrary": false,
             "skipInvalidPlatforms": true,
             "binaryPlatforms": [
                 "windowsx86-64",
+<<<<<<< Updated upstream
                 "linuxx86-64"
+=======
+                "linuxx86-64",
+                "osxx86-64"
+>>>>>>> Stashed changes
             ]
         },
         {
             "groupId": "com.ctre.phoenix",
+<<<<<<< Updated upstream
             "artifactId": "platform-stub",
             "version": "5.17.3",
+=======
+            "artifactId": "platform-sim",
+            "version": "5.19.4",
+>>>>>>> Stashed changes
             "libName": "CTRE_PhoenixPlatform",
             "headerClassifier": "headers",
             "sharedLibrary": false,
             "skipInvalidPlatforms": true,
             "binaryPlatforms": [
                 "windowsx86-64",
+<<<<<<< Updated upstream
                 "linuxx86-64"
+=======
+                "linuxx86-64",
+                "osxx86-64"
+>>>>>>> Stashed changes
             ]
         },
         {
             "groupId": "com.ctre.phoenix",
             "artifactId": "core",
+<<<<<<< Updated upstream
             "version": "5.17.3",
+=======
+            "version": "5.19.4",
+>>>>>>> Stashed changes
             "libName": "CTRE_PhoenixCore",
             "headerClassifier": "headers",
             "sharedLibrary": false,
@@ -173,7 +304,40 @@
             "binaryPlatforms": [
                 "linuxathena",
                 "windowsx86-64",
+<<<<<<< Updated upstream
                 "linuxx86-64"
+=======
+                "linuxx86-64",
+                "osxx86-64"
+            ]
+        },
+        {
+            "groupId": "com.ctre.phoenix.sim",
+            "artifactId": "simTalonSRX",
+            "version": "5.19.4",
+            "libName": "CTRE_SimTalonSRX",
+            "headerClassifier": "headers",
+            "sharedLibrary": true,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxx86-64"
+            ]
+        },
+        {
+            "groupId": "com.ctre.phoenix.sim",
+            "artifactId": "simVictorSPX",
+            "version": "5.19.4",
+            "libName": "CTRE_SimVictorSPX",
+            "headerClassifier": "headers",
+            "sharedLibrary": true,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxx86-64"
+>>>>>>> Stashed changes
             ]
         }
     ]

@@ -1,5 +1,6 @@
 {
   "java.configuration.updateBuildConfiguration": "automatic",
+  "java.server.launchMode": "Standard",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -10,8 +11,15 @@
     "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
+<<<<<<< Updated upstream
     "**/.factorypath": true
   },
   "extensions.ignoreRecommendations": true,
   "files.autoSave": "off"
   
+=======
+    "**/.factorypath": true,
+    "**/*~": true
+  }
+}
+>>>>>>> Stashed changes
