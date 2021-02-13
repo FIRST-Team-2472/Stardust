@@ -36,8 +36,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
  * project.
  */
 public class Robot extends TimedRobot {
-//do we have popcorn?
-//nope.
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
   public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS, Constants.PCMID, Constants.COLLECTOR_WHEEL_PUSH_FORWARD, Constants.COLLECTOR_WHEEL_PUSH_REVERSE);
@@ -48,7 +46,7 @@ public class Robot extends TimedRobot {
   private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
   public AnalogInput pressure = new AnalogInput(0);
-  public PigeonIMU pigeon = new PigeonIMU(Constants.OSTRICH);
+  public PigeonIMU pigeon = new PigeonIMU(Constants.Pidgeon);
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
   public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(Constants.xboxcontroller);
   public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
@@ -67,6 +65,7 @@ public class Robot extends TimedRobot {
     limelight.setDriverCamMode(true);
 
   }
+
 //Assorted SmartDashboard things. Both revolve around the Limelight's abilities to see the target and track it. Untested in serious play.
   @Override
   public void robotPeriodic() {
@@ -112,6 +111,7 @@ public class Robot extends TimedRobot {
       //int rightSpeed = drive.getRightSpeed();
       //SmartDashboard.putNumber("Left Speed:", leftSpeed);
       //SmartDashboard.putNumber("Right Speed:", rightSpeed);}
+
     //driveOverLineAuto(actionQueue);
     //loadBallsAuto(actionQueue);
     //actionQueue.addAction(new DriveDistance(555));
@@ -128,24 +128,8 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     updateSmartDashboard();
   
-    //drive.driverFeet(99);
-    /*if (rightJoystick.getRawButtonPressed(1)) {
-      final int p = preferences.getInt("kP", 2);
-      final int i = preferences.getInt("kI", 0);
-      final int d = preferences.getInt("kD", 0);
-      final int f = preferences.getInt("kF", 1);
-      drive.setupMotionMagic(f, p, i, d, 8000, 1000);
-      SmartDashboard.putNumber("kP", p);
-      SmartDashboard.putNumber("kI", i);
-      SmartDashboard.putNumber("kD", d);
-      SmartDashboard.putNumber("kF", f);
-      SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
-      SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
-    }*/
-
     actionQueue.step();
-    //SmartDashboard.putNumber("MotionMagicError", drive.driveError());
-  }
+    }
 
   @Override
   public void teleopInit() {
@@ -153,7 +137,6 @@ public class Robot extends TimedRobot {
     updateSmartDashboard();
     compressor.setClosedLoopControl(true);
     drive.zeroCounters();
-    // TODO initalize smart dashboard values / set teleop state
     SmartDashboard.putString("RobotState", "TeleopEnabled");
   }
 
@@ -162,7 +145,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-updateSmartDashboard();
+    updateSmartDashboard();
     SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
     SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
 
@@ -245,25 +228,6 @@ updateSmartDashboard();
   public void testInit() {
     // SMART Dashboard perfs
     final Preferences prefs = Preferences.getInstance();
-    // FIXME give this a better name
-    final double p = prefs.getDouble("PID p value", 0);
-    SmartDashboard.putNumber("PID p value", p);
-    final double i = prefs.getDouble("PID i value", 0);
-    // FIXME give this a better name
-    SmartDashboard.putNumber("PID i value", i);
-    final double f = prefs.getDouble("PID f value", 0);
-    SmartDashboard.putNumber("PID f value", f);
-    final int velocity = prefs.getInt("velocity", 0);
-    SmartDashboard.putNumber("velocity", velocity);
-    // FIXME give this a better name
-    final double d = prefs.getDouble("PID d value", 0);
-    SmartDashboard.putNumber("PID d value", d);
-    final int acceleration = prefs.getInt("acceleration", 0);
-    SmartDashboard.putNumber("acceleration", acceleration);
-
-    Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
-
-    // TODO initalize the PID Test state
  }
   
 
@@ -273,7 +237,6 @@ updateSmartDashboard();
 
   @Override
   public void testPeriodic() {
-    //Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
 
     if (rightJoystick.getRawButtonPressed(1)) {
       while(rightJoystick.getRawButtonPressed(1) ) {
