@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.simulation.XboxControllerSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -35,6 +37,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
  */
 public class Robot extends TimedRobot {
 //do we have popcorn?
+//nope.
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
   public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS, Constants.PCMID, Constants.COLLECTOR_WHEEL_PUSH_FORWARD, Constants.COLLECTOR_WHEEL_PUSH_REVERSE);
@@ -42,14 +45,14 @@ public class Robot extends TimedRobot {
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
   public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
-  private final Happytwig rightJoystick = new Happytwig(Constants.jstickR);
-  private final Happytwig leftJoystick = new Happytwig(Constants.jstickL);
-  private final Vroomvroom xboxcontroller = new Vroomvroom(Constants.xboxcontroller);
   private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
   public AnalogInput pressure = new AnalogInput(0);
-  public PigeonIMU pigeon = new PigeonIMU(2);
+  public PigeonIMU pigeon = new PigeonIMU(Constants.OSTRICH);
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
+  public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(Constants.xboxcontroller);
+  public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
+  public static final Joystick leftJoystick = new Joystick(Constants.jstickL);
 
   @Override
   public void robotInit() {
@@ -64,7 +67,7 @@ public class Robot extends TimedRobot {
     limelight.setDriverCamMode(true);
 
   }
-
+//Assorted SmartDashboard things. Both revolve around the Limelight's abilities to see the target and track it. Untested in serious play.
   @Override
   public void robotPeriodic() {
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
@@ -72,12 +75,13 @@ public class Robot extends TimedRobot {
   }
 
   private final ActionQueue actionQueue = new ActionQueue();
-
+//Drives the robot for a set period of time. Hopefully will be rendered useless due to Motion Magic
   private void driveOverLineAuto(ActionQueue actions) {
     actions.clear();
     actions.addAction(new DriveStraightTime(-0.5, 1.5));
   }
-
+  //Autonomous code. Only to be used with the Limelight. 
+  //In theory, it points and shoots the shooter AFTER the target is aimed. Untested as of 2/13/21.
   private void shootBallAuto(ActionQueue actions) {
     actions.clear();
     actions.addAction(new Aim());
@@ -88,7 +92,7 @@ public class Robot extends TimedRobot {
     actions.addAction(new FeedBall());
     actions.addAction(new StopShooter());
   }
-
+//More untested autonomous code! Not even useful here, as our current robot can't hold more than 1 ball in the shooter. Oh well.
   private void loadBallsAuto(ActionQueue actions) {
     actions.addAction(new DriveStraightTime(.5, 5));
     actions.addAction(new DumpBalls(3));
@@ -171,7 +175,7 @@ updateSmartDashboard();
     SmartDashboard.putNumber("RightDesired", drive.desiredRight);
     SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
 
-    //drive.tankDrivePower(0.5, 0.5);
+
 
     if (limelight.isTargetSpotted() && teleopShooting) {
       teleopShooting = false;
@@ -282,7 +286,8 @@ updateSmartDashboard();
     }
     SmartDashboard.putNumber("teststate", teststate);
     switch (teststate) {
-    case 0:
+    //Test case that has the xboxcontroller independently control each motor.
+      case 0:
       collector.runConveyor(-xboxcontroller.getY(Hand.kLeft));
       collector.runFrontWheels(-xboxcontroller.getY(Hand.kRight));
       if (xboxcontroller.getAButton()) {
@@ -310,6 +315,7 @@ updateSmartDashboard();
         drive.runFrontRight(0);
       }
       break;
+    //Test case that run each different area of motors separately for testing.   
     case 1:
       if (xboxcontroller.getAButton()) {
         collector.runConveyor(.65);
@@ -337,6 +343,7 @@ updateSmartDashboard();
         shooter.runFlyWheel(0);
       }
       break;
+    //Climber test case. Made during one of the only competitions in 2020, the Grand Forks Great Northern competition.
     case 2:
       if (xboxcontroller.getAButton()) {
         climb.runClimber(.25);
@@ -350,6 +357,7 @@ updateSmartDashboard();
         climb.runClimber(0);
       } 
       break;
+    //Test case that runs all the pistons. Pistons that were for show, mostly.
     case 3:
       if (xboxcontroller.getAButton()) {
         indexer.runIndexerForward();
@@ -374,6 +382,7 @@ updateSmartDashboard();
         collector.pushofffrontwheel();
       }
       break;
+    //Test case for tank drive.
       case 4:
       
       drive.tankDriveVelocity(1, 1);
@@ -400,40 +409,29 @@ updateSmartDashboard();
     SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
         // SMART Dashboard perfs
         final Preferences prefs = Preferences.getInstance();
-        // FIXME give this a better name
-        final double p = prefs.getDouble("PID p value", 0);
-        SmartDashboard.putNumber("PID p value", p);
-        final double i = prefs.getDouble("PID i value", 0);
-        // FIXME give this a better name
-        SmartDashboard.putNumber("PID i value", i);
-        final double f = prefs.getDouble("PID f value", 0);
-        SmartDashboard.putNumber("PID f value", f);
-        final int velocity = prefs.getInt("velocity", 0);
-        SmartDashboard.putNumber("velocity", velocity);
-        // FIXME give this a better name
-        final double d = prefs.getDouble("PID d value", 0);
-        SmartDashboard.putNumber("PID d value", d);
-        final int acceleration = prefs.getInt("acceleration", 0);
-        SmartDashboard.putNumber("acceleration", acceleration);
-        SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
-        SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
-        SmartDashboard.putString("RobotState", "TeleopEnabled");
-        SmartDashboard.putNumber("kP", p);
-      SmartDashboard.putNumber("kI", i);
-      SmartDashboard.putNumber("kD", d);
-      SmartDashboard.putNumber("kF", f);
+      //Distance SmartDashboard stuff
       SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
       SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
-      SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
-      SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
+      //Robot state SmartDashboard stuff
+      SmartDashboard.putString("RobotState", "TeleopEnabled");
       SmartDashboard.putString("RobotState", "Robot On");
+      //Motion Magic SmartDashboard Stuff
       SmartDashboard.putNumber("LeftError", drive.leftDriveError());
       SmartDashboard.putNumber("RightError", drive.rightDriveError());
       SmartDashboard.putNumber("RightDesired", drive.desiredRight);
-      SmartDashboard.putNumber("Desired", drive.desiredLeft);
+      SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
+      //Pressure and solenoid SmartDashboard stuff
       //SmartDashboard.putNumber("Raw Pressure", pressure.getValue());
       SmartDashboard.putNumber("Raw Pressure", pressure.getAverageValue());
       SmartDashboard.putNumber("PSI", (pressure.getAverageValue()-400)*(70.0/1250.0));
+      //PID
+      SmartDashboard.putNumber("KP", 0.005);
+      SmartDashboard.putNumber("KI", 0);
+      SmartDashboard.putNumber("KD", 0.05);
+      SmartDashboard.putNumber("KF", .164);
+      //Limelight stuff
+      SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
+      SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
 
   }
 }

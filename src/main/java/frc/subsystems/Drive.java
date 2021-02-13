@@ -31,20 +31,15 @@ public class Drive {
         frontLeft.config_kF(0, .164);
 
 
-        backRight.config_kP(0, 0);
+        backRight.config_kP(0, 0.005);
         backRight.config_kI(0, 0);
-        backRight.config_kD(0, 0);
+        backRight.config_kD(0, 0.05);
         backRight.config_kF(0, .164);
 
-        SmartDashboard.putNumber("KP", 0);
-        SmartDashboard.putNumber("KI", 0);
-        SmartDashboard.putNumber("KD", 0);
-        SmartDashboard.putNumber("KF", .164);
-
         // Not slaved for testing
-        backLeft.follow(frontLeft);
+        //backLeft.follow(frontLeft);
         //backLeft.setInverted(InvertType.FollowMaster);
-        frontRight.follow(backRight);
+        //frontRight.follow(backRight);
         //backRight.setInverted(InvertType.FollowMaster);
 
 
@@ -165,14 +160,14 @@ public class Drive {
 
     public void tankDrivePower(double left, double right) {
         //runBackLeft(left * -1);
-        runFrontLeftPower(left * -1);
+        runFrontLeftPower(left);
         runBackRightPower(right);
         //runFrontRight(right);
     }
 
     public void tankDriveVelocity(double left, double right) {
         //runBackLeft(left * -1);
-        runFrontLeftVelocity(left * -1);
+        runFrontLeftVelocity(left);
         runBackRightVelocity(right);
         //runFrontRight(right);
     }
@@ -200,7 +195,7 @@ public class Drive {
     }
 
     public int getLeftSpeed() {
-        return (int)frontLeft.getSelectedSensorVelocity()*-1;
+        return (int)frontLeft.getSelectedSensorVelocity();
     }
 
     public int getLeftDistance() {

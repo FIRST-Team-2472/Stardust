@@ -29,5 +29,7 @@ public class Constants {
 	public static final int COLLECTOR_WHEEL_PUSH_REVERSE = 1;
 	//Compressor
 	public static final int COMPRESSOR = 16;
+	//IMUs
+	public static final int OSTRICH = 2;
 }
 //TODO get climber ids
