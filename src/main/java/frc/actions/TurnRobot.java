@@ -14,6 +14,7 @@ public class TurnRobot implements Actionable {
 
     @Override
     public void startAction() {
+        //Robot.imu.reset();
         SmartDashboard.putString("ActionName", "Turn");
     }
 
@@ -25,10 +26,10 @@ public class TurnRobot implements Actionable {
             we are at 0 want to go to 90
             90 - 0 =90
             left = 90*.5 = 45
-        
-        double error =  angle - Robot.imu.getAngle();
+        */
+        //double error =  angle - Robot.imu.getAngle();
         double kP = .5;
-        Robot.drive.tankDriveVelocity(error*kP, error*-kP);*/
+        //Robot.drive.tankDriveVelocity(error*kP, error*-kP);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class TurnRobot implements Actionable {
 
     @Override
     public boolean isFinished() {
-        return false; 
+        return false;
         //Math.abs(angle - Robot.imu.getAngle()) < 2;
     }
 

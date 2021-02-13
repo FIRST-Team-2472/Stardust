@@ -196,17 +196,6 @@ public class Drive {
     }
 
     public int getRightSpeed() {
-<<<<<<< Updated upstream
-        return backRight.getSelectedSensorVelocity();
-    }
-
-    public int getLeftSpeed() {
-        return frontLeft.getSelectedSensorVelocity()*-1;
-    }
-
-    public int getLeftDistance() {
-        return frontLeft.getSelectedSensorPosition();
-=======
         return (int)backRight.getSelectedSensorVelocity();
     }
 
@@ -216,7 +205,6 @@ public class Drive {
 
     public int getLeftDistance() {
         return (int)frontLeft.getSelectedSensorPosition();
->>>>>>> Stashed changes
     }
 
     public void setLeftDistance(int dis) {
@@ -224,11 +212,7 @@ public class Drive {
     }
 
     public int getRightDistance(){
-<<<<<<< Updated upstream
-        return backRight.getSelectedSensorPosition();
-=======
         return (int)backRight.getSelectedSensorPosition();
->>>>>>> Stashed changes
     }
 
     public void setRightDistance(int dis) {
