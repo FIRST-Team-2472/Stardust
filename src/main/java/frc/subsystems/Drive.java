@@ -25,22 +25,22 @@ public class Drive {
         frontLeft = new TalonSRX(frontleftID);
         frontRight = new TalonSRX(frontrightID);
 
-        frontLeft.config_kP(0, 0.568);
+        frontLeft.config_kP(0, 0.005);
         frontLeft.config_kI(0, 0);
         frontLeft.config_kD(0, 0.05);
         frontLeft.config_kF(0, .39);
 
 
-        backRight.config_kP(0, 0.568);
+        backRight.config_kP(0, 0.005);
         backRight.config_kI(0, 0);
         backRight.config_kD(0, 0.05);
         backRight.config_kF(0, .39);
 
 
         // Not slaved for testing
-        //backLeft.follow(frontLeft);
+        backLeft.follow(frontLeft);
         //backLeft.setInverted(InvertType.FollowMaster);
-        //frontRight.follow(backRight);
+        frontRight.follow(backRight);
         //backRight.setInverted(InvertType.FollowMaster);
 
 
