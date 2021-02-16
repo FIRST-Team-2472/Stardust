@@ -37,9 +37,9 @@ public class Drive {
         backRight.config_kF(0, .164);
 
         // Not slaved for testing
-        //backLeft.follow(frontLeft);
+        backLeft.follow(frontLeft);
         //backLeft.setInverted(InvertType.FollowMaster);
-        //frontRight.follow(backRight);
+        frontRight.follow(backRight);
         //backRight.setInverted(InvertType.FollowMaster);
 
 
