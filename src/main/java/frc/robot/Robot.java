@@ -243,27 +243,7 @@ updateSmartDashboard();
 
   @Override
   public void testInit() {
-    // SMART Dashboard perfs
-    final Preferences prefs = Preferences.getInstance();
-    // FIXME give this a better name
-    final double p = prefs.getDouble("PID p value", 0);
-    SmartDashboard.putNumber("PID p value", p);
-    final double i = prefs.getDouble("PID i value", 0);
-    // FIXME give this a better name
-    SmartDashboard.putNumber("PID i value", i);
-    final double f = prefs.getDouble("PID f value", 0);
-    SmartDashboard.putNumber("PID f value", f);
-    final int velocity = prefs.getInt("velocity", 0);
-    SmartDashboard.putNumber("velocity", velocity);
-    // FIXME give this a better name
-    final double d = prefs.getDouble("PID d value", 0);
-    SmartDashboard.putNumber("PID d value", d);
-    final int acceleration = prefs.getInt("acceleration", 0);
-    SmartDashboard.putNumber("acceleration", acceleration);
-
-    Robot.drive.setupMotionMagic(f, p, i, d, velocity, acceleration);
-
-    // TODO initalize the PID Test state
+   
  }
   
 
@@ -402,6 +382,19 @@ updateSmartDashboard();
       System.out.println(suggestKF);
   }else {
       shooter.runFlyWheel(0);
+    }
+
+    if (rightJoystick.getRawButton(3)) {
+      drive.runBackRightPower(.75);
+      drive.runFrontLeftPower(.75);
+      suggestKF = .75 * 1023 / drive.getRightSpeed();
+      System.out.print("Suggested Right kF: ");
+      System.out.println(suggestKF);
+      suggestKF = .75 * 1023 / drive.getLeftSpeed();
+      System.out.print("Suggested Left kF: ");
+      System.out.println(suggestKF);
+  }else {
+      drive.runBackRightPower(0);
     }
   }
   public void updateSmartDashboard(){
