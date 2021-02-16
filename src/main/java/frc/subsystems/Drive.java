@@ -39,7 +39,7 @@ public class Drive {
 
         // Not slaved for testing
         backLeft.follow(frontLeft);
-        //backLeft.setInverted(InvertType.FollowMaster);
+        backLeft.setInverted(InvertType.FollowMaster);
         frontRight.follow(backRight);
         //backRight.setInverted(InvertType.FollowMaster);
 
@@ -220,7 +220,7 @@ public class Drive {
     double currentAngularRate = xyz_dps[2];
     
     SmartDashboard.putBoolean("AngleGood", angleIsGood);
-    SmartDashboard.putNumber("Angle", currentAngle);
+    SmartDashboard.putNumber("Angle", -((int)currentAngle % 360));
     SmartDashboard.putNumber("Rate", currentAngularRate);
     
 

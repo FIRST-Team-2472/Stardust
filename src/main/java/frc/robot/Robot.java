@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
+    drive.DoPigeon();
   }
 
   private final ActionQueue actionQueue = new ActionQueue();
@@ -159,7 +160,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
 
     //runs the IMU(Pigeon), and related things
-    drive.DoPigeon();
 
     if (limelight.isTargetSpotted() && teleopShooting) {
       teleopShooting = false;
