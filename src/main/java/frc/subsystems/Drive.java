@@ -25,16 +25,16 @@ public class Drive {
         frontLeft = new TalonSRX(frontleftID);
         frontRight = new TalonSRX(frontrightID);
 
-        frontLeft.config_kP(0, 0.005);
+        frontLeft.config_kP(0, 0.568);
         frontLeft.config_kI(0, 0);
         frontLeft.config_kD(0, 0.05);
-        frontLeft.config_kF(0, .6);
+        frontLeft.config_kF(0, .39);
 
 
-        backRight.config_kP(0, 0.005);
+        backRight.config_kP(0, 0.568);
         backRight.config_kI(0, 0);
         backRight.config_kD(0, 0.05);
-        backRight.config_kF(0, .6);
+        backRight.config_kF(0, .39);
 
 
         // Not slaved for testing
@@ -57,15 +57,12 @@ public class Drive {
        
         // Set minimum output (closed loop)  to 0 for now
         backRight.configNominalOutputForward(0, 30);
-        backRight.configNominalOutputReverse(0, 30);
         
         // Set maximum forward and backward to full speed
         backRight.configPeakOutputForward(1, 30);
         backRight.configPeakOutputReverse(-1, 30);
     
-        // Motion magic cruise (max speed) is 100 counts per 100 ms
-            backRight.configMotionCruiseVelocity(500, 30);
-            backRight.configMotionCruiseVelocity(3000, 30);
+        // Motion magic cruise (max speed) is 100 counts per 100 mi
             backRight.configMotionCruiseVelocity(3000, 30);
     
         // Motion magic acceleration is 50 counts
@@ -82,7 +79,6 @@ public class Drive {
             frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
            
             // Set minimum output (closed loop)  to 0 for now
-            frontLeft.configNominalOutputForward(0, 30);
             frontLeft.configNominalOutputReverse(0, 30);
             
             // Set maximum forward and backward to full speed
@@ -90,11 +86,6 @@ public class Drive {
             frontLeft.configPeakOutputReverse(-1, 30);
         
             // Motion magic cruise (max speed) is 100 counts per 100 ms
-
-                frontLeft.configMotionCruiseVelocity(500, 30);
-
-                frontLeft.configMotionCruiseVelocity(3000, 30);
-
                 frontLeft.configMotionCruiseVelocity(3000, 30);
         
             // Motion magic acceleration is 50 counts
