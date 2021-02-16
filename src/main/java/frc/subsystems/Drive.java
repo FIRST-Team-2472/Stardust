@@ -108,22 +108,6 @@ public class Drive {
 
     }
 
-    public void setupMotionMagic(double f, double p, double i, double d, int velocity, int acceleration) {
-
-
-        frontLeft.config_kP(0, p);
-        frontLeft.config_kI(0, i);
-        frontLeft.config_kD(0, d);
-        frontLeft.config_kF(0, f);
-
-
-        backRight.config_kP(0, p);
-        backRight.config_kI(0, i);
-        backRight.config_kD(0, d);
-        backRight.config_kF(0, f);
-
-    }
-
     public static final int COUNTS_PER_FOOT = 5215;
 
     public void driverFeet(double meters) {

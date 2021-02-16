@@ -30,6 +30,5 @@ public class Constants {
 	//Compressor
 	public static final int COMPRESSOR = 16;
 	//IMUs
-	public static final int OSTRICH = 2;
+	public static final int Pidgeon = 2;
 }
-//TODO get climber ids
