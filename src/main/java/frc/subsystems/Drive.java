@@ -36,7 +36,6 @@ public class Drive {
         backRight.config_kD(0, 0.05);
         backRight.config_kF(0, .39);
 
-
         // Not slaved for testing
         backLeft.follow(frontLeft);
         backLeft.setInverted(InvertType.FollowMaster);
@@ -44,6 +43,8 @@ public class Drive {
         //backRight.setInverted(InvertType.FollowMaster);
 
 
+
+        frontRight.setInverted(false);
 
         frontLeft.setInverted(true);
         backRight.setInverted(false);
@@ -57,12 +58,15 @@ public class Drive {
        
         // Set minimum output (closed loop)  to 0 for now
         backRight.configNominalOutputForward(0, 30);
+        backRight.configNominalOutputReverse(0, 30);
         
         // Set maximum forward and backward to full speed
         backRight.configPeakOutputForward(1, 30);
         backRight.configPeakOutputReverse(-1, 30);
     
-        // Motion magic cruise (max speed) is 100 counts per 100 mi
+        // Motion magic cruise (max speed) is 100 counts per 100 ms
+            backRight.configMotionCruiseVelocity(500, 30);
+            backRight.configMotionCruiseVelocity(3000, 30);
             backRight.configMotionCruiseVelocity(3000, 30);
     
         // Motion magic acceleration is 50 counts
@@ -79,6 +83,7 @@ public class Drive {
             frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
            
             // Set minimum output (closed loop)  to 0 for now
+            frontLeft.configNominalOutputForward(0, 30);
             frontLeft.configNominalOutputReverse(0, 30);
             
             // Set maximum forward and backward to full speed
@@ -86,6 +91,11 @@ public class Drive {
             frontLeft.configPeakOutputReverse(-1, 30);
         
             // Motion magic cruise (max speed) is 100 counts per 100 ms
+
+                frontLeft.configMotionCruiseVelocity(500, 30);
+
+                frontLeft.configMotionCruiseVelocity(3000, 30);
+
                 frontLeft.configMotionCruiseVelocity(3000, 30);
         
             // Motion magic acceleration is 50 counts
@@ -110,12 +120,12 @@ public class Drive {
     
     public void runBackRightVelocity(double speed) {
         backRight.set(ControlMode.Velocity, speed * 6250);
-        desiredRight = (double)speed * -6250;
+        desiredRight = (double)speed * 6250;
     }
 
     public void runFrontLeftVelocity(double speed) {
         frontLeft.set(ControlMode.Velocity, speed * 6250);
-        desiredLeft = (double)speed * -6250;
+        desiredLeft = (double)speed * 6250;
     }
 
     public int leftDriveError() {
@@ -213,18 +223,24 @@ public class Drive {
 
         pigeon.getFusedHeading(fusionStatus);
 
-    double currentAngle = fusionStatus.heading;
+        double currentAngle = fusionStatus.heading;
+
+        int yaw = 360+((int)currentAngle % 360);
 
         boolean angleIsGood = (pigeon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
 
     double currentAngularRate = xyz_dps[2];
     
     SmartDashboard.putBoolean("AngleGood", angleIsGood);
-    SmartDashboard.putNumber("Angle", -((int)currentAngle % 360));
+    SmartDashboard.putNumber("Angle", (int)currentAngle % 360);
     SmartDashboard.putNumber("Rate", currentAngularRate);
-    
+    SmartDashboard.putNumber("Yaw", yaw);
+    }
 
-
-
+    public int getCurrentAngle() {
+        PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+        pigeon.getFusedHeading(fusionStatus);
+        double currentAngle = fusionStatus.heading;
+        return (int)currentAngle;
     }
 }

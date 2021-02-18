@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    pigeon.setFusedHeading(0.0, 30);
     SmartDashboard.putString("RobotState", "Robot On");
     compressor.setClosedLoopControl(true);
     /*
@@ -72,6 +73,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
     drive.DoPigeon();
+    SmartDashboard.putNumber("Test", drive.getCurrentAngle());
   }
 
   private final ActionQueue actionQueue = new ActionQueue();
@@ -102,7 +104,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    pigeon.setFusedHeading(0.0, 30);
     drive.zeroCounters();
     actionQueue.clear();
     updateSmartDashboard();
@@ -134,7 +135,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    pigeon.setFusedHeading(0.0, 30);
     updateSmartDashboard();
     compressor.setClosedLoopControl(true);
     drive.zeroCounters();
@@ -238,7 +238,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-
     if (rightJoystick.getRawButtonPressed(1)) {
       while(rightJoystick.getRawButtonPressed(1) ) {
       }
