@@ -2,6 +2,7 @@ package frc.actions;
 
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class DriveStraightPower implements Actionable{ 
@@ -13,8 +14,8 @@ public class DriveStraightPower implements Actionable{
     @Override
     public void startAction() {
         Robot.drive.zeroCounters();
-        //Robot.drive.setDistance(lDis, rDis);
-        Robot.drive.tankDrivePower(1, 1);
+        Robot.drive.setDistance(0, 0);
+        Robot.drive.tankDrivePower(0.5, 0.5);
         }
 
     @Override
@@ -28,8 +29,10 @@ public class DriveStraightPower implements Actionable{
 
     @Override
     public boolean isFinished() {
-        if (Robot.drive.leftDriveError() < 500);
-            Robot.drive.tankDrivePower(0, 0);
+        if (Robot.drive.getLeftDistance() > (int)(feet * Constants.pulsesPerFoot)) {
+            return true;
+        }
+        
         //return Robot.drive.rightDriveError() < 500;
         return false;
     }
