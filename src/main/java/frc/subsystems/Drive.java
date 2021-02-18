@@ -198,6 +198,12 @@ public class Drive {
         backRight.setSelectedSensorPosition(dis);
     }
 
+    public void setDistance(int lDis, int rDis) {
+        frontLeft.setSelectedSensorPosition(lDis);
+        backRight.setSelectedSensorPosition(rDis);
+    }
+
+
     public void tankDriveMotionMagic(int targetPosR, int targetPosL){
         backRight.set(ControlMode.MotionMagic, targetPosR);
         frontLeft.set(ControlMode.MotionMagic, targetPosL);
