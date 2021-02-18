@@ -231,7 +231,7 @@ public class Drive {
 
         double currentAngle = fusionStatus.heading;
 
-        int yaw = 360+((int)currentAngle % 360);
+        int yaw = ((int)currentAngle % 360);
 
         boolean angleIsGood = (pigeon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
 
