@@ -20,7 +20,8 @@ public class DriveStraightPower implements Actionable{
         }
 
     @Override
-    public void periodic() { 
+    public void periodic() {
+        Robot.drive.tankDriveVelocity(.5, .5+(((Robot.drive.getLeftDistance()-Robot.drive.getRightDistance())/Robot.drive.getRightDistance())*0.005));
     }
 
     @Override
@@ -30,10 +31,6 @@ public class DriveStraightPower implements Actionable{
 
     @Override
     public boolean isFinished() {
-        if (Robot.drive.getLeftDistance() > feet * Constants.pulsesPerFoot)
-            return true;
- 
-        //return Robot.drive.rightDriveError() < 500;
-        return false;
+        return Robot.drive.getLeftDistance() > (int) (feet * Constants.pulsesPerFoot);
     }
 }

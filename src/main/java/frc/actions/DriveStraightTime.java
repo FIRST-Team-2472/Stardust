@@ -16,7 +16,7 @@ public class DriveStraightTime extends TimerBase {
     @Override
     public void startAction() {
         super.startAction();
-        SmartDashboard.putString("ActionName", "DriveStraight");
+        SmartDashboard.putString("ActionName", "Drive Straight Time");
         Robot.drive.tankDrivePower(speed, speed);
     }
 
