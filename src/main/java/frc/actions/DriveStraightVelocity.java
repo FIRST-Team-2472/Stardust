@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.Constants;
 
 public class DriveStraightVelocity implements Actionable {
 
