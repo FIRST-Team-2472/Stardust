@@ -31,4 +31,6 @@ public class Constants {
 	public static final int COMPRESSOR = 16;
 	//IMUs
 	public static final int Pidgeon = 2;
+	//Measurement
+	public static final double pulsesPerFoot = 5700;
 }
