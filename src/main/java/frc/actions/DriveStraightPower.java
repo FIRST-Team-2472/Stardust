@@ -7,6 +7,9 @@ import frc.robot.Robot;
 
 public class DriveStraightPower implements Actionable{ 
     public double feet;
+    public double leftspeed = .3;
+    public double rightspeed = .3;
+
     public DriveStraightPower(double x){
         feet = x;
     }
@@ -16,12 +19,18 @@ public class DriveStraightPower implements Actionable{
         Robot.drive.zeroCounters();
         Robot.drive.setDistance(0, 0);
         SmartDashboard.putString("ActionName", "Drive Straight Power");
-        Robot.drive.tankDrivePower(-.3, -.3);
+        Robot.drive.tankDrivePower(leftspeed, rightspeed);
         }
 
     @Override
     public void periodic() {
-        Robot.drive.tankDriveVelocity(.5, .5+(((Robot.drive.getLeftDistance()-Robot.drive.getRightDistance())/Robot.drive.getRightDistance())*0.005));
+        double correction; 
+        if (Robot.drive.getRightDistance() != 0) {
+            correction = ((Robot.drive.getLeftDistance()-Robot.drive.getRightDistance())/Robot.drive.getRightDistance())*0.005;
+            rightspeed += correction;
+            System.out.println(rightspeed);
+            Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
+        }
     }
 
     @Override

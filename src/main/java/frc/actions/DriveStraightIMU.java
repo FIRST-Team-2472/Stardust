@@ -2,11 +2,15 @@ package frc.actions;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class DriveStraightIMU implements Actionable {
 
     public double feet;
+    public double leftspeed = .3;
+    public double rightspeed = .3;
+
     public DriveStraightIMU(double x){
         this.feet = x;
     }
@@ -15,15 +19,18 @@ public class DriveStraightIMU implements Actionable {
     public void startAction() {
         Robot.drive.zeroCounters();
         Robot.drive.zeroIMU();
-        //Robot.drive.setDistance(lDis, rDis);
-        Robot.drive.tankDriveVelocity(1, 1);
+        Robot.drive.setDistance(0, 0);
+        Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         SmartDashboard.putString("ActionName", "Drive Straight IMU");
 
         }
 
     @Override
     public void periodic() { 
-       // SmartDashboard.putString("DistanceDriven", feet);
+        double correction;
+        correction = -Robot.drive.getCurrentAngle()*0.0005;
+        rightspeed += correction;
+        Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
     }
 
     @Override
@@ -32,10 +39,7 @@ public class DriveStraightIMU implements Actionable {
 
     @Override
     public boolean isFinished() {
-        if (Robot.drive.leftDriveError() < 500);
-            Robot.drive.tankDriveVelocity(0, 0);
-        //return Robot.drive.rightDriveError() < 500;
-        return false;
+        return Robot.drive.getLeftDistance() > (int) (feet * Constants.pulsesPerFoot);
     }
 }
 

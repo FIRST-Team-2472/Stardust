@@ -180,16 +180,16 @@ public class Drive {
         return (int)frontLeft.getSelectedSensorVelocity();
     }
 
-    public int getLeftDistance() {
-        return (int)frontLeft.getSelectedSensorPosition();
+    public double getLeftDistance() {
+        return frontLeft.getSelectedSensorPosition();
     }
 
     public void setLeftDistance(int dis) {
         frontLeft.setSelectedSensorPosition(dis);
     }
 
-    public int getRightDistance(){
-        return (int)backRight.getSelectedSensorPosition();
+    public double getRightDistance(){
+        return backRight.getSelectedSensorPosition();
     }
 
     public void setRightDistance(int dis) {
