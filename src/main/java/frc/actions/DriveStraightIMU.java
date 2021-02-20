@@ -35,11 +35,18 @@ public class DriveStraightIMU implements Actionable {
 
     @Override
     public void endAction() {
+        Robot.drive.tankDriveVelocity(0, 0);
     }
 
     @Override
     public boolean isFinished() {
-        return Robot.drive.getLeftDistance() > (int) (feet * Constants.pulsesPerFoot);
+        if (feet > 0) {
+            return Robot.drive.getLeftDistance() > (int) (feet * Constants.pulsesPerFoot);
+        } else if (feet == 0) {
+            return true;
+        } else {   
+            return Robot.drive.getLeftDistance() < (int) (feet * Constants.pulsesPerFoot);
+        }
     }
 }
 
