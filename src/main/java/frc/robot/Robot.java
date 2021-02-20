@@ -78,10 +78,10 @@ public class Robot extends TimedRobot {
 
   private final ActionQueue actionQueue = new ActionQueue();
 //Drives the robot for a set period of time. Hopefully will be rendered useless due to Motion Magic
-  private void driveOverLineAuto(ActionQueue actions) {
+  /*private void driveOverLineAuto(ActionQueue actions) {
     actions.clear();
     actions.addAction(new DriveStraightTime(-0.5, 1.5));
-  }
+}*/
   //Autonomous code. Only to be used with the Limelight. 
   //In theory, it points and shoots the shooter AFTER the target is aimed. Untested as of 2/13/21.
   private void shootBallAuto(ActionQueue actions) {
@@ -98,7 +98,6 @@ public class Robot extends TimedRobot {
   private void loadBallsAuto(ActionQueue actions) {
     actions.addAction(new DriveStraightTime(.5, 5));
     actions.addAction(new DumpBalls(3));
-
   }
 
 
@@ -107,7 +106,9 @@ public class Robot extends TimedRobot {
     drive.zeroCounters();
     actionQueue.clear();
     updateSmartDashboard();
-    actionQueue.addAction(new DriveStraightTime(.3, 5));
+    actionQueue.addAction(new DriveStraightTime(-.3, 5));
+    actionQueue.addAction(new Wait(1));
+    actionQueue.addAction(new DriveStraightPower(5));
     //Full speed = 6250 pulse per 1/10th of a second
       //int leftSpeed = drive.getLeftSpeed();
       //int rightSpeed = drive.getRightSpeed();
@@ -179,6 +180,7 @@ public class Robot extends TimedRobot {
       shooter.runFlyWheel(0);
     }
 
+    //TODO REMINDER joystick forward gives negative values
     drive.tankDriveVelocity(leftJoystick.getY(), rightJoystick.getY());
 
     // Real coooolector
@@ -383,6 +385,7 @@ public class Robot extends TimedRobot {
 
   //run this to set all smart dashboard values
   public void updateSmartDashboard(){
+      SmartDashboard.putNumber("Left Joystick value", leftJoystick.getY());
     SmartDashboard.putNumber("Left Speed:", drive.getLeftSpeed());
     SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
         // SMART Dashboard perfs

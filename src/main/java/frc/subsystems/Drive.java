@@ -40,14 +40,11 @@ public class Drive {
         backLeft.follow(frontLeft);
         backLeft.setInverted(InvertType.FollowMaster);
         frontRight.follow(backRight);
-        //backRight.setInverted(InvertType.FollowMaster);
-
-
-
-        frontRight.setInverted(false);
+        //frontRight.setInverted(InvertType.FollowMaster);
 
         frontLeft.setInverted(true);
         backRight.setInverted(false);
+        
 
         //encoders
         
@@ -120,12 +117,12 @@ public class Drive {
     
     public void runBackRightVelocity(double speed) {
         backRight.set(ControlMode.Velocity, speed * 6250);
-        desiredRight = (double)speed * 6250;
+        desiredRight = (double)speed * -6250;
     }
 
     public void runFrontLeftVelocity(double speed) {
         frontLeft.set(ControlMode.Velocity, speed * 6250);
-        desiredLeft = (double)speed * 6250;
+        desiredLeft = (double)speed * -6250;
     }
 
     public int leftDriveError() {
