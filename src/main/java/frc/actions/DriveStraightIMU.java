@@ -3,16 +3,17 @@ package frc.actions;
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
 
-public class DriveStraightVelocity implements Actionable {
+public class DriveStraightIMU implements Actionable {
 
     public double feet;
-    public DriveStraightVelocity(double x){
+    public DriveStraightIMU(double x){
         this.feet = x;
     }
 
     @Override
     public void startAction() {
         Robot.drive.zeroCounters();
+        Robot.drive.zeroIMU();
         //Robot.drive.setDistance(lDis, rDis);
         Robot.drive.tankDriveVelocity(1, 1);
         }
