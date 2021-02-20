@@ -1,6 +1,8 @@
 package frc.actions;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class DriveStraightVelocity implements Actionable {
@@ -13,25 +15,24 @@ public class DriveStraightVelocity implements Actionable {
     @Override
     public void startAction() {
         Robot.drive.zeroCounters();
-        //Robot.drive.setDistance(lDis, rDis);
-        Robot.drive.tankDriveVelocity(1, 1);
+        Robot.drive.setDistance(0, 0);
+        SmartDashboard.putString("ActionName", "Drive Straight Velocity");
+        Robot.drive.tankDriveVelocity(.5, .5);
         }
 
     @Override
     public void periodic() { 
-       // SmartDashboard.putString("DistanceDriven", feet);
+        Robot.drive.tankDriveVelocity(.5, .5+(((Robot.drive.getLeftDistance()-Robot.drive.getRightDistance())/Robot.drive.getRightDistance())*0.005));
     }
 
     @Override
     public void endAction() {
+        Robot.drive.tankDriveVelocity(0, 0);
     }
 
     @Override
     public boolean isFinished() {
-        if (Robot.drive.leftDriveError() < 500);
-            Robot.drive.tankDriveVelocity(0, 0);
-        //return Robot.drive.rightDriveError() < 500;
-        return false;
+        return Robot.drive.getLeftDistance() > (int) (feet * Constants.pulsesPerFoot);
     }
 }
 
