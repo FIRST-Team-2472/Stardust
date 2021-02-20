@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 
 
 public class Drive {
@@ -209,6 +210,10 @@ public class Drive {
     public void zeroCounters(){
         backRight.setSelectedSensorPosition(0);
         frontLeft.setSelectedSensorPosition(0);
+    }
+
+    public void zeroIMU(){
+        pigeon.setFusedHeading(0.0, 30);
     }
 
     public void DoPigeon(){
