@@ -106,9 +106,11 @@ public class Robot extends TimedRobot {
     drive.zeroCounters();
     actionQueue.clear();
     updateSmartDashboard();
-    actionQueue.addAction(new DriveStraightTime(-.3, 5));
-    actionQueue.addAction(new Wait(1));
-    actionQueue.addAction(new DriveStraightPower(5));
+    /*actionQueue.addAction(new DriveStraightTime(-.3, 5));
+    actionQueue.addAction(new Wait(1));*/
+    //actionQueue.addAction(new DriveStraightPower(5));
+    //actionQueue.addAction(new Wait(1));
+    actionQueue.addAction(new DriveStraightVelocity(5));
     //Full speed = 6250 pulse per 1/10th of a second
       //int leftSpeed = drive.getLeftSpeed();
       //int rightSpeed = drive.getRightSpeed();
