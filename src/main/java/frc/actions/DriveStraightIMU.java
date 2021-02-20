@@ -1,5 +1,6 @@
 package frc.actions;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
 
@@ -16,6 +17,8 @@ public class DriveStraightIMU implements Actionable {
         Robot.drive.zeroIMU();
         //Robot.drive.setDistance(lDis, rDis);
         Robot.drive.tankDriveVelocity(1, 1);
+        SmartDashboard.putString("ActionName", "Drive Straight IMU");
+
         }
 
     @Override
