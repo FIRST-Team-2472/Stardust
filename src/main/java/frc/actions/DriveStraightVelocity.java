@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.Constants;
 
 public class DriveStraightVelocity implements Actionable {
 
@@ -33,7 +32,13 @@ public class DriveStraightVelocity implements Actionable {
 
     @Override
     public boolean isFinished() {
-        return Robot.drive.getLeftDistance() > (int) (feet * Constants.pulsesPerFoot);
+        if (feet > 0) {
+            return Robot.drive.getLeftDistance() > (int) (feet * Constants.pulsesPerFoot);
+        } else if (feet == 0) {
+            return true;
+        } else {   
+            return Robot.drive.getLeftDistance() < (int) (feet * Constants.pulsesPerFoot);
+        }
     }
 }
 
