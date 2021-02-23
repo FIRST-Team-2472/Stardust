@@ -6,11 +6,11 @@ import frc.robot.Robot;
 
 
 public class TurnRobot implements Actionable {
-    private final int angle;
+    private double angle;
 
     
-    public TurnRobot(int angle){
-        this.angle = angle;
+    public TurnRobot(double Angle){
+        angle = Angle;
     }
     
 
@@ -18,14 +18,13 @@ public class TurnRobot implements Actionable {
     public void startAction() {
         Robot.drive.zeroCounters();
         Robot.drive.zeroIMU();
-        Robot.drive.setDistance(0, 0);
         SmartDashboard.putString("ActionName", "Turn");
     }
 
     @Override
     public void periodic() {
-        if (angle < 0) Robot.drive.tankDriveVelocity(-.15, .15);
-        if (angle > 0) Robot.drive.tankDriveVelocity(.15,-.15);
+        if (angle-Robot.drive.getCurrentAngle() > 0) Robot.drive.tankDriveVelocity(-.20, .20);
+        if (angle-Robot.drive.getCurrentAngle() < 0) Robot.drive.tankDriveVelocity(.20,-.20);
     }
 
     @Override
@@ -35,12 +34,10 @@ public class TurnRobot implements Actionable {
 
     @Override
     public boolean isFinished() {
-        if (angle > 0) {
-            return Robot.drive.getCurrentAngle() > angle;
-        } else if (angle == 0) {
+
+        if (Math.abs(angle-Robot.drive.getCurrentAngle()) < 6) {
             return true;
-        } else {
-            return Robot.drive.getCurrentAngle() < angle;
         }
+        return false;
     }
 }

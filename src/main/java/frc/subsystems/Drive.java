@@ -23,16 +23,16 @@ public class Drive {
         frontLeft = new TalonSRX(frontleftID);
         frontRight = new TalonSRX(frontrightID);
 
-        frontLeft.config_kP(0, 0.005);
+        frontLeft.config_kP(0, 0.05);
         frontLeft.config_kI(0, 0);
         frontLeft.config_kD(0, 0.05);
-        frontLeft.config_kF(0, -.13);
+        frontLeft.config_kF(0, -.19);
 
 
-        backRight.config_kP(0, 0.005);
+        backRight.config_kP(0, 0.05);
         backRight.config_kI(0, 0);
         backRight.config_kD(0, 0.05);
-        backRight.config_kF(0, -.13);
+        backRight.config_kF(0, -.19);
 
         // Not slaved for testing
         backLeft.follow(frontLeft);
@@ -115,12 +115,12 @@ public class Drive {
     
     public void runBackRightVelocity(double speed) {
         backRight.set(ControlMode.Velocity, speed * 6250);
-        desiredRight = (double)speed * -6250;
+        desiredRight = (double)speed * 6250;
     }
 
     public void runFrontLeftVelocity(double speed) {
         frontLeft.set(ControlMode.Velocity, speed * 6250);
-        desiredLeft = (double)speed * -6250;
+        desiredLeft = (double)speed * 6250;
     }
 
     public int leftDriveError() {

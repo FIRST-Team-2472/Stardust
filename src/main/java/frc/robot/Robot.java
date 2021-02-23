@@ -110,7 +110,19 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new Wait(1));*/
     //actionQueue.addAction(new DriveStraightPower(5));
     //actionQueue.addAction(new Wait(1));
-    actionQueue.addAction(new DriveStraightIMU(25));
+    //actionQueue.addAction(new DriveStraightIMU(25));
+    //actionQueue.addAction(new Wait(1));
+    //actionQueue.addAction(new TurnRobot(-90));
+    Robot.drive.zeroIMU();
+    actionQueue.addAction(new TurnRobot(90));
+    actionQueue.addAction(new TurnRobot(-90));
+    actionQueue.addAction(new Wait(2));
+    actionQueue.addAction(new DriveTowardHeading(.6, .4, -20));
+    actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));
+    actionQueue.addAction(new DriveTowardHeading(.6, .4, -20));
+    actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));
+    actionQueue.addAction(new DriveTowardHeading(.6, .4, -20));
+    actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));
     //Full speed = 6250 pulse per 1/10th of a second
       //int leftSpeed = drive.getLeftSpeed();
       //int rightSpeed = drive.getRightSpeed();
@@ -183,7 +195,7 @@ public class Robot extends TimedRobot {
     }
 
     //TODO REMINDER joystick forward gives negative values
-    drive.tankDriveVelocity(leftJoystick.getY(), rightJoystick.getY());
+    drive.tankDriveVelocity(leftJoystick.getY()*-1, rightJoystick.getY()*-1);
 
     // Real coooolector
     collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
