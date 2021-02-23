@@ -35,6 +35,7 @@ public class DriveStraightIMU implements Actionable {
 
     @Override
     public void endAction() {
+        Robot.drive.tankDriveVelocity(0, 0);
     }
 
     @Override
