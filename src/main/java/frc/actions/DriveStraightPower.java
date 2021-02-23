@@ -17,7 +17,6 @@ public class DriveStraightPower implements Actionable{
     @Override
     public void startAction() {
         Robot.drive.zeroCounters();
-        Robot.drive.setDistance(0, 0);
         SmartDashboard.putString("ActionName", "Drive Straight Power");
         Robot.drive.tankDrivePower(leftspeed, rightspeed);
         }

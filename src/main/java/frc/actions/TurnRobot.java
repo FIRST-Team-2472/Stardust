@@ -16,9 +16,7 @@ public class TurnRobot implements Actionable {
 
     @Override
     public void startAction() {
-        Robot.drive.zeroCounters();
         Robot.drive.zeroIMU();
-        Robot.drive.setDistance(0, 0);
         SmartDashboard.putString("ActionName", "Turn");
     }
 
