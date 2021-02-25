@@ -123,6 +123,7 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new ZeroIMU());
     actionQueue.addAction(new TurnRobot(90));
     actionQueue.addAction(new TurnRobot(-90));
+    actionQueue.addAction(new ZeroIMU());
     actionQueue.addAction(new Wait(2));
    loopFunc(); actionQueue.addAction(new DriveTowardHeading(.4, .6, -20));
    loopFunc(); actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));  
