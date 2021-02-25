@@ -28,7 +28,7 @@ public class DriveStraightIMU implements Actionable {
     @Override
     public void periodic() { 
         double correction;
-        correction = -(heading+Robot.drive.getCurrentAngle())*0.0005;
+        correction = -((double)heading+Robot.drive.getCurrentAngle())*0.0005;
         rightspeed += correction;
         Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
     }
