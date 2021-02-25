@@ -33,8 +33,7 @@ public class TurnRobot implements Actionable {
 
     @Override
     public boolean isFinished() {
-
-        if (Math.abs(angle-Robot.drive.getCurrentAngle()) < 6) {
+		if (Math.abs(angle-Robot.drive.getCurrentAngle()) < 6) {
             return true;
         }
         return false;

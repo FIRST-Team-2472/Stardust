@@ -17,8 +17,6 @@ public class DriveStraightIMU implements Actionable {
 
     @Override
     public void startAction() {
-        Robot.drive.zeroCounters();
-        Robot.drive.zeroIMU();
         Robot.drive.setDistance(0, 0);
         Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         SmartDashboard.putString("ActionName", "Drive Straight IMU");
