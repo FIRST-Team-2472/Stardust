@@ -116,6 +116,7 @@ public class Robot extends TimedRobot {
     Robot.drive.zeroIMU();
     actionQueue.addAction(new TurnRobot(90));
     actionQueue.addAction(new TurnRobot(-90));
+    actionQueue.addAction(new ZeroIMU());
     actionQueue.addAction(new Wait(2));
     actionQueue.addAction(new DriveTowardHeading(.6, .4, -20));
     actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));
