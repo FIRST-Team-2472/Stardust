@@ -37,10 +37,7 @@ public class DriveTowardHeading implements Actionable {
 
     @Override
     public boolean isFinished() {
-            if (Math.abs(finalangle-Robot.drive.getCurrentAngle()) < 2) {
-                return true;
-            }
-            return false;
+                return Math.abs(finalangle-Robot.drive.getCurrentAngle()) < 2;
         }
     }
 
