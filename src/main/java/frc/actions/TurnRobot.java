@@ -22,8 +22,8 @@ public class TurnRobot implements Actionable {
 
     @Override
     public void periodic() {
-        if (angle-Robot.drive.getCurrentAngle() > 0) Robot.drive.tankDriveVelocity(-.20, .20);
-        if (angle-Robot.drive.getCurrentAngle() < 0) Robot.drive.tankDriveVelocity(.20,-.20);
+        if (angle-Robot.drive.getCurrentAngle() > 0) Robot.drive.tankDriveVelocity(-.30, .30);
+        if (angle-Robot.drive.getCurrentAngle() < 0) Robot.drive.tankDriveVelocity(.30,-.30);
     }
 
     @Override

@@ -78,6 +78,7 @@ public class Robot extends TimedRobot {
 
   private final ActionQueue actionQueue = new ActionQueue();
 //Drives the robot for a set period of time. Hopefully will be rendered useless due to Motion Magic
+//EDIT: It was rendered useless.
   /*private void driveOverLineAuto(ActionQueue actions) {
     actions.clear();
     actions.addAction(new DriveStraightTime(-0.5, 1.5));
@@ -94,10 +95,42 @@ public class Robot extends TimedRobot {
     actions.addAction(new FeedBall());
     actions.addAction(new StopShooter());
   }
+
+  //The newest batch of autonomous code! It actually works, and the DriveTowardHeading makes it so the robot can drive as well as turn.
+  private void driveTrack(ActionQueue actions) {
+    actions.clear();
+    actions.addAction(new ZeroIMU());
+    actions.addAction(new DriveStraightIMU(15));
+    actions.addAction(new DriveTowardHeading(.25, 5, -180));
+  }
 //More untested autonomous code! Not even useful here, as our current robot can't hold more than 1 ball in the shooter. Oh well.
   private void loadBallsAuto(ActionQueue actions) {
     actions.addAction(new DriveStraightTime(.5, 5));
     actions.addAction(new DumpBalls(3));
+  }
+  //Basic autonomous drive testing.
+  private void driveTest(ActionQueue actions) {
+    actionQueue.addAction(new DriveStraightTime(-.3, 5));
+    actionQueue.addAction(new Wait(1));
+    actionQueue.addAction(new DriveStraightPower(5));
+    actionQueue.addAction(new Wait(1));
+    actionQueue.addAction(new DriveStraightIMU(25));
+    actionQueue.addAction(new Wait(1));
+    actionQueue.addAction(new TurnRobot(-90));
+  }
+  //ZiGzAg WoOoOoO
+  private void zigZag(ActionQueue actions) {
+    actionQueue.addAction(new ZeroIMU());
+    actionQueue.addAction(new TurnRobot(90));
+    actionQueue.addAction(new TurnRobot(-90));
+    actionQueue.addAction(new ZeroIMU());
+    actionQueue.addAction(new Wait(2));
+   loopFunc(); actionQueue.addAction(new DriveTowardHeading(.4, .6, -20));
+   loopFunc(); actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));  
+    actionQueue.addAction(new DriveTowardHeading(.6, .4, -20));
+    actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));
+    actionQueue.addAction(new DriveTowardHeading(.6, .4, -20));
+    actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));
   }
 
 
@@ -106,33 +139,16 @@ public class Robot extends TimedRobot {
     drive.zeroCounters();
     actionQueue.clear();
     updateSmartDashboard();
-    /*actionQueue.addAction(new DriveStraightTime(-.3, 5));
-    actionQueue.addAction(new Wait(1));*/
-    //actionQueue.addAction(new DriveStraightPower(5));
-    //actionQueue.addAction(new Wait(1));
-    //actionQueue.addAction(new DriveStraightIMU(25));
-    //actionQueue.addAction(new Wait(1));
-    //actionQueue.addAction(new TurnRobot(-90));
-    Robot.drive.zeroIMU();
-    actionQueue.addAction(new TurnRobot(90));
-    actionQueue.addAction(new TurnRobot(-90));
-    actionQueue.addAction(new ZeroIMU());
-    actionQueue.addAction(new Wait(2));
-    actionQueue.addAction(new DriveTowardHeading(.6, .4, -20));
-    actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));
-    actionQueue.addAction(new DriveTowardHeading(.6, .4, -20));
-    actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));
-    actionQueue.addAction(new DriveTowardHeading(.6, .4, -20));
-    actionQueue.addAction(new DriveTowardHeading(.4, .6, 20));
     //Full speed = 6250 pulse per 1/10th of a second
       //int leftSpeed = drive.getLeftSpeed();
       //int rightSpeed = drive.getRightSpeed();
       //SmartDashboard.putNumber("Left Speed:", leftSpeed);
       //SmartDashboard.putNumber("Right Speed:", rightSpeed);}
+    driveTest(actionQueue);
+    zigZag(actionQueue);
 
     //driveOverLineAuto(actionQueue);
     //loadBallsAuto(actionQueue);
-    //actionQueue.addAction(new DriveDistance(555));
     //actionQueue.addAction(new PushFrontWheels());
     //shootBallAuto(actionQueue);
     //limelight.setPipeline(Limelight.PIPELINE_DRIVER_CAM);
