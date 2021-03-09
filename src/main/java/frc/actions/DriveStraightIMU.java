@@ -10,9 +10,9 @@ public class DriveStraightIMU implements Actionable {
     public double feet;
     public double leftspeed = .3;
     public double rightspeed = .3;
-    public int heading;
+    public double heading;
 
-    public DriveStraightIMU(double x, int angle){
+    public DriveStraightIMU(double x, double angle){
         this.feet = x;
         heading = angle;
     }
@@ -28,7 +28,7 @@ public class DriveStraightIMU implements Actionable {
     @Override
     public void periodic() { 
         double correction;
-        correction = -((double)heading+Robot.drive.getCurrentAngle())*0.0005;
+        correction = (heading-Robot.drive.getCurrentAngle())*0.0005;
         rightspeed += correction;
         Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
     }

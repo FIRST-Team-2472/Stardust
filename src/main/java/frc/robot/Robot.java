@@ -86,9 +86,9 @@ public class Robot extends TimedRobot {
   //In theory, it points and shoots the shooter AFTER the target is aimed. Untested as of 2/13/21.
   private void trackDrive(ActionQueue actions) {
     actions.clear();
-    actions.addAction(new DriveStraightIMU(10));
+    actions.addAction(new DriveStraightIMU(10, -180));
     actions.addAction(new DriveTowardHeading(.3, .5, -180));
-    actions.addAction(new DriveStraightIMU(10));
+    actions.addAction(new DriveStraightIMU(10, -180));
     actions.addAction(new DriveTowardHeading(.3, .5, -180));
   }
 
@@ -111,6 +111,14 @@ public class Robot extends TimedRobot {
     actions.addAction(new FeedBall());
     actions.addAction(new StopShooter());
   }
+
+  //The newest batch of autonomous code! It actually works, and the DriveTowardHeading makes it so the robot can drive as well as turn.
+  private void driveTrack(ActionQueue actions) {
+    actions.clear();
+    actions.addAction(new ZeroIMU());
+    //actions.addAction(new DriveStraightIMU(15, ));
+    actions.addAction(new DriveTowardHeading(.25, 5, -180));
+  }
 //More untested autonomous code! Not even useful here, as our current robot can't hold more than 1 ball in the shooter. Oh well.
   private void loadBallsAuto(ActionQueue actions) {
     actions.addAction(new DriveStraightTime(.5, 5));
@@ -121,6 +129,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     drive.zeroCounters();
+    drive.zeroIMU();
     actionQueue.clear();
     updateSmartDashboard();
 
@@ -136,14 +145,20 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new ZeroIMU());
     actionQueue.addAction(new Wait(2));*/
     actionQueue.addAction(new ZeroIMU());
-    actionQueue.addAction(new DriveStraightIMU(1));
+    actionQueue.addAction(new DriveStraightIMU(1, 0));
     actionQueue.addAction(new DriveTowardHeading(0, .3, 60));
-    actionQueue.addAction(new DriveStraightPower(1));
+    actionQueue.addAction(new DriveStraightIMU(1, 60));
     actionQueue.addAction(new DriveTowardHeading(.3, 0, 0));
-    actionQueue.addAction(new DriveStraightIMU(10));
+    actionQueue.addAction(new DriveStraightIMU(11, 0));
     actionQueue.addAction(new DriveTowardHeading(.3, 0, -60));
-    actionQueue.addAction(new DriveStraightPower(1));
-    actionQueue.addAction(new DriveTowardHeading(.2, .35, 359));
+    actionQueue.addAction(new DriveStraightIMU(2, -60));
+    actionQueue.addAction(new DriveTowardHeading(.1, .5, 220));
+    actionQueue.addAction(new DriveStraightIMU(2, 220));
+    actionQueue.addAction(new DriveTowardHeading(.3, 0, 180));
+    actionQueue.addAction(new DriveStraightIMU(11, 180));
+    actionQueue.addAction(new DriveTowardHeading(0.3, 0, 120));
+    actionQueue.addAction(new DriveStraightIMU(2, 120));
+    actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
     
     
     

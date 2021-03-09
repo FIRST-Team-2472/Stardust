@@ -19,7 +19,6 @@ public class DriveTowardHeading implements Actionable {
 
     @Override
     public void startAction() {
-        Robot.drive.zeroCounters();
         Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         SmartDashboard.putString("ActionName", "Drive Toward Heading");
 
