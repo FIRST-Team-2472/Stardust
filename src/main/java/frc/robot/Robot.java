@@ -52,6 +52,9 @@ public class Robot extends TimedRobot {
   public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(Constants.xboxcontroller);
   public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
   public static final Joystick leftJoystick = new Joystick(Constants.jstickL);
+  Preferences prefs;
+  double leftMotorSpeed, rightMotorSpeed, angle;
+
 
   @Override
   public void robotInit() {
@@ -474,5 +477,14 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
       SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
 
+  }
+
+  public void GetPrefs()
+  {
+    prefs = Preferences.getInstance();
+		leftMotorSpeed = prefs.getDouble("KP", 1.0);
+		rightMotorSpeed = prefs.getDouble("KI", 0.1);
+    angle = prefs.getDouble("KD", 2.0);
+ 
   }
 }
