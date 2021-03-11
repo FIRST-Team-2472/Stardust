@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
   private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
   public AnalogInput pressure = new AnalogInput(0);
+  public AnalogInput turretEncoder = new AnalogInput(1);
   public PigeonIMU pigeon = new PigeonIMU(Constants.Pidgeon);
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
   public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(Constants.xboxcontroller);
@@ -144,6 +145,9 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new TurnRobot(-90));
     actionQueue.addAction(new ZeroIMU());
     actionQueue.addAction(new Wait(2));*/
+
+    // for Autonomous #1
+    /*
     actionQueue.addAction(new ZeroIMU());
     actionQueue.addAction(new DriveStraightIMU(1, 0));
     actionQueue.addAction(new DriveTowardHeading(0, .3, 60));
@@ -159,8 +163,9 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new DriveTowardHeading(0.3, 0, 120));
     actionQueue.addAction(new DriveStraightIMU(2, 120));
     actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
+    */
     
-    
+    actionQueue.addAction(new DriveTowardHeading(.2,.3,15));
     
     //Full speed = 6250 pulse per 1/10th of a second
       //int leftSpeed = drive.getLeftSpeed();
@@ -458,6 +463,8 @@ public class Robot extends TimedRobot {
       //SmartDashboard.putNumber("Raw Pressure", pressure.getValue());
       SmartDashboard.putNumber("Raw Pressure", pressure.getAverageValue());
       SmartDashboard.putNumber("PSI", (pressure.getAverageValue()-400)*(70.0/1250.0));
+      SmartDashboard.putNumber("Turret Postion", (turretEncoder.getAverageValue()));
+
       //PID
       SmartDashboard.putNumber("KP", 0.005);
       SmartDashboard.putNumber("KI", 0);
