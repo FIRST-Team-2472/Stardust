@@ -136,6 +136,7 @@ public class Robot extends TimedRobot {
     drive.zeroIMU();
     actionQueue.clear();
     updateSmartDashboard();
+    Preferences preferences = Preferences.getInstance();
 
     /*actionQueue.addAction(new DriveStraightTime(-.3, 5));
     actionQueue.addAction(new Wait(1));*/
@@ -168,7 +169,7 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
     */
     
-    actionQueue.addAction(new DriveTowardHeading(.2,.3,15));
+    actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
     
     //Full speed = 6250 pulse per 1/10th of a second
       //int leftSpeed = drive.getLeftSpeed();
@@ -185,13 +186,12 @@ public class Robot extends TimedRobot {
     //limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
     //limelight.setDriverCamMode(false);
    }
-  
-  Preferences preferences = Preferences.getInstance();
-
+ 
+ 
   @Override
   public void autonomousPeriodic() {
     updateSmartDashboard();
-  
+
     actionQueue.step();
     }
 
@@ -447,10 +447,10 @@ public class Robot extends TimedRobot {
   //run this to set all smart dashboard values
   public void updateSmartDashboard(){
       SmartDashboard.putNumber("Left Joystick value", leftJoystick.getY());
-    SmartDashboard.putNumber("Left Speed:", drive.getLeftSpeed());
-    SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
-        // SMART Dashboard perfs
-        final Preferences prefs = Preferences.getInstance();
+      SmartDashboard.putNumber("Left Speed:", drive.getLeftSpeed());
+      SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
+      // SMART Dashboard perfs
+      final Preferences prefs = Preferences.getInstance();
       //Distance SmartDashboard stuff
       SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
       SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
@@ -482,9 +482,8 @@ public class Robot extends TimedRobot {
   public void GetPrefs()
   {
     prefs = Preferences.getInstance();
-		leftMotorSpeed = prefs.getDouble("KP", 1.0);
-		rightMotorSpeed = prefs.getDouble("KI", 0.1);
-    angle = prefs.getDouble("KD", 2.0);
- 
+		leftMotorSpeed = prefs.getDouble("Left Motor Speed");
+		rightMotorSpeed = prefs.getDouble("Right Motor Speed");
+    angle = prefs.getDouble("Angle");
   }
 }
