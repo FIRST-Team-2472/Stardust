@@ -198,6 +198,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     GetPrefs();
     updateSmartDashboard();
+
     actionQueue.step();
   }
 
