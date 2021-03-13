@@ -7,21 +7,26 @@ import frc.robot.Robot;
 
 public class DriveTowardHeading implements Actionable {
 
-    public double finalangle;
-    public double leftspeed = .3;
-    public double rightspeed = .3;
+    public double rightspeed, leftspeed, heading, distance;
 
-    public DriveTowardHeading(double left, double right, double heading){
-        leftspeed = left;
-        rightspeed = right;
-        finalangle = heading;
+    public DriveTowardHeading( double ddistance, double hheading) {
+        heading = hheading;
+        distance = ddistance;
     }
 
     @Override
     public void startAction() {
+        if (heading > 0) {
+            
+        } else if (heading == 0) {
+            leftspeed = 0;
+            rightspeed = 0;
+        } else {
+
+        }
+
         Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         SmartDashboard.putString("ActionName", "Drive Toward Heading");
-
         }
 
     @Override
@@ -36,7 +41,7 @@ public class DriveTowardHeading implements Actionable {
 
     @Override
     public boolean isFinished() {
-                return Math.abs(finalangle-Robot.drive.getCurrentAngle()) < 2;
+                return Math.abs(heading-Robot.drive.getCurrentAngle()) < 2;
         }
     }
 
