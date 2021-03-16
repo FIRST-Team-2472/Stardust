@@ -25,6 +25,9 @@ import frc.subsystems.Shooter;
 import frc.subsystems.Turret;
 import frc.subsystems.Collector;
 import com.ctre.phoenix.sensors.PigeonIMU;
+
+import java.util.Random;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.AnalogInput;
 
@@ -175,6 +178,22 @@ public class Robot extends TimedRobot {
      * actionQueue.addAction(new DriveStraightIMU(2, 120));
      * actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
      */
+    
+    /*TODO do not touch max
+    //for turning right
+    leftMotorSpeed = Math.random() * (.75-0+1) +0;
+    rightMotorSpeed = Math.random() * (leftMotorSpeed-.2+1);
+    angle = (int)Math.random() * (-180+10+1)-10;
+
+    //for turning right
+    rightMotorSpeed = Math.random() * (.75-0+1) +0;
+    leftMotorSpeed = Math.random() * (rightMotorSpeed-.2+1);
+    angle = (int)Math.random() * (180-10+1)+10;
+    */
+
+    SmartDashboard.putNumber("Auto Left Motor Speed", leftMotorSpeed);
+    SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
+    SmartDashboard.putNumber("Auto Heading", angle);
 
     actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
 
