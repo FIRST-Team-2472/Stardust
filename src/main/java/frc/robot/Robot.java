@@ -26,6 +26,8 @@ import frc.subsystems.Turret;
 import frc.subsystems.Collector;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
@@ -90,10 +92,21 @@ public class Robot extends TimedRobot {
   //In theory, it points and shoots the shooter AFTER the target is aimed. Untested as of 2/13/21.
   private void trackDrive(ActionQueue actions) {
     actions.clear();
-    actions.addAction(new DriveStraightIMU(10, -180));
-    actions.addAction(new DriveTowardHeading(.3, .5, -180));
-    actions.addAction(new DriveStraightIMU(10, -180));
-    actions.addAction(new DriveTowardHeading(.3, .5, -180));
+    actionQueue.addAction(new ZeroIMU());
+    actionQueue.addAction(new DriveStraightIMU(1, 0));
+    actionQueue.addAction(new DriveTowardHeading(0, .3, 60));
+    actionQueue.addAction(new DriveStraightIMU(1, 60));
+    actionQueue.addAction(new DriveTowardHeading(.3, 0, 0));
+    actionQueue.addAction(new DriveStraightIMU(11, 0));
+    actionQueue.addAction(new DriveTowardHeading(.3, 0, -60));
+    actionQueue.addAction(new DriveStraightIMU(2, -60));
+    actionQueue.addAction(new DriveTowardHeading(.1, .5, 220));
+    actionQueue.addAction(new DriveStraightIMU(2, 220));
+    actionQueue.addAction(new DriveTowardHeading(.3, 0, 180));
+    actionQueue.addAction(new DriveStraightIMU(11, 180));
+    actionQueue.addAction(new DriveTowardHeading(0.3, 0, 120));
+    actionQueue.addAction(new DriveStraightIMU(2, 120));
+    actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
   }
 
   private void zigZag(ActionQueue actions) {
@@ -150,26 +163,9 @@ public class Robot extends TimedRobot {
     actionQueue.addAction(new ZeroIMU());
     actionQueue.addAction(new Wait(2));*/
 
-    // for Autonomous #1
-    /*
-    actionQueue.addAction(new ZeroIMU());
-    actionQueue.addAction(new DriveStraightIMU(1, 0));
-    actionQueue.addAction(new DriveTowardHeading(0, .3, 60));
-    actionQueue.addAction(new DriveStraightIMU(1, 60));
-    actionQueue.addAction(new DriveTowardHeading(.3, 0, 0));
-    actionQueue.addAction(new DriveStraightIMU(11, 0));
-    actionQueue.addAction(new DriveTowardHeading(.3, 0, -60));
-    actionQueue.addAction(new DriveStraightIMU(2, -60));
-    actionQueue.addAction(new DriveTowardHeading(.1, .5, 220));
-    actionQueue.addAction(new DriveStraightIMU(2, 220));
-    actionQueue.addAction(new DriveTowardHeading(.3, 0, 180));
-    actionQueue.addAction(new DriveStraightIMU(11, 180));
-    actionQueue.addAction(new DriveTowardHeading(0.3, 0, 120));
-    actionQueue.addAction(new DriveStraightIMU(2, 120));
-    actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
-    */
+    actionQueue.addAction(new Aim());
     
-    actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
+    //actionQueue.addAction(new DriveTowardHeading(.1, .6, 175));
     
     //Full speed = 6250 pulse per 1/10th of a second
       //int leftSpeed = drive.getLeftSpeed();
@@ -209,18 +205,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     updateSmartDashboard();
-    SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
-    SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
-
-    SmartDashboard.putNumber("LeftError", drive.leftDriveError());
-    SmartDashboard.putNumber("RightError", drive.rightDriveError());
-
-    SmartDashboard.putNumber("Left Speed:", drive.getLeftSpeed());
-    SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
-
-    SmartDashboard.putNumber("RightDesired", drive.desiredRight);
-    SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
-
+  
     //runs the IMU(Pigeon), and related things
 
     if (limelight.isTargetSpotted() && teleopShooting) {
@@ -476,14 +461,16 @@ public class Robot extends TimedRobot {
       //Limelight stuff
       SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
       SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
+      SmartDashboard.putNumber("Target Distance", limelight.distanceIN());
+      SmartDashboard.putNumber("Target Angle", limelight.targetYAngleFromCenter());
 
   }
 
   public void GetPrefs()
   {
     prefs = Preferences.getInstance();
-		leftMotorSpeed = prefs.getDouble("Left Motor Speed");
-		rightMotorSpeed = prefs.getDouble("Right Motor Speed");
-    angle = prefs.getDouble("Angle");
+	  prefs.getDouble("Left Motor Speed", leftMotorSpeed);
+		prefs.getDouble("Right Motor Speed", rightMotorSpeed);
+    prefs.getDouble("Angle", angle);
   }
 }
