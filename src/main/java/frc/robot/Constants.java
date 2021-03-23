@@ -9,9 +9,9 @@ public class Constants {
 	public static final int motorFL = 1;
 	public static final int motorFR = 3;
 
-	public static final int turret = 13;
+	public static final int turret = 11;
 
-	public static final int shooterID = 11;
+	public static final int shooterID = 13;
 
 	public static final int COLLECTOR_CONVERYER = 12;
 	public static final int COLLECTOR_WHEELS = 15;

@@ -13,7 +13,7 @@ public class Aim implements Actionable {
 		SmartDashboard.putString("ActionName", "Aiming");
 	}
 	
-	private static final double kP = .03;
+	private static final double kP = .02;
 
 	// this should not be static in case you need to aim multiple times
 	private double TurretSpeed = 0;
@@ -28,11 +28,11 @@ public class Aim implements Actionable {
 			TurretSpeed = Robot.limelight.targetXAngleFromCenter() * kP; 
 						
 			Robot.turret.runTurret (TurretSpeed);
-			timeout = null;
-		} else { 
+			//timeout = null;
+		} /*else { 
 			if (timeout == null) timeout = new Timer(2);
 			Robot.turret.runTurret(0);
-		}
+		}*/
         
 	}
 
@@ -43,7 +43,7 @@ public class Aim implements Actionable {
 
 	@Override
 	public boolean isFinished() {
-		return Timer.tryIsTimedOut(timeout) || Robot.limelight.isTargetSpotted() && Math.abs(Robot.limelight.targetXAngleFromCenter()) < 2;
+		return /*Timer.tryIsTimedOut(timeout) ||*/ Robot.limelight.isTargetSpotted() && Math.abs(Robot.limelight.targetXAngleFromCenter()) < 0.5;
     }
 
 	public static void aim() {

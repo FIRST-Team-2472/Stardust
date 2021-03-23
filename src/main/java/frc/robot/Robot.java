@@ -141,8 +141,14 @@ public class Robot extends TimedRobot {
     actionQueue.clear();
     updateSmartDashboard();
     GetPrefs();
-
+    actionQueue.addAction(new TurnRobot(180));
+    actionQueue.addAction(new Wait(5));
+    actionQueue.addAction(new Seek());
+    actionQueue.addAction(new Wait(5));
     actionQueue.addAction(new Aim());
+    actionQueue.addAction(new Wait(5));
+
+
     
     /*TODO do not touch max
     //for turning right
@@ -160,7 +166,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
     SmartDashboard.putNumber("Auto Heading", angle);
 
-    actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
+    //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
 
   }
 
@@ -168,6 +174,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     GetPrefs();
     updateSmartDashboard();
+
 
     actionQueue.step();
   }
