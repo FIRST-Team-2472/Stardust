@@ -51,12 +51,11 @@ public class Shooter {
     }
 
     public void fireFlyWheel() {
-      flyWheel.set(ControlMode.PercentOutput, Robot.limelight.distanceCM()  /* TODO make speed of flywheel effected by distance from target*/);
+      flyWheel.set(ControlMode.PercentOutput, Robot.limelight.distanceIN());
     }
 
     public double runSensorVelocity() {
       return flyWheel.getSelectedSensorVelocity();
     }
-    // TODO Write a set RPM method
     
 }

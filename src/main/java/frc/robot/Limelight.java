@@ -95,12 +95,24 @@ public class Limelight {
         limelight.getEntry("pipeLine").setNumber(snapshotMode);
     }
 
-    public double distanceCM() {
-        double targetAngle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-        double cameraHeight = 1.0668;
-        double targetHeight = 2.54635;
-        double cameraAngle = 25;
-        double d = (targetHeight-cameraHeight) / Math.tan(cameraAngle+targetAngle);
+    //TODO DO NOT USE WILL SNAP NECK it is looking for target when it can't see it
+    public void seek() {
+        if (isTargetSpotted() == false) {
+            Robot.turret.runTurret(0.3);
+        }
+        else {
+            Robot.turret.runTurret(0);
+        }
+    }
+
+public double distanceIN() {
+        double targetAngle = targetYAngleFromCenter();
+        double cameraHeight = 44;
+        double targetHeight = 70;
+        double cameraAngle = 0;
+        double d = (targetHeight-cameraHeight) / (Math.tan(cameraAngle+targetAngle));
+        //d = (h2-h1) / tan(a1+a2)
         return d;
+        //targetHeight = 98
     }
 }

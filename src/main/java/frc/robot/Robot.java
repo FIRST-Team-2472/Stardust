@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.simulation.XboxControllerSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -25,10 +24,6 @@ import frc.subsystems.Shooter;
 import frc.subsystems.Turret;
 import frc.subsystems.Collector;
 import com.ctre.phoenix.sensors.PigeonIMU;
-
-import java.util.Random;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
@@ -39,8 +34,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL,
-      Constants.motorFR);
+  public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
   public static final Collector collector = new Collector(Constants.COLLECTOR_CONVERYER, Constants.COLLECTOR_WHEELS,
       Constants.PCMID, Constants.COLLECTOR_WHEEL_PUSH_FORWARD, Constants.COLLECTOR_WHEEL_PUSH_REVERSE);
@@ -54,8 +48,7 @@ public class Robot extends TimedRobot {
   public AnalogInput turretEncoder = new AnalogInput(1);
   public PigeonIMU pigeon = new PigeonIMU(Constants.Pidgeon);
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
-  public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(
-      Constants.xboxcontroller);
+  public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(Constants.xboxcontroller);
   public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
   public static final Joystick leftJoystick = new Joystick(Constants.jstickL);
   Preferences prefs;
@@ -97,10 +90,21 @@ public class Robot extends TimedRobot {
   // Untested as of 2/13/21.
   private void trackDrive(ActionQueue actions) {
     actions.clear();
-    actions.addAction(new DriveStraightIMU(10, -180));
-    actions.addAction(new DriveTowardHeading(.3, .5, -180));
-    actions.addAction(new DriveStraightIMU(10, -180));
-    actions.addAction(new DriveTowardHeading(.3, .5, -180));
+    actionQueue.addAction(new ZeroIMU());
+    actionQueue.addAction(new DriveStraightIMU(1, 0));
+    actionQueue.addAction(new DriveTowardHeading(0, .3, 60));
+    actionQueue.addAction(new DriveStraightIMU(1, 60));
+    actionQueue.addAction(new DriveTowardHeading(.3, 0, 0));
+    actionQueue.addAction(new DriveStraightIMU(11, 0));
+    actionQueue.addAction(new DriveTowardHeading(.3, 0, -60));
+    actionQueue.addAction(new DriveStraightIMU(2, -60));
+    actionQueue.addAction(new DriveTowardHeading(.1, .5, 220));
+    actionQueue.addAction(new DriveStraightIMU(2, 220));
+    actionQueue.addAction(new DriveTowardHeading(.3, 0, 180));
+    actionQueue.addAction(new DriveStraightIMU(11, 180));
+    actionQueue.addAction(new DriveTowardHeading(0.3, 0, 120));
+    actionQueue.addAction(new DriveStraightIMU(2, 120));
+    actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
   }
 
   private void zigZag(ActionQueue actions) {
@@ -124,15 +128,6 @@ public class Robot extends TimedRobot {
     actions.addAction(new StopShooter());
   }
 
-  // The newest batch of autonomous code! It actually works, and the
-  // DriveTowardHeading makes it so the robot can drive as well as turn.
-  private void driveTrack(ActionQueue actions) {
-    actions.clear();
-    actions.addAction(new ZeroIMU());
-    // actions.addAction(new DriveStraightIMU(15, ));
-    actions.addAction(new DriveTowardHeading(.25, 5, -180));
-  }
-
   // More untested autonomous code! Not even useful here, as our current robot
   // can't hold more than 1 ball in the shooter. Oh well.
   private void loadBallsAuto(ActionQueue actions) {
@@ -147,37 +142,8 @@ public class Robot extends TimedRobot {
     actionQueue.clear();
     updateSmartDashboard();
     GetPrefs();
-    /*
-     * actionQueue.addAction(new DriveStraightTime(-.3, 5));
-     * actionQueue.addAction(new Wait(1));
-     */
-    // actionQueue.addAction(new DriveStraightPower(5));
-    // actionQueue.addAction(new Wait(1));
-    // actionQueue.addAction(new DriveStraightIMU(25));
-    // actionQueue.addAction(new Wait(1));
-    // actionQueue.addAction(new TurnRobot(-90));
-    /*
-     * actionQueue.addAction(new TurnRobot(90)); actionQueue.addAction(new
-     * TurnRobot(-90)); actionQueue.addAction(new ZeroIMU());
-     * actionQueue.addAction(new Wait(2));
-     */
 
-    // for Autonomous #1
-    /*
-     * actionQueue.addAction(new ZeroIMU()); actionQueue.addAction(new
-     * DriveStraightIMU(1, 0)); actionQueue.addAction(new DriveTowardHeading(0, .3,
-     * 60)); actionQueue.addAction(new DriveStraightIMU(1, 60));
-     * actionQueue.addAction(new DriveTowardHeading(.3, 0, 0));
-     * actionQueue.addAction(new DriveStraightIMU(11, 0)); actionQueue.addAction(new
-     * DriveTowardHeading(.3, 0, -60)); actionQueue.addAction(new
-     * DriveStraightIMU(2, -60)); actionQueue.addAction(new DriveTowardHeading(.1,
-     * .5, 220)); actionQueue.addAction(new DriveStraightIMU(2, 220));
-     * actionQueue.addAction(new DriveTowardHeading(.3, 0, 180));
-     * actionQueue.addAction(new DriveStraightIMU(11, 180));
-     * actionQueue.addAction(new DriveTowardHeading(0.3, 0, 120));
-     * actionQueue.addAction(new DriveStraightIMU(2, 120));
-     * actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
-     */
+    actionQueue.addAction(new Aim());
     
     //for turning right
     //leftMotorSpeed = Math.random() * (.75-0+1) +0;
@@ -200,20 +166,6 @@ public class Robot extends TimedRobot {
 
     //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
 
-    // Full speed = 6250 pulse per 1/10th of a second
-    // int leftSpeed = drive.getLeftSpeed();
-    // int rightSpeed = drive.getRightSpeed();
-    // SmartDashboard.putNumber("Left Speed:", leftSpeed);
-    // SmartDashboard.putNumber("Right Speed:", rightSpeed);}
-
-    // driveOverLineAuto(actionQueue);
-    // loadBallsAuto(actionQueue);
-    // actionQueue.addAction(new DriveDistance(555));
-    // actionQueue.addAction(new PushFrontWheels());
-    // shootBallAuto(actionQueue);
-    // limelight.setPipeline(Limelight.PIPELINE_DRIVER_CAM);
-    // limelight.setLedMode(Limelight.LED_DEFAULT_TO_PIPELINE);
-    // limelight.setDriverCamMode(false);
   }
 
   @Override
@@ -271,20 +223,16 @@ public class Robot extends TimedRobot {
       shooter.runFlyWheel(0);
     }
 
+    shooter.runFlyWheel(-1);
+    limelight.seek();
+
+
     // TODO REMINDER joystick forward gives negative values
     drive.tankDriveVelocity(leftJoystick.getY() * -1, rightJoystick.getY() * -1);
 
-    // Real coooolector
     collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
     collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(5));
 
-    if (xboxcontroller.getYButton()) {
-      indexer.runIndexerForward();
-    } else {
-      indexer.runIndexerBackward();
-    }
-
-    // using the HAT switch?
     if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       collector.pushoutfrontwheel();
     } else if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {

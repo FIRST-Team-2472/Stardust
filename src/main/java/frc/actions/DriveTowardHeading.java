@@ -2,7 +2,6 @@ package frc.actions;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
-import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class DriveTowardHeading implements Actionable {
@@ -46,6 +45,3 @@ public class DriveTowardHeading implements Actionable {
                 return Math.abs(heading-Robot.drive.getCurrentAngle()) < 2;
         }
     }
-
-
-
