@@ -1,12 +1,5 @@
 [
   {
-    "artifact": "frcJava (in project Stardust-Improved)",
-    "target": "roborio",
-    "debugfile": "frcJava_roborio.debugconfig",
-    "project": "Stardust-Improved",
-    "language": "java"
-  },
-  {
     "artifact": "frcJava (in project Stardust)",
     "target": "roborio",
     "debugfile": "frcJava_roborio.debugconfig",
