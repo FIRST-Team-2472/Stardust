@@ -142,8 +142,14 @@ public class Robot extends TimedRobot {
     actionQueue.clear();
     updateSmartDashboard();
     GetPrefs();
-
+    actionQueue.addAction(new TurnRobot(180));
+    actionQueue.addAction(new Wait(5));
+    actionQueue.addAction(new Seek());
+    actionQueue.addAction(new Wait(5));
     actionQueue.addAction(new Aim());
+    actionQueue.addAction(new Wait(5));
+
+
     
     //for turning right
     //leftMotorSpeed = Math.random() * (.75-0+1) +0;
@@ -172,6 +178,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     GetPrefs();
     updateSmartDashboard();
+
 
     actionQueue.step();
   }

@@ -98,7 +98,7 @@ public class Limelight {
     //TODO DO NOT USE WILL SNAP NECK it is looking for target when it can't see it
     public void seek() {
         if (isTargetSpotted() == false) {
-            Robot.turret.runTurret(0.3);
+            Robot.turret.runTurret(-0.005);
         }
         else {
             Robot.turret.runTurret(0);
