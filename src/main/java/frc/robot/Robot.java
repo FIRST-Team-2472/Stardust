@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
   public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
   public static final Joystick leftJoystick = new Joystick(Constants.jstickL);
   Preferences prefs;
-  double leftMotorSpeed, rightMotorSpeed, angle;
+  double leftMotorSpeed, rightMotorSpeed, angle, change, change2;
 
   @Override
   public void robotInit() {
@@ -179,23 +179,26 @@ public class Robot extends TimedRobot {
      * actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
      */
     
-    /*TODO do not touch max
     //for turning right
-    leftMotorSpeed = Math.random() * (.75-0+1) +0;
-    rightMotorSpeed = Math.random() * (leftMotorSpeed-.2+1);
-    angle = (int)Math.random() * (-180+10+1)-10;
+    //leftMotorSpeed = Math.random() * (.75-0+1) +0;
+    //rightMotorSpeed = Math.random() * (leftMotorSpeed-.2+1);
+    //angle = (int)Math.random() * (-180+10+1)-10;
 
     //for turning right
-    rightMotorSpeed = Math.random() * (.75-0+1) +0;
-    leftMotorSpeed = Math.random() * (rightMotorSpeed-.2+1);
-    angle = (int)Math.random() * (180-10+1)+10;
-    */
+    change = Math.random() * (75-0+1) +0;
+    change2 = (int)change;
+    rightMotorSpeed = change2/100;
+    change = Math.random() * ((rightMotorSpeed-.2)*100);
+    change2 = (int)change;
+    leftMotorSpeed = change2/100;
+    angle = (int)(Math.random() * (180-10+1)+10);
+    
 
     SmartDashboard.putNumber("Auto Left Motor Speed", leftMotorSpeed);
     SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
     SmartDashboard.putNumber("Auto Heading", angle);
 
-    actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
+    //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
 
     // Full speed = 6250 pulse per 1/10th of a second
     // int leftSpeed = drive.getLeftSpeed();
@@ -273,7 +276,7 @@ public class Robot extends TimedRobot {
 
     // Real coooolector
     collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
-    collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
+    collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(5));
 
     if (xboxcontroller.getYButton()) {
       indexer.runIndexerForward();
