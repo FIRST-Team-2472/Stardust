@@ -149,7 +149,14 @@ public class Robot extends TimedRobot {
     drive.zeroCounters();
     drive.zeroIMU();
     actionQueue.clear();
-    updateSmartDashboard();    
+    updateSmartDashboard();
+    GetPrefs();
+    /*actionQueue.addAction(new TurnRobot(180));
+    actionQueue.addAction(new Wait(5));
+    actionQueue.addAction(new Seek());
+    actionQueue.addAction(new Wait(5));
+    actionQueue.addAction(new Aim());
+    actionQueue.addAction(new Wait(5));*/
 
 
     
@@ -197,14 +204,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    turret.zeroTurret();
     updateSmartDashboard();
-    compressor.setClosedLoopControl(true);
+    //compressor.setClosedLoopControl(true);
     drive.zeroCounters();
     SmartDashboard.putString("RobotState", "TeleopEnabled");
   }
 
   private final ActionQueue teleopActions = new ActionQueue();
-  private boolean teleopShooting = false;
+  //private boolean teleopShooting = false;
 
   @Override
   public void teleopPeriodic() {
@@ -212,10 +220,9 @@ public class Robot extends TimedRobot {
     updateSmartDashboard();
 
     // runs the IMU(Pigeon), and related things
-    /*
-    if (limelight.isTargetSpotted() && teleopShooting) {
+
+    /*if (limelight.isTargetSpotted() && teleopShooting) {
       teleopShooting = false;
-      shootBallAuto(teleopActions);
     }
     if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
       teleopShooting = true;
@@ -223,22 +230,22 @@ public class Robot extends TimedRobot {
     if (xboxcontroller.getBButtonPressed()) {
       teleopShooting = false;
       teleopActions.abort();
-    }
-    */
-    if (xboxcontroller.getXButton()) {
+    }*/
+
+    /*if (xboxcontroller.getXButton()) {
       shooter.runFlyWheel(-1);
     } else {
       shooter.runFlyWheel(0);
-    }
+    }*/
 
-    shooter.runFlyWheel(-1);
+    //shooter.runFlyWheel(-1);
 
 
     // TODO REMINDER joystick forward gives negative values
     drive.tankDriveVelocity(leftJoystick.getY() * -.5, rightJoystick.getY() * -.5);
 
-    collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
-    collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(5));
+    //collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
+    //collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
 
     if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       collector.pushoutfrontwheel();
@@ -248,9 +255,9 @@ public class Robot extends TimedRobot {
       collector.pushofffrontwheel();
     }
 
-    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > .6) {
+    if (xboxcontroller.getXButton()) {
       turret.runTurret(.25);
-    } else if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > .6) {
+    } else if (xboxcontroller.getBButton()) {
       turret.runTurret(-.25);
     } else {
       turret.runTurret(0);
@@ -339,12 +346,12 @@ public class Robot extends TimedRobot {
         } else {
           collector.runFrontWheels(0);
         }
-        if (xboxcontroller.getXButton()) {
+        /*if (xboxcontroller.getXButton()) {
           turret.runTurret(.25);
           SmartDashboard.putString("MotorsTest", "runTurret");
         } else {
           turret.runTurret(0);
-        }
+        }*/
         if (xboxcontroller.getYButton()) {
           shooter.runFlyWheel(.25);
           SmartDashboard.putString("MotorsTest", "runShooter");
@@ -436,6 +443,9 @@ public class Robot extends TimedRobot {
     // SMART Dashboard perfs
     GetPrefs();
     // Distance SmartDashboard stuff
+    SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
+    SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
+    SmartDashboard.putNumber("TurretDistance", turret.getTurretDistance());
     SmartDashboard.putNumber("Right Distance inches", drive.getRightDistance()/(Constants.pulsesPerFoot/12));
     SmartDashboard.putNumber("Left Distance inches", drive.getLeftDistance()/(Constants.pulsesPerFoot/12));
     // Robot state SmartDashboard stuff
