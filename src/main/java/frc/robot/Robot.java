@@ -52,7 +52,8 @@ public class Robot extends TimedRobot {
   public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
   public static final Joystick leftJoystick = new Joystick(Constants.jstickL);
   Preferences prefs;
-  double leftMotorSpeed, rightMotorSpeed, angle;
+  double leftMotorSpeed, rightMotorSpeed, angle, change, change2;
+
   @Override
   public void robotInit() {
     pigeon.setFusedHeading(0.0, 30);
@@ -73,7 +74,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
     drive.DoPigeon();
-    SmartDashboard.putNumber("Test", drive.getCurrentAngle());
+    SmartDashboard.putNumber("Angle", drive.getCurrentAngle());
   }
 
   private final ActionQueue actionQueue = new ActionQueue();
@@ -134,6 +135,15 @@ public class Robot extends TimedRobot {
     actions.addAction(new DumpBalls(3));
   }
 
+  private void seekTheFleshMeat(ActionQueue actions) {
+    actions.addAction(new TurnRobot(180));
+    actions.addAction(new Wait(5));
+    actions.addAction(new Seek());
+    actions.addAction(new Wait(5));
+    actions.addAction(new Aim());
+    actions.addAction(new Wait(5));
+  }
+
   @Override
   public void autonomousInit() {
     drive.zeroCounters();
@@ -150,23 +160,34 @@ public class Robot extends TimedRobot {
 
 
     
-    /*TODO do not touch max
     //for turning right
-    leftMotorSpeed = Math.random() * (.75-0+1) +0;
-    rightMotorSpeed = Math.random() * (leftMotorSpeed-.2+1);
-    angle = (int)Math.random() * (-180+10+1)-10;
+    
+    change = Math.random() * (50-20+1) +20;
+    change2 = (int)change;
+    leftMotorSpeed = change2/100;
+    change = Math.random() * ((leftMotorSpeed-.1)*100 +1);
+    change2 = (int)change;
+    rightMotorSpeed = change2/100;
+    angle = (int)(Math.random() * (180-10+1)+10);
+    
 
-    //for turning right
-    rightMotorSpeed = Math.random() * (.75-0+1) +0;
-    leftMotorSpeed = Math.random() * (rightMotorSpeed-.2+1);
-    angle = (int)Math.random() * (180-10+1)+10;
+    //for turning left
+    /*
+    change = Math.random() * (50-20+1) +20;
+    change2 = (int)change;
+    rightMotorSpeed = change2/100;
+    change = Math.random() * ((rightMotorSpeed-.1)*100+1);
+    change2 = (int)change;
+    leftMotorSpeed = change2/100;
+    angle = (int)(Math.random() * (180-10+1)+10);
     */
+    
 
     SmartDashboard.putNumber("Auto Left Motor Speed", leftMotorSpeed);
     SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
     SmartDashboard.putNumber("Auto Heading", angle);
 
-    actionQueue.addAction(new LimelightStuff());
+    actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
 
     //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
 
@@ -197,17 +218,6 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     GetPrefs();
     updateSmartDashboard();
-    SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
-    SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
-
-    SmartDashboard.putNumber("LeftError", drive.leftDriveError());
-    SmartDashboard.putNumber("RightError", drive.rightDriveError());
-
-    SmartDashboard.putNumber("Left Speed:", drive.getLeftSpeed());
-    SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
-
-    SmartDashboard.putNumber("RightDesired", drive.desiredRight);
-    SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
 
     // runs the IMU(Pigeon), and related things
 
@@ -232,7 +242,7 @@ public class Robot extends TimedRobot {
 
 
     // TODO REMINDER joystick forward gives negative values
-    drive.tankDriveVelocity(leftJoystick.getY() * -1, rightJoystick.getY() * -1);
+    drive.tankDriveVelocity(leftJoystick.getY() * -.5, rightJoystick.getY() * -.5);
 
     //collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
     //collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
@@ -436,6 +446,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
     SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
     SmartDashboard.putNumber("TurretDistance", turret.getTurretDistance());
+    SmartDashboard.putNumber("Right Distance inches", drive.getRightDistance()/(Constants.pulsesPerFoot/12));
+    SmartDashboard.putNumber("Left Distance inches", drive.getLeftDistance()/(Constants.pulsesPerFoot/12));
     // Robot state SmartDashboard stuff
     SmartDashboard.putString("RobotState", "TeleopEnabled");
     SmartDashboard.putString("RobotState", "Robot On");
@@ -463,6 +475,7 @@ public class Robot extends TimedRobot {
 
   public void GetPrefs() {
     prefs = Preferences.getInstance();
+    /*
     leftMotorSpeed = prefs.getDouble("Left Motor Speed", .2);
     rightMotorSpeed = prefs.getDouble("Right Motor Speed", .5);
     angle = prefs.getDouble("Angle", 30);
@@ -470,5 +483,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Left Motor Speed", leftMotorSpeed);
     SmartDashboard.putNumber("Right Motor Speed", rightMotorSpeed);
     SmartDashboard.putNumber("Angle", angle);
+    */
   }
 }

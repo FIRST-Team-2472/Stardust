@@ -1,9 +1,5 @@
 package frc.actions;
 
-import javax.swing.Action;
-import javax.swing.ActionMap;
-
-import frc.actions.runners.ActionQueue;
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
 
@@ -11,18 +7,27 @@ public class Seek implements Actionable {
 
     @Override
     public void startAction() {
-
+        
     }
 
 
     @Override
     public void periodic() {
-        Robot.turret.runTurret(-0.2);
+        if (Robot.drive.getCurrentAngle() < 0 && Robot.drive.getCurrentAngle() > -180) {
+            Robot.drive.tankDriveVelocity(0.3, 0.1);
+        }
+        else if (Robot.drive.getCurrentAngle() > 0 && Robot.drive.getCurrentAngle() < 180) {
+            Robot.drive.tankDriveVelocity(0.1, 0.3);
+        }
+        else if (Robot.drive.getCurrentAngle() == 0) {
+            Robot.drive.tankDriveVelocity(0.3, 0.1);
+        }
+        
     }
 
     @Override
     public void endAction() {
-        Robot.turret.runTurret(0);
+        Robot.drive.tankDriveVelocity(0, 0);
     }
 
     @Override

@@ -2,6 +2,8 @@ package frc.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**  This fun little subsytems moves balls from the convery belt to the shooter flywheel for shooting*/
+//or it used to.
+//actually it never did.
 public class Indexer {
     private DoubleSolenoid Indexer;
 
