@@ -1,4 +1,5 @@
 package frc.actions;
+
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
 
@@ -12,11 +13,14 @@ public class Seek implements Actionable {
 
     @Override
     public void periodic() {
-        if (Robot.drive.getCurrentAngle() < 0) {
+        if (Robot.drive.getCurrentAngle() < 0 && Robot.drive.getCurrentAngle() > -180) {
             Robot.drive.tankDriveVelocity(0.3, 0.1);
         }
-        else if (Robot.drive.getCurrentAngle() > 0) {
+        else if (Robot.drive.getCurrentAngle() > 0 && Robot.drive.getCurrentAngle() < 180) {
             Robot.drive.tankDriveVelocity(0.1, 0.3);
+        }
+        else if (Robot.drive.getCurrentAngle() == 0) {
+            Robot.drive.tankDriveVelocity(0.3, 0.1);
         }
         
     }

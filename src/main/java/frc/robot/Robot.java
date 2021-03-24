@@ -232,7 +232,6 @@ public class Robot extends TimedRobot {
     }
 
     shooter.runFlyWheel(-1);
-    limelight.seek();
 
 
     // TODO REMINDER joystick forward gives negative values
