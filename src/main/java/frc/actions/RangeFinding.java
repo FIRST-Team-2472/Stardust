@@ -1,7 +1,5 @@
 package frc.actions;
 
-import javax.security.sasl.SaslException;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
