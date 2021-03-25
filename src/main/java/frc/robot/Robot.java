@@ -75,6 +75,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
     drive.DoPigeon();
     SmartDashboard.putNumber("Angle", drive.getCurrentAngle());
+    limelight.distanceIN();
+  
   }
 
   private final ActionQueue actionQueue = new ActionQueue();
@@ -162,13 +164,13 @@ public class Robot extends TimedRobot {
     
     //for turning right
     
-    change = Math.random() * (50-20+1) +20;
+    /*change = Math.random() * (50-20+1) +20;
     change2 = (int)change;
     leftMotorSpeed = change2/100;
     change = Math.random() * ((leftMotorSpeed-.1)*100 +1);
     change2 = (int)change;
     rightMotorSpeed = change2/100;
-    angle = (int)(Math.random() * (180-10+1)+10);
+    angle = (int)(Math.random() * (180-10+1)+10);*/
     
 
     //for turning left
@@ -187,8 +189,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
     SmartDashboard.putNumber("Auto Heading", angle);
 
-    actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
-
+    //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
+    actionQueue.addAction(new RangeFinding());
     //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
 
   }

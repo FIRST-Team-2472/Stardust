@@ -34,9 +34,9 @@ public class Turret {
     public void zeroTurret() {
         turret.setSelectedSensorPosition(0);
         turret.configForwardSoftLimitEnable(true);
-        turret.configForwardSoftLimitThreshold(1800000);
+        turret.configForwardSoftLimitThreshold(450000);
         turret.configReverseSoftLimitEnable(true);
-        turret.configReverseSoftLimitThreshold(-1800000);
+        turret.configReverseSoftLimitThreshold(-450000);
     }
 }
 

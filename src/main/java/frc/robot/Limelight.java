@@ -101,7 +101,7 @@ public double distanceIN() {
         double targetAngle = targetYAngleFromCenter();
         double cameraHeight = 44;
         double targetHeight = 70;
-        double cameraAngle = 0;
+        double cameraAngle = 1;
         double d = (targetHeight-cameraHeight) / (Math.tan(cameraAngle+targetAngle));
         //d = (h2-h1) / tan(a1+a2)
         return d;

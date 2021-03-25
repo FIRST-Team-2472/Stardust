@@ -20,11 +20,11 @@ public class RangeFinding implements Actionable {
 
     @Override
     public void periodic() {
-        if (distanceErrorForward < 0 && distanceErrorBackward < 216) {
-            Robot.drive.tankDriveVelocity(-0.3, -0.3);
-        }
-        else if (distanceErrorBackward > 240 && distanceErrorForward > -24) {
+        if (currentDistance < 96) {
             Robot.drive.tankDriveVelocity(0.3, 0.3);
+        }
+        else if (currentDistance > 120) {
+            Robot.drive.tankDriveVelocity(-0.3, -0.3);
         }
     }
 
