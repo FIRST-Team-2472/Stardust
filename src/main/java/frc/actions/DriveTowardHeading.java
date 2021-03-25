@@ -16,15 +16,18 @@ public class DriveTowardHeading implements Actionable {
 
     @Override
     public void startAction() {
-        /*
+
+        
         if (heading > 0) {
-            
+            leftspeed = (heading*1-distance-8.6)/356;
+            rightspeed = (heading*1-distance+17.8)/-55;
+            Robot.drive.tankDriveVelocity(1,1);
         } else if (heading == 0) {
             leftspeed = 0;
             rightspeed = 0;
         } else {
 
-        }*/
+        }
 
         Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         SmartDashboard.putString("ActionName", "Drive Toward Heading");
