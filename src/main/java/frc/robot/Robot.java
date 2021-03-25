@@ -146,6 +146,11 @@ public class Robot extends TimedRobot {
     actions.addAction(new Wait(5));
   }
 
+  private void maybeThisWillWork(ActionQueue actions) {
+    actions.addAction(new Seek());
+    actions.addAction(new LimelightStuff());
+  }
+
   @Override
   public void autonomousInit() {
     drive.zeroCounters();
