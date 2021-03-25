@@ -477,6 +477,9 @@ public class Robot extends TimedRobot {
     // Limelight stuff
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
+    SmartDashboard.putNumber("y degrees off", limelight.targetYAngleFromCenter());
+    SmartDashboard.putNumber("DistanceFromFiring", limelight.distanceIN());
+    SmartDashboard.putNumber("Tangent", limelight.tangent());
 
   }
 

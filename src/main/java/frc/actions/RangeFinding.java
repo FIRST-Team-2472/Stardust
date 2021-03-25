@@ -13,7 +13,6 @@ public class RangeFinding implements Actionable {
     @Override
     public void startAction() {
         SmartDashboard.putString("ActionName", "RangeFinding");
-        SmartDashboard.putNumber("DistanceFromFiring", currentDistance);
     }
 
     @Override
