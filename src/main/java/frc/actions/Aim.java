@@ -2,7 +2,6 @@ package frc.actions;
 
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
-import frc.robot.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -13,27 +12,15 @@ public class Aim implements Actionable {
 		SmartDashboard.putString("ActionName", "Aiming");
 	}
 	
-	private static final double kP = .02;
-
-	// this should not be static in case you need to aim multiple times
+	private static final double kP = -.027;
 	private double TurretSpeed = 0;
 
-	private Timer timeout = null;
 	@Override
 	public void periodic() {
-		//double error = Robot.limelight.targetXAngleFromCenter();
-		//Robot.turret.runTurret(kP*error);
-		SmartDashboard.putNumber("Error", Robot.limelight.targetXAngleFromCenter());
 		if (Robot.limelight.isTargetSpotted()) {
 			TurretSpeed = Robot.limelight.targetXAngleFromCenter() * kP; 
-						
 			Robot.turret.runTurret (TurretSpeed);
-			//timeout = null;
-		} /*else { 
-			if (timeout == null) timeout = new Timer(2);
-			Robot.turret.runTurret(0);
-		}*/
-        
+		}
 	}
 
 	@Override
@@ -43,11 +30,7 @@ public class Aim implements Actionable {
 
 	@Override
 	public boolean isFinished() {
-		return /*Timer.tryIsTimedOut(timeout) ||*/ Robot.limelight.isTargetSpotted() && Math.abs(Robot.limelight.targetXAngleFromCenter()) < 0.5;
+		if (Robot.limelight.isTargetSpotted()) return Math.abs(Robot.limelight.targetXAngleFromCenter()) < 0.5;
+		else return true;
     }
-
-	public static void aim() {
-		//what is this
-		//idk what this is. why does it exist.
-	}
 }

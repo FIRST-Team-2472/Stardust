@@ -23,6 +23,9 @@ import frc.subsystems.Indexer;
 import frc.subsystems.Shooter;
 import frc.subsystems.Turret;
 import frc.subsystems.Collector;
+
+import javax.swing.Action;
+
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.AnalogInput;
 
@@ -217,16 +220,18 @@ public class Robot extends TimedRobot {
     //compressor.setClosedLoopControl(true);
     drive.zeroCounters();
     SmartDashboard.putString("RobotState", "TeleopEnabled");
+   
   }
 
   private final ActionQueue teleopActions = new ActionQueue();
+  
   //private boolean teleopShooting = false;
 
   @Override
   public void teleopPeriodic() {
     GetPrefs();
     updateSmartDashboard();
-
+    actionQueue.addAction(new Aim());
     // runs the IMU(Pigeon), and related things
 
     /*if (limelight.isTargetSpotted() && teleopShooting) {
