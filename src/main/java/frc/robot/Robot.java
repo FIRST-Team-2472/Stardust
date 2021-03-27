@@ -194,8 +194,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
     SmartDashboard.putNumber("Auto Heading", angle);
 
+    actionQueue.addAction(new Aim());
     //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
-    actionQueue.addAction(new RangeFinding());
+    //actionQueue.addAction(new RangeFinding());
     //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
 
   }
