@@ -242,7 +242,7 @@ public class Drive {
     SmartDashboard.putBoolean("AngleGood", angleIsGood);
     SmartDashboard.putNumber("Angle", (int)currentAngle % 360);
     SmartDashboard.putNumber("Rate", currentAngularRate);
-    SmartDashboard.putNumber("Yaw", yaw);
+
     }
 
     public int getCurrentAngle() {

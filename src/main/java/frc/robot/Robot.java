@@ -161,6 +161,7 @@ public class Robot extends TimedRobot {
     actionQueue.clear();
     updateSmartDashboard();
     GetPrefs();
+    actionQueue.addAction(new DriveTowardHeading(0.12, 0.5, 80));
     /*actionQueue.addAction(new TurnRobot(180));
     actionQueue.addAction(new Wait(5));
     actionQueue.addAction(new Seek());
@@ -197,7 +198,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
     SmartDashboard.putNumber("Auto Heading", angle);
 
-    actionQueue.addAction(new Aim());
+
     //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
     //actionQueue.addAction(new RangeFinding());
     //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
@@ -482,7 +483,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("KF", .164);
     // Limelight stuff
     SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
-    SmartDashboard.putNumber("x degrees off", Math.abs(limelight.targetXAngleFromCenter())<1.5);
+    SmartDashboard.putBoolean("Aimed", Math.abs(limelight.targetXAngleFromCenter())<1.5);
     SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
     SmartDashboard.putNumber("y degrees off", limelight.targetYAngleFromCenter());
     SmartDashboard.putNumber("DistanceFromFiring", limelight.distanceIN());

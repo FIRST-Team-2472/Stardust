@@ -1,5 +1,6 @@
 package frc.actions;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
 import frc.robot.Robot;
 
@@ -7,22 +8,15 @@ public class Seek implements Actionable {
 
     @Override
     public void startAction() {
-        
+        SmartDashboard.putString("ActionName", "Seek");
     }
 
 
     @Override
     public void periodic() {
-        if (Robot.drive.getCurrentAngle() < 0 && Robot.drive.getCurrentAngle() > -180) {
-            Robot.drive.tankDriveVelocity(0.3, 0.1);
+        if (Robot.limelight.isTargetSpotted() == false) {
+            Robot.drive.tankDriveVelocity(-0.2, 0.2);
         }
-        else if (Robot.drive.getCurrentAngle() > 0 && Robot.drive.getCurrentAngle() < 180) {
-            Robot.drive.tankDriveVelocity(0.1, 0.3);
-        }
-        else if (Robot.drive.getCurrentAngle() == 0) {
-            Robot.drive.tankDriveVelocity(0.3, 0.1);
-        }
-        
     }
 
     @Override
