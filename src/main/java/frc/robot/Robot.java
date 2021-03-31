@@ -154,6 +154,19 @@ public class Robot extends TimedRobot {
     actions.addAction(new LimelightStuff());
   }
 
+  private void runBounceCourse(ActionQueue actions) {
+    //actionQueue.addAction(new DriveStraightVelocity(1));
+    actionQueue.addAction(new DriveTowardHeading(0.1, 0.6, 90));
+    actionQueue.addAction(new Wait(0.2));
+    actionQueue.addAction(new TurnRobot(90));
+    actionQueue.addAction(new DriveTowardHeading(-0.4, -0.05, 115));
+    actionQueue.addAction(new TurnRobot(0));
+    actionQueue.addAction(new ZeroIMU());
+    actionQueue.addAction(new DriveStraightVelocity(2));
+    actionQueue.addAction(new DriveTowardHeading(0.05, 0.4, 95));
+    //actionQueue.addAction(new Wait(1));
+  }
+
   @Override
   public void autonomousInit() {
     drive.zeroCounters();
@@ -161,7 +174,12 @@ public class Robot extends TimedRobot {
     actionQueue.clear();
     updateSmartDashboard();
     GetPrefs();
-    actionQueue.addAction(new DriveTowardHeading(0.12, 0.5, 80));
+    runBounceCourse(actionQueue);
+
+    /*actionQueue.addAction(new TurnToHeading(0.1, 0.6, 90));
+    actionQueue.addAction(new Wait(0.2));
+    actionQueue.addAction(new TurnRobot(90));*/
+    //actionQueue.addAction(new DriveTowardHeading(0.12, 0.5, 80));
     /*actionQueue.addAction(new TurnRobot(180));
     actionQueue.addAction(new Wait(5));
     actionQueue.addAction(new Seek());

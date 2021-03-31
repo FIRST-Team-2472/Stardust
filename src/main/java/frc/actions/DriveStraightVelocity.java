@@ -36,7 +36,7 @@ public class DriveStraightVelocity implements Actionable {
             return Robot.drive.getLeftDistance() > (int) (feet * Constants.pulsesPerFoot);
         } else if (feet == 0) {
             return true;
-        } else {   
+        } else  {   
             return Robot.drive.getLeftDistance() < (int) (feet * Constants.pulsesPerFoot);
         }
     } 
