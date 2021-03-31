@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
     drive.DoPigeon();
     SmartDashboard.putNumber("Angle", drive.getCurrentAngle());
     limelight.distanceIN();
-  
+    updateSmartDashboard();
   }
 
   private final ActionQueue actionQueue = new ActionQueue();
@@ -125,9 +125,6 @@ public class Robot extends TimedRobot {
     actions.addAction(new Aim());
     actions.addAction(new Conveyor(1, .75));
     actions.addAction(new StartShooter(1));
-    actions.addAction(new FeedBall());
-    actions.addAction(new FeedBall());
-    actions.addAction(new FeedBall());
     actions.addAction(new StopShooter());
   }
 
@@ -153,16 +150,8 @@ public class Robot extends TimedRobot {
   }
 
   private void runBounceCourse(ActionQueue actions) {
-    //actionQueue.addAction(new DriveStraightVelocity(1));
-    actionQueue.addAction(new DriveTowardHeading(0.1, 0.6, 90));
-    actionQueue.addAction(new Wait(0.2));
-    actionQueue.addAction(new TurnRobot(90));
-    actionQueue.addAction(new DriveTowardHeading(-0.4, -0.05, 115));
-    actionQueue.addAction(new TurnRobot(0));
-    actionQueue.addAction(new ZeroIMU());
-    actionQueue.addAction(new DriveStraightVelocity(2));
-    actionQueue.addAction(new DriveTowardHeading(0.05, 0.4, 95));
-    //actionQueue.addAction(new Wait(1));
+    actions.addAction(new DriveTowardHeading(.12, .6, 80));
+    //actions.addAction(new TurnRobot(-30));
   }
 
   @Override
@@ -481,6 +470,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("PSI", (pressure.getAverageValue() - 400) * (70.0 / 1250.0));
     SmartDashboard.putNumber("Turret Postion", (turretEncoder.getAverageValue()));
 
+    SmartDashboard.putNumber("Angle", drive.getCurrentAngle());
     // PID
     SmartDashboard.putNumber("KP", 0.005);
     SmartDashboard.putNumber("KI", 0);

@@ -7,13 +7,14 @@ import frc.robot.Robot;
 public class DriveTowardHeading implements Actionable {
 
     public double rightspeed, leftspeed, heading, distance;
-    public double kP = 0.0019;
+    public double kP = 0.01;
 
     public DriveTowardHeading(double lleftspeed, double rrightspeed, double hheading) {
         heading = hheading;
         leftspeed = lleftspeed;
         rightspeed = rrightspeed;
-        heading = Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle());
+        Robot.drive.zeroIMU();
+        //heading = Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle());
     }
 
     @Override
@@ -24,9 +25,9 @@ public class DriveTowardHeading implements Actionable {
     @Override
     public void periodic() { 
         if (leftspeed < rightspeed) {
-            Robot.drive.tankDriveVelocity(leftspeed-(kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle())))/2), rightspeed-kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle()))));
+            Robot.drive.tankDriveVelocity(leftspeed-kP*((heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle())))/2), rightspeed-kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle()))));
         } else if (leftspeed > rightspeed) {
-            Robot.drive.tankDriveVelocity(leftspeed-(kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle())))/2), rightspeed-kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle()))));
+            Robot.drive.tankDriveVelocity(leftspeed-kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle()))), rightspeed-kP*((heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle())))/2));
         } else {
             Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         }
