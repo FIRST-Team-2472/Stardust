@@ -19,7 +19,6 @@ import frc.actions.runners.ActionQueue;
 import frc.actions.*;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
-import frc.subsystems.Indexer;
 import frc.subsystems.Shooter;
 import frc.subsystems.Turret;
 import frc.subsystems.Collector;
@@ -44,7 +43,6 @@ public class Robot extends TimedRobot {
   public static final Climber climb = new Climber(Constants.CLIMBER);
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
-  public static final Indexer indexer = new Indexer(Constants.IndexerF, Constants.IndexerR);
   private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
   public AnalogInput pressure = new AnalogInput(0);
@@ -408,17 +406,6 @@ public class Robot extends TimedRobot {
         break;
       // Test case that runs all the pistons. Pistons that were for show, mostly.
       case 3:
-        if (xboxcontroller.getAButton()) {
-          indexer.runIndexerForward();
-          SmartDashboard.putString("PistonTest", "runFeedPistonForward");
-        }
-        if (xboxcontroller.getBButton()) {
-          indexer.runIndexerBackward();
-          SmartDashboard.putString("PistonTest", "runFeedPistonBackward");
-        }
-        if (!xboxcontroller.getBButton() && !xboxcontroller.getAButton()) {
-          indexer.runIndexerOff();
-        }
         if (xboxcontroller.getYButton()) {
           collector.pushoutfrontwheel();
           SmartDashboard.putString("PistonTest", "runFrontPistonForward");

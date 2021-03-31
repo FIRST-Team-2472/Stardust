@@ -23,7 +23,13 @@ public class DriveTowardHeading implements Actionable {
 
     @Override
     public void periodic() { 
-        Robot.drive.tankDriveVelocity(leftspeed, rightspeed-kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle()))));
+        if (leftspeed < rightspeed) {
+            Robot.drive.tankDriveVelocity(leftspeed-(kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle())))/2), rightspeed-kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle()))));
+        } else if (leftspeed > rightspeed) {
+            Robot.drive.tankDriveVelocity(leftspeed-(kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle())))/2), rightspeed-kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle()))));
+        } else {
+            Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
+        }
     }
 
     @Override

@@ -50,10 +50,6 @@ public class Shooter {
       flyWheel.set(ControlMode.PercentOutput, speed);    
     }
 
-    public void fireFlyWheel() {
-      flyWheel.set(ControlMode.PercentOutput, Robot.limelight.distanceIN());
-    }
-
     public double runSensorVelocity() {
       return flyWheel.getSelectedSensorVelocity();
     }
