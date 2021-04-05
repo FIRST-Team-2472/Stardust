@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -150,8 +151,34 @@ public class Robot extends TimedRobot {
   }
 
   private void runBounceCourse(ActionQueue actions) {
-    actions.addAction(new DriveTowardHeading(.12, .6, 80));
-    //actions.addAction(new TurnRobot(-30));
+    actions.addAction(new DriveStraightVelocity(1.5));
+    actions.addAction(new TurnRobot(90));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(2.5));
+    actions.addAction(new TurnRobot(-150));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(10));
+    actions.addAction(new TurnRobot(60));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(2.5));
+    actions.addAction(new TurnRobot(85));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(8));
+    actions.addAction(new TurnRobot(180));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(9));
+    actions.addAction(new TurnRobot(80));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(6));
+    actions.addAction(new TurnRobot(85));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(8));
+    actions.addAction(new TurnRobot(-160));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(4));
+    actions.addAction(new TurnRobot(60));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(2.5));
   }
 
   @Override

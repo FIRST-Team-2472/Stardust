@@ -7,7 +7,7 @@ import frc.robot.Robot;
 public class DriveTowardHeading implements Actionable {
 
     public double rightspeed, leftspeed, heading, distance, editSpeed, smallEditSpeed;
-    public double kP = 0.019;
+    public double kP = 0.008;
 
     public DriveTowardHeading(double lleftspeed, double rrightspeed, double hheading) {
         heading = Math.abs(hheading);
@@ -24,15 +24,16 @@ public class DriveTowardHeading implements Actionable {
 
     @Override
     public void periodic() { 
-        editSpeed = kP*(heading-(Math.abs(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle()))))*(Math.abs(Math.abs(rightspeed)-Math.abs(leftspeed)));
+        editSpeed = kP*(heading-(Math.abs(heading-Math.abs(Robot.drive.getCurrentAngle()))))*(1-Math.abs(rightspeed-leftspeed));
         SmartDashboard.putNumber("Edit Speed", editSpeed);
-        smallEditSpeed = editSpeed/2;
+        if (1-Math.abs(leftspeed -rightspeed) != 0)smallEditSpeed = editSpeed/(1-Math.abs(leftspeed-rightspeed));
+        else smallEditSpeed = editSpeed;
     
         if (leftspeed < rightspeed) {
-            if (rightspeed-editSpeed < 0) editSpeed == 0;
-            Robot.drive.tankDriveVelocity(leftspeed-smallEditSpeed, rightspeed-editSpeed);
+            //if (rightspeed-editSpeed < 0) editSpeed = 0;
+            Robot.drive.tankDriveVelocity(leftspeed, rightspeed-editSpeed);
         } else if (leftspeed > rightspeed) {
-            Robot.drive.tankDriveVelocity(leftspeed-editSpeed, rightspeed-smallEditSpeed);
+            Robot.drive.tankDriveVelocity(leftspeed-editSpeed, rightspeed);
         } else {
             Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         }
