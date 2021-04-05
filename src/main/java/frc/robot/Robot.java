@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -79,7 +80,7 @@ public class Robot extends TimedRobot {
     drive.DoPigeon();
     SmartDashboard.putNumber("Angle", drive.getCurrentAngle());
     limelight.distanceIN();
-  
+    updateSmartDashboard();
   }
 
   private final ActionQueue actionQueue = new ActionQueue();
@@ -122,15 +123,6 @@ public class Robot extends TimedRobot {
     actions.addAction(new DriveTowardHeading(.4, .6, 20));
   }
 
-  private void shootBallAuto(ActionQueue actions) {
-    actions.clear();
-    actions.addAction(new Aim());
-    actions.addAction(new Conveyor(1, .75));
-
-  }
-
-  // More untested autonomous code! Not even useful here, as our current robot
-  // can't hold more than 1 ball in the shooter. Oh well.
   private void loadBallsAuto(ActionQueue actions) {
     actions.addAction(new DriveStraightTime(.5, 5));
     actions.addAction(new DumpBalls(3));
@@ -154,16 +146,34 @@ public class Robot extends TimedRobot {
   }
 
   private void runBounceCourse(ActionQueue actions) {
-    //actionQueue.addAction(new DriveStraightVelocity(1));
-    actions.addAction(new DriveTowardHeading(0.1, 0.6, 90));
-    actions.addAction(new Wait(0.2));
+    actions.addAction(new DriveStraightVelocity(1.5));
     actions.addAction(new TurnRobot(90));
-    actions.addAction(new DriveTowardHeading(-0.4, -0.05, 115));
-    actions.addAction(new TurnRobot(0));
-    actions.addAction(new ZeroIMU());
-    actions.addAction(new DriveStraightVelocity(2));
-    actions.addAction(new DriveTowardHeading(0.05, 0.4, 95));
-    //actionQueue.addAction(new Wait(1));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(2.5));
+    actions.addAction(new TurnRobot(-150));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(10));
+    actions.addAction(new TurnRobot(60));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(2.5));
+    actions.addAction(new TurnRobot(85));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(8));
+    actions.addAction(new TurnRobot(180));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(9));
+    actions.addAction(new TurnRobot(80));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(6));
+    actions.addAction(new TurnRobot(85));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(8));
+    actions.addAction(new TurnRobot(-160));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(4));
+    actions.addAction(new TurnRobot(60));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new DriveStraightVelocity(2.5));
   }
 
   @Override
@@ -486,6 +496,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("PSI", (pressure.getAverageValue() - 400) * (70.0 / 1250.0));
     SmartDashboard.putNumber("Turret Postion", (turretEncoder.getAverageValue()));
 
+    SmartDashboard.putNumber("Angle", drive.getCurrentAngle());
     // PID
     SmartDashboard.putNumber("KP", 0.005);
     SmartDashboard.putNumber("KI", 0);

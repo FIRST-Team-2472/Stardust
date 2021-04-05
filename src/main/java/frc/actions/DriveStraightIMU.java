@@ -29,7 +29,9 @@ public class DriveStraightIMU implements Actionable {
     public void periodic() { 
         double correction;
         correction = (heading-Robot.drive.getCurrentAngle())*0.0005;
-        rightspeed += correction;
+        //rightspeed = rightspeed + correction;
+        SmartDashboard.putNumber("Edit Speed", correction);
+
         Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
     }
 

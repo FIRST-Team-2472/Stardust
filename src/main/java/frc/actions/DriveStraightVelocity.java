@@ -22,7 +22,7 @@ public class DriveStraightVelocity implements Actionable {
 
     @Override
     public void periodic() { 
-        Robot.drive.tankDriveVelocity(.5, .5+(((Robot.drive.getLeftDistance()-Robot.drive.getRightDistance())/Robot.drive.getRightDistance())*0.005));
+        Robot.drive.tankDriveVelocity(.4, .4+(((Robot.drive.getLeftDistance()-Robot.drive.getRightDistance())/Robot.drive.getRightDistance())*0.005));
     }
 
     @Override

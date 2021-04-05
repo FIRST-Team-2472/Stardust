@@ -6,14 +6,15 @@ import frc.robot.Robot;
 
 public class DriveTowardHeading implements Actionable {
 
-    public double rightspeed, leftspeed, heading, distance;
-    public double kP = 0.0019;
+    public double rightspeed, leftspeed, heading, distance, editSpeed, smallEditSpeed;
+    public double kP = 0.008;
 
     public DriveTowardHeading(double lleftspeed, double rrightspeed, double hheading) {
-        heading = hheading;
+        heading = Math.abs(hheading);
         leftspeed = lleftspeed;
         rightspeed = rrightspeed;
-        heading = Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle());
+        Robot.drive.zeroIMU();
+        //heading = Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle());
     }
 
     @Override
@@ -23,10 +24,16 @@ public class DriveTowardHeading implements Actionable {
 
     @Override
     public void periodic() { 
+        editSpeed = kP*(heading-(Math.abs(heading-Math.abs(Robot.drive.getCurrentAngle()))))*(1-Math.abs(rightspeed-leftspeed));
+        SmartDashboard.putNumber("Edit Speed", editSpeed);
+        if (1-Math.abs(leftspeed -rightspeed) != 0)smallEditSpeed = editSpeed/(1-Math.abs(leftspeed-rightspeed));
+        else smallEditSpeed = editSpeed;
+    
         if (leftspeed < rightspeed) {
-            Robot.drive.tankDriveVelocity(leftspeed-(kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle())))/2), rightspeed-kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle()))));
+            //if (rightspeed-editSpeed < 0) editSpeed = 0;
+            Robot.drive.tankDriveVelocity(leftspeed, rightspeed-editSpeed);
         } else if (leftspeed > rightspeed) {
-            Robot.drive.tankDriveVelocity(leftspeed-(kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle())))/2), rightspeed-kP*(heading-(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle()))));
+            Robot.drive.tankDriveVelocity(leftspeed-editSpeed, rightspeed);
         } else {
             Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         }
@@ -39,6 +46,8 @@ public class DriveTowardHeading implements Actionable {
 
     @Override
     public boolean isFinished() {
-                return Math.abs(Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle())) < 1;
+            if (leftspeed < rightspeed) return heading < Robot.drive.getCurrentAngle();
+            else if (leftspeed > rightspeed) return heading < -1*Robot.drive.getCurrentAngle();
+            else return true;
         }
     }
