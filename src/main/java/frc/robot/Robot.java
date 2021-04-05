@@ -19,12 +19,11 @@ import frc.actions.runners.ActionQueue;
 import frc.actions.*;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
+import frc.subsystems.Elevator;
 import frc.subsystems.Shooter;
 import frc.subsystems.Turret;
 import frc.subsystems.Collector;
-
-import javax.swing.Action;
-
+import frc.subsystems.Shield;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.AnalogInput;
 
@@ -45,6 +44,7 @@ public class Robot extends TimedRobot {
   public static final Limelight limelight = new Limelight();
   private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
+  public static final Elevator elevator = new Elevator(Constants.ElevatorID);
   public AnalogInput pressure = new AnalogInput(0);
   public AnalogInput turretEncoder = new AnalogInput(1);
   public PigeonIMU pigeon = new PigeonIMU(Constants.Pidgeon);
@@ -52,8 +52,10 @@ public class Robot extends TimedRobot {
   public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(Constants.xboxcontroller);
   public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
   public static final Joystick leftJoystick = new Joystick(Constants.jstickL);
+  public static final Shield shield = new Shield(Constants.ShieldID);
   Preferences prefs;
   double leftMotorSpeed, rightMotorSpeed, angle, change, change2;
+  boolean teleopShooting;
 
   @Override
   public void robotInit() {
@@ -124,11 +126,7 @@ public class Robot extends TimedRobot {
     actions.clear();
     actions.addAction(new Aim());
     actions.addAction(new Conveyor(1, .75));
-    actions.addAction(new StartShooter(1));
-    actions.addAction(new FeedBall());
-    actions.addAction(new FeedBall());
-    actions.addAction(new FeedBall());
-    actions.addAction(new StopShooter());
+
   }
 
   // More untested autonomous code! Not even useful here, as our current robot
@@ -147,21 +145,24 @@ public class Robot extends TimedRobot {
     actions.addAction(new Wait(5));
   }
 
-  private void maybeThisWillWork(ActionQueue actions) {
-    actions.addAction(new Seek());
-    actions.addAction(new LimelightStuff());
+  private void FIRE(ActionQueue actions) {
+    actions.clear();
+    actions.addAction(new Aim());
+    actions.addAction(new RangeFinding());
+    actions.addAction(new ShieldAim());
+    actions.addAction(new Shooting(5));
   }
 
   private void runBounceCourse(ActionQueue actions) {
     //actionQueue.addAction(new DriveStraightVelocity(1));
-    actionQueue.addAction(new DriveTowardHeading(0.1, 0.6, 90));
-    actionQueue.addAction(new Wait(0.2));
-    actionQueue.addAction(new TurnRobot(90));
-    actionQueue.addAction(new DriveTowardHeading(-0.4, -0.05, 115));
-    actionQueue.addAction(new TurnRobot(0));
-    actionQueue.addAction(new ZeroIMU());
-    actionQueue.addAction(new DriveStraightVelocity(2));
-    actionQueue.addAction(new DriveTowardHeading(0.05, 0.4, 95));
+    actions.addAction(new DriveTowardHeading(0.1, 0.6, 90));
+    actions.addAction(new Wait(0.2));
+    actions.addAction(new TurnRobot(90));
+    actions.addAction(new DriveTowardHeading(-0.4, -0.05, 115));
+    actions.addAction(new TurnRobot(0));
+    actions.addAction(new ZeroIMU());
+    actions.addAction(new DriveStraightVelocity(2));
+    actions.addAction(new DriveTowardHeading(0.05, 0.4, 95));
     //actionQueue.addAction(new Wait(1));
   }
 
@@ -248,7 +249,6 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     GetPrefs();
     updateSmartDashboard();
-    actionQueue.addAction(new Aim());
     // runs the IMU(Pigeon), and related things
 
     /*if (limelight.isTargetSpotted() && teleopShooting) {
@@ -270,12 +270,12 @@ public class Robot extends TimedRobot {
 
     //shooter.runFlyWheel(-1);
 
-
-    // TODO REMINDER joystick forward gives negative values
+    //One or the other
     drive.tankDriveVelocity(leftJoystick.getY() * -.5, rightJoystick.getY() * -.5);
+    //drive.arcadeDriveVelocity(leftJoystick.getY()*-.5, rightJoystick.getX()*-.5);
 
-    //collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
-    //collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
+    collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
+    collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
 
     if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
       collector.pushoutfrontwheel();
@@ -285,12 +285,16 @@ public class Robot extends TimedRobot {
       collector.pushofffrontwheel();
     }
 
-    if (xboxcontroller.getXButton()) {
-      turret.runTurret(.25);
-    } else if (xboxcontroller.getBButton()) {
-      turret.runTurret(-.25);
-    } else {
-      turret.runTurret(0);
+    if (limelight.isTargetSpotted() && teleopShooting) {
+      teleopShooting = false;
+    }
+    if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
+      teleopShooting = true;
+      FIRE(teleopActions);
+    }
+    if (xboxcontroller.getBButtonPressed()) {
+      teleopShooting = false;
+      teleopActions.abort();
     }
 
     // NOTE: should probably have another control to prevent misfires since this can
@@ -467,6 +471,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("TurretDistance", turret.getTurretDistance());
     SmartDashboard.putNumber("Right Distance inches", drive.getRightDistance()/(Constants.pulsesPerFoot/12));
     SmartDashboard.putNumber("Left Distance inches", drive.getLeftDistance()/(Constants.pulsesPerFoot/12));
+    SmartDashboard.getNumber("Flywheel", shooter.runSensorVelocity());
     // Robot state SmartDashboard stuff
     SmartDashboard.putString("RobotState", "TeleopEnabled");
     SmartDashboard.putString("RobotState", "Robot On");

@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 
 public class Drive {
 
@@ -139,17 +138,19 @@ public class Drive {
      */
 
     public void tankDrivePower(double left, double right) {
-        //runBackLeft(left * -1);
         runFrontLeftPower(left);
         runBackRightPower(right);
-        //runFrontRight(right);
     }
 
     public void tankDriveVelocity(double left, double right) {
-        //runBackLeft(left * -1);
         runFrontLeftVelocity(left);
         runBackRightVelocity(right);
-        //runFrontRight(right);
+    }
+
+    public void arcadeDriveVelocity(double leftJoystickY, double rightJoystickX) {
+        tankDriveVelocity(leftJoystickY, leftJoystickY);
+        if (rightJoystickX > 0) tankDriveVelocity(rightJoystickX, rightJoystickX*-1);
+        else tankDriveVelocity(rightJoystickX*-1, rightJoystickX);
     }
     /** Run the back left moter at the given speed */
     public void runBackLeft(double speed) {
@@ -159,7 +160,6 @@ public class Drive {
 //Just for testing.
     public void runFrontRight(double speed) {
         frontRight.set(ControlMode.Velocity, speed * 300);
-        
     }
 
     public void runBackRightPower(double speed) {
