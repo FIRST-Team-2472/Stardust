@@ -148,9 +148,12 @@ public class Drive {
     }
 
     public void arcadeDriveVelocity(double leftJoystickY, double rightJoystickX) {
-        tankDriveVelocity(leftJoystickY, leftJoystickY);
-        if (rightJoystickX > 0) tankDriveVelocity(rightJoystickX, rightJoystickX*-1);
-        else tankDriveVelocity(rightJoystickX*-1, rightJoystickX);
+        /*
+        if (Math.abs(leftJoystickY) > Math.abs(rightJoystickX)) tankDriveVelocity(leftJoystickY, leftJoystickY);
+        else {
+            if (rightJoystickX > 0) tankDriveVelocity(rightJoystickX*-1, rightJoystickX);
+            else tankDriveVelocity(rightJoystickX*-1, rightJoystickX);
+        }*/
     }
     /** Run the back left moter at the given speed */
     public void runBackLeft(double speed) {

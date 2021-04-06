@@ -309,6 +309,10 @@ public class Robot extends TimedRobot {
       teleopActions.abort();
     }
 
+    if (leftJoystick.getRawButton(1)) {
+      
+    }
+
     // NOTE: should probably have another control to prevent misfires since this can
     // only be done once per match
     if (leftJoystick.getRawButton(3) && rightJoystick.getRawButton(3)) {
