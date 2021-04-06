@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
   public static final Shield shield = new Shield(Constants.ShieldID);
   Preferences prefs;
   double leftMotorSpeed, rightMotorSpeed, angle, change, change2;
+  int driveState;
   boolean teleopShooting;
 
   @Override
@@ -247,10 +248,9 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     turret.zeroTurret();
     updateSmartDashboard();
-    //compressor.setClosedLoopControl(true);
     drive.zeroCounters();
     SmartDashboard.putString("RobotState", "TeleopEnabled");
-   
+    driveState = 0;
   }
 
   private final ActionQueue teleopActions = new ActionQueue();
@@ -261,30 +261,23 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     GetPrefs();
     updateSmartDashboard();
-    // runs the IMU(Pigeon), and related things
 
-    /*if (limelight.isTargetSpotted() && teleopShooting) {
-      teleopShooting = false;
+    
+    if (rightJoystick.getRawButtonPressed(1)) {
+      driveState++;
+      if (driveState > 1) {
+        driveState = 0;
+      }
     }
-    if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
-      teleopShooting = true;
+
+    if (driveState == 0) {
+      drive.tankDriveVelocity(leftJoystick.getY() * -.5, rightJoystick.getY() * -.5);
+      SmartDashboard.putString("Drive State", "Tonk ;)");
     }
-    if (xboxcontroller.getBButtonPressed()) {
-      teleopShooting = false;
-      teleopActions.abort();
-    }*/
-
-    /*if (xboxcontroller.getXButton()) {
-      shooter.runFlyWheel(-1);
-    } else {
-      shooter.runFlyWheel(0);
-    }*/
-
-    //shooter.runFlyWheel(-1);
-
-    //One or the other
-    drive.tankDriveVelocity(leftJoystick.getY() * -.5, rightJoystick.getY() * -.5);
-    //drive.arcadeDriveVelocity(leftJoystick.getY()*-.5, rightJoystick.getX()*-.5);
+    else if (driveState == 1) {
+      drive.arcadeDriveVelocity(leftJoystick.getY()*-.5, rightJoystick.getX()*-.5);
+      SmartDashboard.putString("Drive State", "Arcade");
+    }
 
     collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
     collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
