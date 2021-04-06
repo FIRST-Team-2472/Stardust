@@ -96,18 +96,19 @@ public class Robot extends TimedRobot {
     actions.clear();
     actionQueue.addAction(new ZeroIMU());
     actionQueue.addAction(new DriveStraightIMU(1, 0));
-    actionQueue.addAction(new DriveTowardHeading(0, .3, 60));
+    actionQueue.addAction(new DriveTowardHeading(0, .4, 60));
     actionQueue.addAction(new DriveStraightIMU(1, 60));
-    actionQueue.addAction(new DriveTowardHeading(.3, 0, 0));
-    actionQueue.addAction(new DriveStraightIMU(11, 0));
+    actionQueue.addAction(new DriveTowardHeading(.4, 0, 5));
+    actionQueue.addAction(new TurnRobot(0));
+    actionQueue.addAction(new DriveStraightVelocity(8.5));
     actionQueue.addAction(new DriveTowardHeading(.3, 0, -60));
-    actionQueue.addAction(new DriveStraightIMU(2, -60));
-    actionQueue.addAction(new DriveTowardHeading(.1, .5, 220));
-    actionQueue.addAction(new DriveStraightIMU(2, 220));
-    actionQueue.addAction(new DriveTowardHeading(.3, 0, 180));
-    actionQueue.addAction(new DriveStraightIMU(11, 180));
+    actionQueue.addAction(new DriveStraightVelocity(2));
+    actionQueue.addAction(new DriveTowardHeading(0.05, .45, 220));
+    actionQueue.addAction(new DriveStraightVelocity(4));
+    actionQueue.addAction(new DriveTowardHeading(.3, 0, 260));
+    actionQueue.addAction(new DriveStraightVelocity(8.5));
     actionQueue.addAction(new DriveTowardHeading(0.3, 0, 120));
-    actionQueue.addAction(new DriveStraightIMU(2, 120));
+    actionQueue.addAction(new DriveStraightVelocity(2));
     actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
   }
 
@@ -188,7 +189,8 @@ public class Robot extends TimedRobot {
     actionQueue.clear();
     updateSmartDashboard();
     GetPrefs();
-    runBounceCourse(actionQueue);
+    //runBounceCourse(actionQueue);
+    trackDrive(actionQueue);
 
     /*actionQueue.addAction(new TurnToHeading(0.1, 0.6, 90));
     actionQueue.addAction(new Wait(0.2));

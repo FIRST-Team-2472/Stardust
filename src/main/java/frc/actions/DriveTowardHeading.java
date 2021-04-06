@@ -7,13 +7,14 @@ import frc.robot.Robot;
 public class DriveTowardHeading implements Actionable {
 
     public double rightspeed, leftspeed, heading, distance, editSpeed, smallEditSpeed;
-    public double kP = 0.008;
+    public double kP = 0.00008;
+    //public double kP = 0.008;
 
     public DriveTowardHeading(double lleftspeed, double rrightspeed, double hheading) {
         heading = Math.abs(hheading);
         leftspeed = lleftspeed;
         rightspeed = rrightspeed;
-        Robot.drive.zeroIMU();
+        //Robot.drive.zeroIMU();
         //heading = Math.abs(heading)-Math.abs(Robot.drive.getCurrentAngle());
     }
 
@@ -24,16 +25,16 @@ public class DriveTowardHeading implements Actionable {
 
     @Override
     public void periodic() { 
-        editSpeed = kP*(heading-(Math.abs(heading-Math.abs(Robot.drive.getCurrentAngle()))))*(1-Math.abs(rightspeed-leftspeed));
+        /*editSpeed = kP*(heading-(Math.abs(heading-Math.abs(Robot.drive.getCurrentAngle()))))*(1-Math.abs(rightspeed-leftspeed));
         SmartDashboard.putNumber("Edit Speed", editSpeed);
         if (1-Math.abs(leftspeed -rightspeed) != 0)smallEditSpeed = editSpeed/(1-Math.abs(leftspeed-rightspeed));
-        else smallEditSpeed = editSpeed;
+        else smallEditSpeed = editSpeed;*/
     
         if (leftspeed < rightspeed) {
             //if (rightspeed-editSpeed < 0) editSpeed = 0;
-            Robot.drive.tankDriveVelocity(leftspeed, rightspeed-editSpeed);
+            Robot.drive.tankDriveVelocity(leftspeed, rightspeed/*-editSpeed*/);
         } else if (leftspeed > rightspeed) {
-            Robot.drive.tankDriveVelocity(leftspeed-editSpeed, rightspeed);
+            Robot.drive.tankDriveVelocity(leftspeed/*-editSpeed*/, rightspeed);
         } else {
             Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         }
