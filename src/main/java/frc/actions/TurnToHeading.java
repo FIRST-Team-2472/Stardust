@@ -45,7 +45,7 @@ public class TurnToHeading implements Actionable {
 
     @Override
     public boolean isFinished() {
-		if (Math.abs(angle-Robot.drive.getCurrentAngle()) < 2) {
+		if (angle-Robot.drive.getCurrentAngle() < 2) {
             return true;
         }
         return false;

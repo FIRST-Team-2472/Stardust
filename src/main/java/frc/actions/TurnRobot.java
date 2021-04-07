@@ -17,14 +17,14 @@ public class TurnRobot implements Actionable {
     @Override
     public void startAction() {
         SmartDashboard.putString("ActionName", "Turn");
-        //Robot.drive.zeroIMU();
+        Robot.drive.zeroIMU();
         
     }
 
     @Override
     public void periodic() {
-        if (angle-Robot.drive.getCurrentAngle() > 0) Robot.drive.tankDriveVelocity(-.2, .2);
-        if (angle-Robot.drive.getCurrentAngle() < 0) Robot.drive.tankDriveVelocity(.2, -.2);
+        if (angle-Robot.drive.getCurrentAngle() > 0) Robot.drive.tankDrivePower(.2, -.2);
+        if (angle-Robot.drive.getCurrentAngle() < 0) Robot.drive.tankDrivePower(-.2, .2);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class TurnRobot implements Actionable {
 
     @Override
     public boolean isFinished() {
-		if (Math.abs(angle-Robot.drive.getCurrentAngle()) < 0.5) {
+		if (Math.abs(angle-Robot.drive.getCurrentAngle()) < 2.0) {
             return true;
         }
         return false;

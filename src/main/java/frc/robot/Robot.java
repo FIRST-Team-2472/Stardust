@@ -98,21 +98,56 @@ public class Robot extends TimedRobot {
   private void trackDrive(ActionQueue actions) {
     actions.clear();
     actionQueue.addAction(new ZeroIMU());
-    actionQueue.addAction(new DriveStraightIMU(1, 0));
-    actionQueue.addAction(new DriveTowardHeading(0, .4, 60));
-    actionQueue.addAction(new DriveStraightIMU(1, 60));
+    actionQueue.addAction(new DriveStraightVelocity(0));
+    actionQueue.addAction(new DriveTowardHeading(0.02, .4, 60));
+    actionQueue.addAction(new DriveStraightVelocity(1));
+    actionQueue.addAction(new Wait(0.5));
     actionQueue.addAction(new DriveTowardHeading(.4, 0, 5));
     actionQueue.addAction(new TurnRobot(0));
     actionQueue.addAction(new DriveStraightVelocity(8.5));
-    actionQueue.addAction(new DriveTowardHeading(.3, 0, -60));
-    actionQueue.addAction(new DriveStraightVelocity(2));
-    actionQueue.addAction(new DriveTowardHeading(0.05, .45, 220));
+    actionQueue.addAction(new Wait(0.5));
+    actionQueue.addAction(new DriveTowardHeading(.4, 0, -60));
+    actionQueue.addAction(new DriveStraightVelocity(1.5));
+    actionQueue.addAction(new DriveTowardHeading(0.03, .45, 220));
     actionQueue.addAction(new DriveStraightVelocity(4));
-    actionQueue.addAction(new DriveTowardHeading(.3, 0, 260));
+    
+    actionQueue.addAction(new ZeroIMU());
+    actionQueue.addAction(new DriveTowardHeading(.3, 0, -50));
+    actionQueue.addAction(new TurnRobot(-50));
+    actionQueue.addAction(new DriveStraightVelocity(8.5));
+    /*
+    actionQueue.addAction(new TurnRobot(180));
     actionQueue.addAction(new DriveStraightVelocity(8.5));
     actionQueue.addAction(new DriveTowardHeading(0.3, 0, 120));
     actionQueue.addAction(new DriveStraightVelocity(2));
     actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
+    */
+  }
+
+  private void boringSlam(ActionQueue actions)
+  {
+    actions.addAction(new DriveStraightVelocity(3.0));
+    actions.addAction(new TurnRobot(90));
+    actions.addAction(new DriveStraightVelocity(4.5));
+    actions.addAction(new TurnRobot(0));
+    actions.addAction(new DriveStraightVelocity(16.5));
+    actions.addAction(new TurnRobot(-90));
+
+    actions.addAction(new DriveStraightVelocity(4.0));
+    actions.addAction(new TurnRobot(0));
+    actions.addAction(new DriveStraightVelocity(4.5));
+    actions.addAction(new TurnRobot(90));
+    actions.addAction(new DriveStraightVelocity(4.5));
+    actions.addAction(new TurnRobot(180));
+    actions.addAction(new DriveStraightVelocity(4.5));
+    actions.addAction(new TurnRobot(270));
+    actions.addAction(new DriveStraightVelocity(4.5));
+    actions.addAction(new TurnRobot(180));
+    actions.addAction(new DriveStraightVelocity(16.0));
+    actions.addAction(new TurnRobot(90));
+    actions.addAction(new DriveStraightVelocity(4.0));
+    actions.addAction(new TurnRobot(180));
+    actions.addAction(new DriveStraightVelocity(3.0));
   }
 
   private void zigZag(ActionQueue actions) {
@@ -148,10 +183,10 @@ public class Robot extends TimedRobot {
   }
 
   private void runBounceCourse(ActionQueue actions) {
-    actions.addAction(new DriveStraightVelocity(1.5));
+    actions.addAction(new DriveStraightVelocity(2.75));
     actions.addAction(new TurnRobot(90));
     actions.addAction(new ZeroCounters());
-    actions.addAction(new DriveStraightVelocity(2.5));
+    actions.addAction(new DriveStraightVelocity(2.75));
     actions.addAction(new TurnRobot(-150));
     actions.addAction(new ZeroCounters());
     actions.addAction(new DriveStraightVelocity(10));
@@ -160,20 +195,20 @@ public class Robot extends TimedRobot {
     actions.addAction(new DriveStraightVelocity(2.5));
     actions.addAction(new TurnRobot(85));
     actions.addAction(new ZeroCounters());
-    actions.addAction(new DriveStraightVelocity(8));
+    actions.addAction(new DriveStraightVelocity(9));
     actions.addAction(new TurnRobot(180));
     actions.addAction(new ZeroCounters());
     actions.addAction(new DriveStraightVelocity(9));
     actions.addAction(new TurnRobot(80));
     actions.addAction(new ZeroCounters());
-    actions.addAction(new DriveStraightVelocity(6));
+    actions.addAction(new DriveStraightVelocity(5.5));
     actions.addAction(new TurnRobot(85));
     actions.addAction(new ZeroCounters());
-    actions.addAction(new DriveStraightVelocity(8));
+    actions.addAction(new DriveStraightVelocity(8.50));
     actions.addAction(new TurnRobot(-160));
     actions.addAction(new ZeroCounters());
-    actions.addAction(new DriveStraightVelocity(4));
-    actions.addAction(new TurnRobot(60));
+    actions.addAction(new DriveStraightVelocity(3.0));
+    actions.addAction(new TurnRobot(90));
     actions.addAction(new ZeroCounters());
     actions.addAction(new DriveStraightVelocity(2.5));
   }
@@ -185,8 +220,8 @@ public class Robot extends TimedRobot {
     actionQueue.clear();
     updateSmartDashboard();
     GetPrefs();
-    //runBounceCourse(actionQueue);
-    trackDrive(actionQueue);
+    runBounceCourse(actionQueue);
+    //boringSlam(actionQueue);
 
     /*actionQueue.addAction(new TurnToHeading(0.1, 0.6, 90));
     actionQueue.addAction(new Wait(0.2));
@@ -263,7 +298,7 @@ public class Robot extends TimedRobot {
     updateSmartDashboard();
 
     
-    if (rightJoystick.getRawButtonPressed(1)) {
+    if (leftJoystick.getRawButtonPressed(1)) {
       driveState++;
       if (driveState > 1) {
         driveState = 0;
@@ -275,7 +310,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putString("Drive State", "Tonk ;)");
     }
     else if (driveState == 1) {
-      drive.arcadeDriveVelocity(leftJoystick.getY()*-.5, rightJoystick.getX()*-.5);
+      drive.arcadeDriveVelocity(leftJoystick.getY()*-.5, leftJoystick.getX()*-.5);
       SmartDashboard.putString("Drive State", "Arcade");
     }
 
