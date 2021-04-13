@@ -19,8 +19,6 @@ public class TurnToHeading implements Actionable {
         angle = Angle;
         leftspeed = Left;
         rightspeed = Right;
-
-
     }
     
 
@@ -29,13 +27,11 @@ public class TurnToHeading implements Actionable {
         Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         Robot.drive.zeroIMU();
         SmartDashboard.putString("ActionName", "TurnHeading");
-
     }
 
     @Override
     public void periodic() {
         Robot.drive.tankDriveVelocity(Math.min(leftspeed, leftBaseSpeed+Math.abs(angle-Robot.drive.getCurrentAngle())*kP), Math.min(rightspeed, rightBaseSpeed+Math.abs(angle-Robot.drive.getCurrentAngle())*kP));
-
     }
 
     @Override

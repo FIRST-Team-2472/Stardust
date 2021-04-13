@@ -51,5 +51,4 @@ public class Shooter {
     public double runSensorVelocity() {
       return flyWheel.getSelectedSensorVelocity();
     }
-    
 }
