@@ -148,20 +148,16 @@ public class Drive {
     }
 
     public void arcadeDriveVelocity(double y, double x) {
-        //tankDriveVelocity(leftJoystickY, leftJoystickY);
-        //if (rightJoystickX > 0) tankDriveVelocity(rightJoystickX, rightJoystickX*-1);
-        //else tankDriveVelocity(rightJoystickX*-1, rightJoystickX);
-        /*
-        leftspeed = x * 0.3 + y * 0.6;
-        rightspeed = x * - 0.3 + y * 0.6;
-        tankDriveVelocity(leftspeed, rightspeed);
-        */
+        // y is Joystick Y
+        // x is Joystick X
+
         if (Math.abs(x) + Math.abs(y) < .5) {
-            tankDriveVelocity(y + x*-1, y + x);
+            tankDriveVelocity(y - x, y + x);
         } else {
-            double betterX = (x/(x+y))/2;
-            double betterY = (y/(x+y))/2;
-            tankDriveVelocity(betterY + betterX*-1, betterY + betterX);
+            // limits the motors from ever going over 50% speed
+            double betterX = (x/(Math.abs(x)+Math.abs(y)))/2;
+            double betterY = (y/(Math.abs(x)+Math.abs(y)))/2;
+            tankDriveVelocity(betterY - betterX, betterY + betterX);
         }
     }
     /** Run the back left moter at the given speed */
