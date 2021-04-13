@@ -21,8 +21,8 @@ public class Constants {
 
 	public static final int CLIMBER = 14;
 	//Controllers 
-	public static final int jstickL = 1;
-    public static final int jstickR = 0;
+	public static final int jstickL = 0;
+    public static final int jstickR = 1;
 	public static final int xboxcontroller = 2;
 	//Pistons
 	public static final int IndexerF = 3;

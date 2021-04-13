@@ -33,11 +33,11 @@ public class DriveStraightVelocity implements Actionable {
     @Override
     public boolean isFinished() {
         if (feet > 0) {
-            return Robot.drive.getLeftDistance() > (int) (feet * Constants.pulsesPerFoot);
+            return Robot.drive.getLeftDistance() >  (feet * Constants.pulsesPerFoot);
         } else if (feet == 0) {
             return true;
         } else  {   
-            return Robot.drive.getLeftDistance() < (int) (feet * Constants.pulsesPerFoot);
+            return Robot.drive.getLeftDistance() <  (feet * Constants.pulsesPerFoot);
         }
     } 
 }
