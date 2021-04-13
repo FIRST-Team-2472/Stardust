@@ -7,7 +7,7 @@ public interface Actionable {
 	public void periodic();
 	
 	public void endAction();
-	
+
 	public boolean isFinished();
 		
 }

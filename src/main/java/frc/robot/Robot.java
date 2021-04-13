@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
 import frc.actions.*;
@@ -84,37 +83,35 @@ public class Robot extends TimedRobot {
     updateSmartDashboard();
   }
 
-  private final ActionQueue actionQueue = new ActionQueue();
+  private final ActionQueue autoActions = new ActionQueue();
 
-  // Drives the robot for a set period of time. Hopefully will be rendered useless
-  // due to Motion Magic
-  /*
-   * private void driveOverLineAuto(ActionQueue actions) { actions.clear();
-   * actions.addAction(new DriveStraightTime(-0.5, 1.5)); }
-   */
-  // Autonomous code. Only to be used with the Limelight.
-  // In theory, it points and shoots the shooter AFTER the target is aimed.
-  // Untested as of 2/13/21.
+  private void driveStraight(ActionQueue actions, double distance) {
+    actions.addAction(new ZeroEncoder());
+    actions.addAction(new Wait(0.01));
+    actions.addAction(new DriveStraightVelocity(distance));
+    actions.addAction(new Correction(distance));
+  }
+
   private void trackDrive(ActionQueue actions) {
     actions.clear();
-    actionQueue.addAction(new ZeroIMU());
-    actionQueue.addAction(new DriveStraightVelocity(0));
-    actionQueue.addAction(new DriveTowardHeading(0.02, .4, 60));
-    actionQueue.addAction(new DriveStraightVelocity(1));
-    actionQueue.addAction(new Wait(0.5));
-    actionQueue.addAction(new DriveTowardHeading(.4, 0, 5));
-    actionQueue.addAction(new TurnRobot(0));
-    actionQueue.addAction(new DriveStraightVelocity(8.5));
-    actionQueue.addAction(new Wait(0.5));
-    actionQueue.addAction(new DriveTowardHeading(.4, 0, -60));
-    actionQueue.addAction(new DriveStraightVelocity(1.5));
-    actionQueue.addAction(new DriveTowardHeading(0.03, .45, 220));
-    actionQueue.addAction(new DriveStraightVelocity(4));
+    actions.addAction(new ZeroIMU());
+    actions.addAction(new DriveStraightVelocity(0));
+    actions.addAction(new DriveTowardHeading(0.02, .4, 60));
+    actions.addAction(new DriveStraightVelocity(1));
+    actions.addAction(new Wait(0.5));
+    actions.addAction(new DriveTowardHeading(.4, 0, 5));
+    actions.addAction(new TurnRobot(0));
+    actions.addAction(new DriveStraightVelocity(8.5));
+    actions.addAction(new Wait(0.5));
+    actions.addAction(new DriveTowardHeading(.4, 0, -60));
+    actions.addAction(new DriveStraightVelocity(1.5));
+    actions.addAction(new DriveTowardHeading(0.03, .45, 220));
+    actions.addAction(new DriveStraightVelocity(4));
     
-    actionQueue.addAction(new ZeroIMU());
-    actionQueue.addAction(new DriveTowardHeading(.3, 0, -50));
-    actionQueue.addAction(new TurnRobot(-50));
-    actionQueue.addAction(new DriveStraightVelocity(8.5));
+    actions.addAction(new ZeroIMU());
+    actions.addAction(new DriveTowardHeading(.3, 0, -50));
+    actions.addAction(new TurnRobot(-50));
+    actions.addAction(new DriveStraightVelocity(8.5));
     /*
     actionQueue.addAction(new TurnRobot(180));
     actionQueue.addAction(new DriveStraightVelocity(8.5));
@@ -182,6 +179,72 @@ public class Robot extends TimedRobot {
     actions.addAction(new Shooting(5));
   }
 
+  private void runBarrelRun(ActionQueue actions) {
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(11.0));
+    actions.addAction(new TurnRobot(-90.0));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(3.0));
+    actions.addAction(new TurnRobot(-180.0));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(3.0));
+    actions.addAction(new TurnRobot(-270.0));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(3.0));
+    actions.addAction(new TurnRobot(-359.0));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(3.0));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(9.0));
+    actions.addAction(new TurnRobot(-270));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(5.5));
+    actions.addAction(new TurnRobot(-180));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(3.5));
+    actions.addAction(new TurnRobot(-90));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(3.0));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(7.0));
+    actions.addAction(new TurnRobot(-1));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(8.0));
+    actions.addAction(new TurnRobot(90));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(4.0));
+   //hope
+    actions.addAction(new TurnRobot(180));
+    actions.addAction(new ZeroCounters());
+    actions.addAction(new Wait(0.1));
+
+    actions.addAction(new DriveStraightVelocity(26.0));
+  }
+
   private void runBounceCourse(ActionQueue actions) {
     actions.addAction(new DriveStraightVelocity(2.75));
     actions.addAction(new TurnRobot(90));
@@ -217,25 +280,13 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     drive.zeroCounters();
     drive.zeroIMU();
-    actionQueue.clear();
+    autoActions.clear();
     updateSmartDashboard();
     GetPrefs();
-    runBounceCourse(actionQueue);
-    //boringSlam(actionQueue);
-
-    /*actionQueue.addAction(new TurnToHeading(0.1, 0.6, 90));
-    actionQueue.addAction(new Wait(0.2));
-    actionQueue.addAction(new TurnRobot(90));*/
-    //actionQueue.addAction(new DriveTowardHeading(0.12, 0.5, 80));
-    /*actionQueue.addAction(new TurnRobot(180));
-    actionQueue.addAction(new Wait(5));
-    actionQueue.addAction(new Seek());
-    actionQueue.addAction(new Wait(5));
-    actionQueue.addAction(new Aim());
-    actionQueue.addAction(new Wait(5));*/
+    //Used to remove start problem DO NOT touch, Wes
+    autoActions.addAction(new Wait(0));
 
 
-    
     //for turning right
     
     /*change = Math.random() * (50-20+1) +20;
@@ -262,12 +313,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Auto Left Motor Speed", leftMotorSpeed);
     SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
     SmartDashboard.putNumber("Auto Heading", angle);
-
-
-    //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
-    //actionQueue.addAction(new RangeFinding());
-    //actionQueue.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
-
   }
 
   @Override
@@ -275,8 +320,7 @@ public class Robot extends TimedRobot {
     GetPrefs();
     updateSmartDashboard();
 
-
-    actionQueue.step();
+    autoActions.step();
   }
 
   @Override
