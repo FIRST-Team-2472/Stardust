@@ -151,14 +151,15 @@ public class Drive {
         // y is Joystick Y
         // x is Joystick X
 
-        if (Math.abs(x) + Math.abs(y) < .5) {
+        if (Math.abs(x) + Math.abs(y) < .75) {
             tankDriveVelocity(y - x, y + x);
         } else {
             // limits the motors from ever going over 50% speed
-            double betterX = (x/(Math.abs(x)+Math.abs(y)))/2;
-            double betterY = (y/(Math.abs(x)+Math.abs(y)))/2;
+            double betterX = (x/(Math.abs(x)+Math.abs(y)))/1.5;
+            double betterY = (y/(Math.abs(x)+Math.abs(y)))/1.5;
             tankDriveVelocity(betterY - betterX, betterY + betterX);
         }
+        
     }
     /** Run the back left moter at the given speed */
     public void runBackLeft(double speed) {

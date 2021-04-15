@@ -8,6 +8,8 @@ import frc.robot.Robot;
 public class DriveStraightVelocity implements Actionable {
 
     public double feet;
+    public double speed = .4;
+    public double correction;
     public DriveStraightVelocity(double x){
         feet = x;
     }
@@ -22,7 +24,12 @@ public class DriveStraightVelocity implements Actionable {
 
     @Override
     public void periodic() { 
-        Robot.drive.tankDriveVelocity(.4, .4+(((Robot.drive.getLeftDistance()-Robot.drive.getRightDistance())/Robot.drive.getRightDistance())*0.005));
+        correction = (((Robot.drive.getLeftDistance()-Robot.drive.getRightDistance())/Robot.drive.getRightDistance())*0.005);
+        SmartDashboard.putNumber("Edit Speed", correction);
+
+        if (feet > 0) Robot.drive.tankDriveVelocity(speed, speed+correction);
+        else if (feet < 0) Robot.drive.tankDriveVelocity(-speed, -speed-correction);
+        else Robot.drive.tankDriveVelocity(0, 0);
     }
 
     @Override

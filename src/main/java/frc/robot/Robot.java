@@ -24,6 +24,9 @@ import frc.subsystems.Shooter;
 import frc.subsystems.Turret;
 import frc.subsystems.Collector;
 import frc.subsystems.Shield;
+
+import javax.swing.Action;
+
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.AnalogInput;
 
@@ -284,7 +287,17 @@ public class Robot extends TimedRobot {
     updateSmartDashboard();
     GetPrefs();
     //Used to remove start problem DO NOT touch, Wes
+    //dummy action for step thing 
     autoActions.addAction(new Wait(0));
+    autoActions.addAction(new DriveStraightIMU(20,0));
+    autoActions.addAction(new DriveStraightIMU(-20,0));
+    autoActions.addAction(new DriveStraightIMU(20,0));
+    autoActions.addAction(new DriveStraightIMU(-20,0));
+    autoActions.addAction(new DriveStraightIMU(20,0));
+    autoActions.addAction(new DriveStraightIMU(-20,0));
+
+
+
 
 
     //for turning right
@@ -350,11 +363,11 @@ public class Robot extends TimedRobot {
     }
 
     if (driveState == 0) {
-      drive.tankDriveVelocity(leftJoystick.getY() * -.5, rightJoystick.getY() * -.5);
+      drive.arcadeDriveVelocity(leftJoystick.getY() * -.5, leftJoystick.getX() * -.5);
       SmartDashboard.putString("Drive State", "Tonk ;)");
     }
     else if (driveState == 1) {
-      drive.arcadeDriveVelocity(leftJoystick.getY()*-.5, leftJoystick.getX()*-.5);
+      drive.tankDriveVelocity(leftJoystick.getY()*-.5, rightJoystick.getY()*-.5);
       SmartDashboard.putString("Drive State", "Arcade");
     }
 
@@ -381,9 +394,10 @@ public class Robot extends TimedRobot {
       teleopActions.abort();
     }
 
-    if (leftJoystick.getRawButton(1)) {
-      
-    }
+    if (xboxcontroller.getXButtonPressed()) elevator.runElevatorPower(.5);
+    else elevator.runElevatorPower(0);
+
+
 
     // NOTE: should probably have another control to prevent misfires since this can
     // only be done once per match
