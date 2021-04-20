@@ -351,7 +351,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     GetPrefs();
     updateSmartDashboard();
-
+    
     
     if (leftJoystick.getRawButtonPressed(1)) {
       driveState++;
@@ -369,25 +369,21 @@ public class Robot extends TimedRobot {
       SmartDashboard.putString("Drive State", "Arcade");
     }
 
+    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > .6) turret.runTurret(-.25);
+    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > .6) turret.runTurret(.25);
+
     collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
     collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
 
-    if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) {
-      collector.pushoutfrontwheel();
-    } else if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) {
-      collector.pushinfrontwheel();
-    } else {
-      collector.pushofffrontwheel();
-    }
+    if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) collector.pushoutfrontwheel();
+    else if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) collector.pushinfrontwheel();
+    else collector.pushofffrontwheel();
 
-    if (limelight.isTargetSpotted() && teleopShooting) {
-      teleopShooting = false;
-    }
+    if (limelight.isTargetSpotted() && teleopShooting) teleopShooting = false;
     if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
       teleopShooting = true;
       FIRE(teleopActions);
     }
-
     if (xboxcontroller.getBButtonPressed()) {
       teleopShooting = false;
       teleopActions.abort();
