@@ -95,12 +95,16 @@ public class Robot extends TimedRobot {
     smartDashBoard.GetPrefs();
     //Used to remove start problem DO NOT touch, Wes
     autoActions.addAction(new Wait(0));
+<<<<<<< HEAD
     autoActions.addAction(new DriveStraightIMU(20,0));
     autoActions.addAction(new DriveStraightIMU(-20,0));
     autoActions.addAction(new DriveStraightIMU(20,0));
     autoActions.addAction(new DriveStraightIMU(-20,0));
     autoActions.addAction(new DriveStraightIMU(20,0));
     autoActions.addAction(new DriveStraightIMU(-20,0));
+=======
+
+>>>>>>> parent of f2d1881 (fixes and something)
 
     //for turning right
     
@@ -187,8 +191,14 @@ public class Robot extends TimedRobot {
       teleopActions.abort();
     }
 
+<<<<<<< HEAD
     if (xboxcontroller.getXButtonPressed()) elevator.runElevatorPower(.5);
     else elevator.runElevatorPower(0);
+=======
+    if (leftJoystick.getRawButton(1)) {
+      
+    }
+>>>>>>> parent of f2d1881 (fixes and something)
 
     // NOTE: should probably have another control to prevent misfires since this can
     // only be done once per match
