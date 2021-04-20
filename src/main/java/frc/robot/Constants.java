@@ -14,13 +14,11 @@ public class Constants {
 	//TODO Placeholder talons
 	public static final int shooterID = 11;
 	public static final int ShieldID = 35;
-	public static final int ElevatorID = 10;
+	public static final int ElevatorID = 145;
 
-	//may be 12
 	public static final int COLLECTOR_CONVERYER = 12;
 	public static final int COLLECTOR_WHEELS = 15;
 
-	//may be 14
 	public static final int CLIMBER = 14;
 	//Controllers 
 	public static final int jstickL = 0;
