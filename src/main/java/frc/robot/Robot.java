@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
   public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
   public static final Joystick leftJoystick = new Joystick(Constants.jstickL);
   public static final Shield shield = new Shield(Constants.ShieldID);
+  public static final SmartDashBoard smartDashBoard = new SmartDashBoard();
   Preferences prefs;
   double leftMotorSpeed, rightMotorSpeed, angle, change, change2;
   int driveState;
@@ -71,7 +72,7 @@ public class Robot extends TimedRobot {
      */
     limelight.setLedMode(Limelight.LED_FORCE_OFF);
     limelight.setDriverCamMode(true);
-    GetPrefs();
+    smartDashBoard.GetPrefs();
   }
 
   // Assorted SmartDashboard things. Both revolve around the Limelight's abilities
@@ -83,7 +84,7 @@ public class Robot extends TimedRobot {
     drive.DoPigeon();
     SmartDashboard.putNumber("Angle", drive.getCurrentAngle());
     limelight.distanceIN();
-    updateSmartDashboard();
+    smartDashBoard.update();
   }
 
   private final ActionQueue autoActions = new ActionQueue();
@@ -284,8 +285,7 @@ public class Robot extends TimedRobot {
     drive.zeroCounters();
     drive.zeroIMU();
     autoActions.clear();
-    updateSmartDashboard();
-    GetPrefs();
+    smartDashBoard.GetPrefs();
     //Used to remove start problem DO NOT touch, Wes
     //dummy action for step thing 
     autoActions.addAction(new Wait(0));
@@ -330,8 +330,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    GetPrefs();
-    updateSmartDashboard();
+    smartDashBoard.GetPrefs();
 
     autoActions.step();
   }
@@ -339,7 +338,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     turret.zeroTurret();
-    updateSmartDashboard();
     drive.zeroCounters();
     SmartDashboard.putString("RobotState", "TeleopEnabled");
     driveState = 0;
@@ -349,8 +347,7 @@ public class Robot extends TimedRobot {
   
   @Override
   public void teleopPeriodic() {
-    GetPrefs();
-    updateSmartDashboard();
+    smartDashBoard.GetPrefs();
 
     
     if (leftJoystick.getRawButtonPressed(1)) {
@@ -416,7 +413,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // SMART Dashboard perfs
-    GetPrefs();
+    smartDashBoard.GetPrefs();
   }
 
   int teststate = 0;
@@ -556,61 +553,7 @@ public class Robot extends TimedRobot {
       drive.runBackRightPower(0);
     }
   }
+  
 
-  // run this to set all smart dashboard values
-  public void updateSmartDashboard() {
-    SmartDashboard.putNumber("Left Joystick value", leftJoystick.getY());
-    SmartDashboard.putNumber("Left Speed:", drive.getLeftSpeed());
-    SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
-    // SMART Dashboard perfs
-    GetPrefs();
-    // Distance SmartDashboard stuff
-    SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
-    SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
-    SmartDashboard.putNumber("TurretDistance", turret.getTurretDistance());
-    SmartDashboard.putNumber("Right Distance inches", drive.getRightDistance()/(Constants.pulsesPerFoot/12));
-    SmartDashboard.putNumber("Left Distance inches", drive.getLeftDistance()/(Constants.pulsesPerFoot/12));
-    SmartDashboard.getNumber("Flywheel", shooter.runSensorVelocity());
-    // Robot state SmartDashboard stuff
-    SmartDashboard.putString("RobotState", "TeleopEnabled");
-    SmartDashboard.putString("RobotState", "Robot On");
-    // Motion Magic SmartDashboard Stuff
-    SmartDashboard.putNumber("LeftError", drive.leftDriveError());
-    SmartDashboard.putNumber("RightError", drive.rightDriveError());
-    SmartDashboard.putNumber("RightDesired", drive.desiredRight);
-    SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
-    // Pressure and solenoid SmartDashboard stuff
-    // SmartDashboard.putNumber("Raw Pressure", pressure.getValue());
-    SmartDashboard.putNumber("Raw Pressure", pressure.getAverageValue());
-    SmartDashboard.putNumber("PSI", (pressure.getAverageValue() - 400) * (70.0 / 1250.0));
-    SmartDashboard.putNumber("Turret Postion", (turretEncoder.getAverageValue()));
 
-    SmartDashboard.putNumber("Angle", drive.getCurrentAngle());
-    // PID
-    SmartDashboard.putNumber("KP", 0.005);
-    SmartDashboard.putNumber("KI", 0);
-    SmartDashboard.putNumber("KD", 0.05);
-    SmartDashboard.putNumber("KF", .164);
-    // Limelight stuff
-    SmartDashboard.putNumber("x degrees off", limelight.targetXAngleFromCenter());
-    SmartDashboard.putBoolean("Aimed", Math.abs(limelight.targetXAngleFromCenter())<1.5);
-    SmartDashboard.putBoolean("seeing target?", limelight.isTargetSpotted());
-    SmartDashboard.putNumber("y degrees off", limelight.targetYAngleFromCenter());
-    SmartDashboard.putNumber("DistanceFromFiring", limelight.distanceIN());
-    SmartDashboard.putNumber("Tangent", limelight.tangent());
-
-  }
-
-  public void GetPrefs() {
-    prefs = Preferences.getInstance();
-    /*
-    leftMotorSpeed = prefs.getDouble("Left Motor Speed", .2);
-    rightMotorSpeed = prefs.getDouble("Right Motor Speed", .5);
-    angle = prefs.getDouble("Angle", 30);
-
-    SmartDashboard.putNumber("Left Motor Speed", leftMotorSpeed);
-    SmartDashboard.putNumber("Right Motor Speed", rightMotorSpeed);
-    SmartDashboard.putNumber("Angle", angle);
-    */
-  }
 }
