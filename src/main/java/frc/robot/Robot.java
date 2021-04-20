@@ -296,10 +296,6 @@ public class Robot extends TimedRobot {
     autoActions.addAction(new DriveStraightIMU(20,0));
     autoActions.addAction(new DriveStraightIMU(-20,0));
 
-
-
-
-
     //for turning right
     
     /*change = Math.random() * (50-20+1) +20;
@@ -321,7 +317,6 @@ public class Robot extends TimedRobot {
     leftMotorSpeed = change2/100;
     angle = (int)(Math.random() * (180-10+1)+10);
     */
-    
 
     SmartDashboard.putNumber("Auto Left Motor Speed", leftMotorSpeed);
     SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
