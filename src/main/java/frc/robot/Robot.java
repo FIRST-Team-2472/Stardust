@@ -347,8 +347,6 @@ public class Robot extends TimedRobot {
 
   private final ActionQueue teleopActions = new ActionQueue();
   
-  //private boolean teleopShooting = false;
-
   @Override
   public void teleopPeriodic() {
     GetPrefs();
@@ -389,6 +387,7 @@ public class Robot extends TimedRobot {
       teleopShooting = true;
       FIRE(teleopActions);
     }
+
     if (xboxcontroller.getBButtonPressed()) {
       teleopShooting = false;
       teleopActions.abort();
@@ -396,8 +395,6 @@ public class Robot extends TimedRobot {
 
     if (xboxcontroller.getXButtonPressed()) elevator.runElevatorPower(.5);
     else elevator.runElevatorPower(0);
-
-
 
     // NOTE: should probably have another control to prevent misfires since this can
     // only be done once per match
