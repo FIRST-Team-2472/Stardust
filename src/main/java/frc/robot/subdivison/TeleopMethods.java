@@ -73,5 +73,24 @@ boolean teleopShooting;
         }
     }
 
-    public void 
+    public void runTopElevator(){
+         //runs top elvator
+        if (Robot.xboxcontroller.getXButton()) Robot.elevator.runElevatorPower(0.5);
+        else Robot.elevator.runElevatorPower(0);
+    }
+    
+    public void runClimber(){
+        //would run climber if we had one
+        if (Robot.leftJoystick.getRawButtonPressed(3) && Robot.rightJoystick.getRawButton(3)) {
+            Robot.climb.runClimber(1);
+          } else {
+            Robot.climb.runClimber(0);
+          }
+          
+          if (Robot.leftJoystick.getRawButton(2) && Robot.rightJoystick.getRawButton(2)) {
+            Robot.climb.runClimber(-1);
+          } else {
+            Robot.climb.runClimber(0);
+          }
+    }
 }
