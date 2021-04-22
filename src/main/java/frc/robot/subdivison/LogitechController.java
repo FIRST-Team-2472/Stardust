@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.subdivison;
 
 import edu.wpi.first.wpilibj.GenericHID;
 

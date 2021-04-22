@@ -26,14 +26,8 @@ import frc.subsystems.Collector;
 import frc.subsystems.Shield;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.AnalogInput;
+import frc.robot.subdivison.*;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
- * project.
- */
 public class Robot extends TimedRobot {
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
   public static final Shooter shooter = new Shooter(Constants.shooterID);
@@ -56,7 +50,7 @@ public class Robot extends TimedRobot {
   public static final SmartDashBoard smartDashBoard = new SmartDashBoard();
   public static final ActionLists actionList = new ActionLists();
 
-  Preferences prefs;
+  protected Preferences prefs;
   double leftMotorSpeed, rightMotorSpeed, angle, change, change2;
   int driveState;
   boolean teleopShooting;

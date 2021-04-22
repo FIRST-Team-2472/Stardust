@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.subdivison;
 
 // These can probably all be sent to the smart dashboard as preferences for configuration during debugging
 // and for driver preference
