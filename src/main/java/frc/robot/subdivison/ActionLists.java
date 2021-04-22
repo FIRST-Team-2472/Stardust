@@ -1,10 +1,9 @@
 package frc.robot.subdivison;
 
 import frc.actions.runners.ActionQueue;
-import frc.robot.Robot;
 import frc.actions.*;
 
-public class ActionLists extends Robot {
+public class ActionLists {
     public void driveStraight(ActionQueue actions, double distance) {
         actions.addAction(new ZeroEncoder());
         actions.addAction(new Wait(0.01));

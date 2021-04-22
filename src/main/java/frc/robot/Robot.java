@@ -39,8 +39,8 @@ public class Robot extends TimedRobot {
   private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
   public static final Elevator elevator = new Elevator(Constants.ElevatorID);
-  public AnalogInput pressure = new AnalogInput(0);
-  public AnalogInput turretEncoder = new AnalogInput(1);
+  public static AnalogInput pressure = new AnalogInput(0);
+  public static AnalogInput turretEncoder = new AnalogInput(1);
   public PigeonIMU pigeon = new PigeonIMU(Constants.Pidgeon);
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
   public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(Constants.xboxcontroller);
@@ -50,7 +50,6 @@ public class Robot extends TimedRobot {
   public static final SmartDashBoard smartDashBoard = new SmartDashBoard();
   public static final ActionLists actionList = new ActionLists();
 
-  protected Preferences prefs;
   double leftMotorSpeed, rightMotorSpeed, angle, change, change2;
   int driveState;
   boolean teleopShooting;
