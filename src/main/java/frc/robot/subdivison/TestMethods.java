@@ -1,6 +1,5 @@
 package frc.robot.subdivison;
 
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.Joystick;

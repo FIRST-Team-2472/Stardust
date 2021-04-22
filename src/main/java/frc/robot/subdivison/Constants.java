@@ -12,8 +12,8 @@ public class Constants {
 	public static final int turret = 13;
 
 	//TODO Placeholder talons
-	public static final int shooterID = 11;
-	public static final int ShieldID = 35;
+	public static final int shooterID = 10000;
+	public static final int ShieldID = 10000;
 	public static final int ElevatorID = 7;
 
 	public static final int COLLECTOR_CONVERYER = 12;

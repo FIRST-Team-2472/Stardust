@@ -168,21 +168,26 @@ public class Robot extends TimedRobot {
     }
 
     //runs the turret
-    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > 1) turret.runTurret(-.25);
-    else if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > 1) turret.runTurret(.25);
+    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > .6) turret.runTurret(-.25);
+    else if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > .6) turret.runTurret(.25);
     else turret.runTurret(0);
 
-    //runs the lower elevator
-    collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
-    //front collector wheels
-    collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
+    //runs the lower elevator and collector intake
+    if (Math.abs(xboxcontroller.getRawAxis(1)) > Math.abs(xboxcontroller.getRawAxis(5))) {
+      collector.runConveyor(.7 * -Math.abs(xboxcontroller.getRawAxis(1)));
+      collector.runFrontWheels(.5 * -Math.abs(xboxcontroller.getRawAxis(1)));
+    } else {
+      //runs the lower elevator and collector outtake
+      collector.runConveyor(.7 * Math.abs(xboxcontroller.getRawAxis(5)));
+      collector.runFrontWheels(.5 * Math.abs(xboxcontroller.getRawAxis(5)));
+    }
 
     //pushes out pistons to collect balls
     if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) collector.pushoutfrontwheel();
     else if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) collector.pushinfrontwheel();
     else collector.pushofffrontwheel();
 
-    //
+    //runs the fire action which autonomusly fires at the target
     if (limelight.isTargetSpotted() && teleopShooting) teleopShooting = false;
     if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
       teleopShooting = true;
@@ -196,19 +201,6 @@ public class Robot extends TimedRobot {
     //runs top elvator
     if (xboxcontroller.getXButton()) elevator.runElevatorPower(0.5);
     else elevator.runElevatorPower(0);
-
-    //would run climber if we had one
-    if (leftJoystick.getRawButtonPressed(3) && rightJoystick.getRawButton(3)) {
-      climb.runClimber(1);
-    } else {
-      climb.runClimber(0);
-    }
-
-    if (leftJoystick.getRawButton(2) && rightJoystick.getRawButton(2)) {
-      climb.runClimber(-1);
-    } else {
-      climb.runClimber(0);
-    }
 
     teleopActions.step();
   }
