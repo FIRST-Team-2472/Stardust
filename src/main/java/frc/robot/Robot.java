@@ -10,7 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -49,6 +48,7 @@ public class Robot extends TimedRobot {
   public static final Shield shield = new Shield(Constants.ShieldID);
   public static final SmartDashBoard smartDashBoard = new SmartDashBoard();
   public static final ActionLists actionList = new ActionLists();
+  public static final TestMethods testMethods = new TestMethods();
 
   double leftMotorSpeed, rightMotorSpeed, angle, change, change2;
   int driveState;
@@ -148,7 +148,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     smartDashBoard.GetPrefs();
 
-    
+    //switches drive state from tank to acrade drive
     if (leftJoystick.getRawButtonPressed(1)) {
       driveState++;
       if (driveState > 1) {
@@ -157,24 +157,32 @@ public class Robot extends TimedRobot {
     }
 
     if (driveState == 0) {
+      //runs tank drive
       drive.tankDriveVelocity(leftJoystick.getY() * -.5, rightJoystick.getY() * -.5);
       SmartDashboard.putString("Drive State", "Tonk ;)");
     }
     else if (driveState == 1) {
+      //runs arcade drive
       drive.arcadeDriveVelocity(leftJoystick.getY()*-.5, leftJoystick.getX()*-.5);
       SmartDashboard.putString("Drive State", "Arcade");
     }
 
-    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > .6) turret.runTurret(-.25);
-    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > .6) turret.runTurret(.25);
+    //runs the turret
+    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > 1) turret.runTurret(-.25);
+    else if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > 1) turret.runTurret(.25);
+    else turret.runTurret(0);
 
+    //runs the lower elevator
     collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
+    //front collector wheels
     collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
 
+    //pushes out pistons to collect balls
     if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) collector.pushoutfrontwheel();
     else if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) collector.pushinfrontwheel();
     else collector.pushofffrontwheel();
 
+    //
     if (limelight.isTargetSpotted() && teleopShooting) teleopShooting = false;
     if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
       teleopShooting = true;
@@ -185,12 +193,12 @@ public class Robot extends TimedRobot {
       teleopActions.abort();
     }
 
-    if (xboxcontroller.getXButtonPressed()) elevator.runElevatorPower(.5);
+    //runs top elvator
+    if (xboxcontroller.getXButton()) elevator.runElevatorPower(0.5);
     else elevator.runElevatorPower(0);
 
-    // NOTE: should probably have another control to prevent misfires since this can
-    // only be done once per match
-    if (leftJoystick.getRawButton(3) && rightJoystick.getRawButton(3)) {
+    //would run climber if we had one
+    if (leftJoystick.getRawButtonPressed(3) && rightJoystick.getRawButton(3)) {
       climb.runClimber(1);
     } else {
       climb.runClimber(0);
@@ -212,7 +220,7 @@ public class Robot extends TimedRobot {
   }
 
   int teststate = 0;
-  public double suggestKF = 0;
+  
 
   @Override
   public void testPeriodic() {
@@ -229,123 +237,25 @@ public class Robot extends TimedRobot {
     switch (teststate) {
       // Test case that has the xboxcontroller independently control each motor.
       case 0:
-        collector.runConveyor(-xboxcontroller.getY(Hand.kLeft));
-        collector.runFrontWheels(-xboxcontroller.getY(Hand.kRight));
-        if (xboxcontroller.getAButton()) {
-          drive.runBackLeft(.25);
-          SmartDashboard.putString("MotorsTest", "runBackLeft");
-        } else {
-          drive.runBackLeft(0);
-        }
-        if (xboxcontroller.getBButton()) {
-          drive.runBackRightPower(.25);
-          SmartDashboard.putString("MotorsTest", "runBackRight");
-        } else {
-          drive.runBackRightPower(0);
-        }
-        if (xboxcontroller.getYButton()) {
-          drive.runFrontLeftPower(.25);
-          SmartDashboard.putString("MotorsTest", "runFrontLeft");
-        } else {
-          drive.runFrontLeftPower(0);
-        }
-        if (xboxcontroller.getXButton()) {
-          drive.runFrontRight(.25);
-          SmartDashboard.putString("MotorsTest", "runFrontRight");
-        } else {
-          drive.runFrontRight(0);
-        }
-        break;
-      // Test case that run each different area of motors separately for testing.
+      testMethods.case0();
+       break;
       case 1:
-        if (xboxcontroller.getAButton()) {
-          collector.runConveyor(.65);
-          SmartDashboard.putString("MotorsTest", "runCollector");
-        } else {
-          collector.runConveyor(0);
-
-        }
-        if (xboxcontroller.getBButton()) {
-          collector.runFrontWheels(-.25);
-          SmartDashboard.putString("MotorsTest", "runotherth9ingageaefawef");
-        } else {
-          collector.runFrontWheels(0);
-        }
-        /*if (xboxcontroller.getXButton()) {
-          turret.runTurret(.25);
-          SmartDashboard.putString("MotorsTest", "runTurret");
-        } else {
-          turret.runTurret(0);
-        }*/
-        if (xboxcontroller.getYButton()) {
-          shooter.runFlyWheel(.25);
-          SmartDashboard.putString("MotorsTest", "runShooter");
-        } else {
-          shooter.runFlyWheel(0);
-        }
-        break;
-      // Climber test case. Made during one of the only competitions in 2020, the
-      // Grand Forks Great Northern competition.
+       testMethods.case1();
+       break;
       case 2:
-        if (xboxcontroller.getAButton()) {
-          climb.runClimber(.25);
-          SmartDashboard.putString("MotorsTest", "runClimber");
-        }
-        if (xboxcontroller.getXButton()) {
-          climb.runClimber(-.25);
-          SmartDashboard.putString("MotorsTest", "runClimber");
-        }
-        if (!xboxcontroller.getXButton() && !xboxcontroller.getAButton()) {
-          climb.runClimber(0);
-        }
-        break;
-      // Test case that runs all the pistons. Pistons that were for show, mostly.
+       testMethods.case2();
+       break;
       case 3:
-        if (xboxcontroller.getYButton()) {
-          collector.pushoutfrontwheel();
-          SmartDashboard.putString("PistonTest", "runFrontPistonForward");
-        }
-        if (xboxcontroller.getXButton()) {
-          collector.pushinfrontwheel();
-          SmartDashboard.putString("PistonTest", "runFrontPistonBackward");
-        }
-        if (!xboxcontroller.getXButton() && !xboxcontroller.getYButton()) {
-          collector.pushofffrontwheel();
-        }
-        break;
-      // Test case for tank drive.
+       testMethods.case3();
+       break;
       case 4:
-
-        drive.tankDriveVelocity(1, 1);
-        int leftSpeed = drive.getLeftSpeed();
-        int rightSpeed = drive.getRightSpeed();
-        SmartDashboard.putNumber("Left Speed:", leftSpeed);
-        SmartDashboard.putNumber("Right Speed:", rightSpeed);
-
-        break;
+       testMethods.case4();
+       break;
 
       default:
     }
-    if (rightJoystick.getRawButton(2)) {
-      shooter.runFlyWheel(.75);
-      suggestKF = .75 * 1023 / shooter.runSensorVelocity();
-      System.out.print("Suggested kF: ");
-      System.out.println(suggestKF);
-    } else {
-      shooter.runFlyWheel(0);
-    }
+    testMethods.shooterKF(2);
 
-    if (rightJoystick.getRawButton(3)) {
-      drive.runBackRightPower(.75);
-      drive.runFrontLeftPower(.75);
-      suggestKF = .75 * 1023 / drive.getRightSpeed();
-      System.out.print("Suggested Right kF: ");
-      System.out.println(suggestKF);
-      suggestKF = .75 * 1023 / drive.getLeftSpeed();
-      System.out.print("Suggested Left kF: ");
-      System.out.println(suggestKF);
-    } else {
-      drive.runBackRightPower(0);
-    }
+    testMethods.drivetrainKF(3);
   }
 }
