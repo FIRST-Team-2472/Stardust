@@ -10,7 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -148,7 +147,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     smartDashBoard.GetPrefs();
 
-    
+    //switches drive state from tank to acrade drive
     if (leftJoystick.getRawButtonPressed(1)) {
       driveState++;
       if (driveState > 1) {
@@ -157,24 +156,32 @@ public class Robot extends TimedRobot {
     }
 
     if (driveState == 0) {
+      //runs tank drive
       drive.tankDriveVelocity(leftJoystick.getY() * -.5, rightJoystick.getY() * -.5);
       SmartDashboard.putString("Drive State", "Tonk ;)");
     }
     else if (driveState == 1) {
+      //runs arcade drive
       drive.arcadeDriveVelocity(leftJoystick.getY()*-.5, leftJoystick.getX()*-.5);
       SmartDashboard.putString("Drive State", "Arcade");
     }
 
-    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > .6) turret.runTurret(-.25);
-    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > .6) turret.runTurret(.25);
+    //runs the turret
+    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > 1) turret.runTurret(-.25);
+    else if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > 1) turret.runTurret(.25);
+    else turret.runTurret(0);
 
+    //runs the lower elevator
     collector.runConveyor(.7 * -xboxcontroller.getRawAxis(1));
+    //front collector wheels
     collector.runFrontWheels(.5 * -xboxcontroller.getRawAxis(2));
 
+    //pushes out pistons to collect balls
     if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) collector.pushoutfrontwheel();
     else if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) collector.pushinfrontwheel();
     else collector.pushofffrontwheel();
 
+    //
     if (limelight.isTargetSpotted() && teleopShooting) teleopShooting = false;
     if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
       teleopShooting = true;
@@ -185,12 +192,12 @@ public class Robot extends TimedRobot {
       teleopActions.abort();
     }
 
-    if (xboxcontroller.getXButtonPressed()) elevator.runElevatorPower(.5);
+    //runs top elvator
+    if (xboxcontroller.getXButton()) elevator.runElevatorPower(0.5);
     else elevator.runElevatorPower(0);
 
-    // NOTE: should probably have another control to prevent misfires since this can
-    // only be done once per match
-    if (leftJoystick.getRawButton(3) && rightJoystick.getRawButton(3)) {
+    //would run climber if we had one
+    if (leftJoystick.getRawButtonPressed(3) && rightJoystick.getRawButton(3)) {
       climb.runClimber(1);
     } else {
       climb.runClimber(0);
