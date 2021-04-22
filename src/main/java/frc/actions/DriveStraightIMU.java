@@ -8,10 +8,9 @@ import frc.robot.Robot;
 public class DriveStraightIMU implements Actionable {
 
     public double feet;
-    public double leftspeed;
-    public double rightspeed;
+    public double leftspeed = .3;
+    public double rightspeed = .3;
     public double heading;
-    public double speed = .4;
 
     public DriveStraightIMU(double x, double angle){
         this.feet = x;
@@ -24,25 +23,13 @@ public class DriveStraightIMU implements Actionable {
         Robot.drive.setDistance(0, 0);
         Robot.drive.tankDriveVelocity(leftspeed, rightspeed);
         SmartDashboard.putString("ActionName", "Drive Straight IMU");
-        if (feet > 0) {
-            leftspeed = speed;
-            rightspeed = speed;
-        }
-        else if (feet < 0) {
-            leftspeed = -speed;
-            rightspeed = -speed;
-        }
-        else {
-            leftspeed = 0;
-            rightspeed = 0;
-        }
         }
 
     @Override
     public void periodic() { 
         double correction;
         correction = (heading-Robot.drive.getCurrentAngle())*0.0005;
-        rightspeed = rightspeed + correction;
+        //rightspeed = rightspeed + correction;
         SmartDashboard.putNumber("Edit Speed", correction);
 
         Robot.drive.tankDriveVelocity(leftspeed, rightspeed);

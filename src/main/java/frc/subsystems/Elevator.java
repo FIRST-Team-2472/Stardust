@@ -13,6 +13,10 @@ public class Elevator {
         Elevator = new TalonSRX(ElevatorID);
     }
 
+    public void runElevatorVelocity(double speed) {
+        Elevator.set(ControlMode.Velocity, speed * 300);
+    }
+
     public void runElevatorPower(double power) {
         Elevator.set(ControlMode.PercentOutput, power);
     }

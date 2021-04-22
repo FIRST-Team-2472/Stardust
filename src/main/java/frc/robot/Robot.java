@@ -87,7 +87,6 @@ public class Robot extends TimedRobot {
     autoActions.clear();
     smartDashBoard.GetPrefs();
     //Used to remove start problem DO NOT touch, Wes
-    //dummy action for step thing 
     autoActions.addAction(new Wait(0));
     autoActions.addAction(new DriveStraightIMU(20,0));
     autoActions.addAction(new DriveStraightIMU(-20,0));
@@ -95,6 +94,10 @@ public class Robot extends TimedRobot {
     autoActions.addAction(new DriveStraightIMU(-20,0));
     autoActions.addAction(new DriveStraightIMU(20,0));
     autoActions.addAction(new DriveStraightIMU(-20,0));
+
+
+
+
 
     //for turning right
     
@@ -117,6 +120,7 @@ public class Robot extends TimedRobot {
     leftMotorSpeed = change2/100;
     angle = (int)(Math.random() * (180-10+1)+10);
     */
+    
 
     SmartDashboard.putNumber("Auto Left Motor Speed", leftMotorSpeed);
     SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
@@ -153,11 +157,11 @@ public class Robot extends TimedRobot {
     }
 
     if (driveState == 0) {
-      drive.arcadeDriveVelocity(leftJoystick.getY() * -.5, leftJoystick.getX() * -.5);
+      drive.tankDriveVelocity(leftJoystick.getY() * -.5, rightJoystick.getY() * -.5);
       SmartDashboard.putString("Drive State", "Tonk ;)");
     }
     else if (driveState == 1) {
-      drive.tankDriveVelocity(leftJoystick.getY()*-.5, rightJoystick.getY()*-.5);
+      drive.arcadeDriveVelocity(leftJoystick.getY()*-.5, leftJoystick.getX()*-.5);
       SmartDashboard.putString("Drive State", "Arcade");
     }
 
