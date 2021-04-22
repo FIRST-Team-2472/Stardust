@@ -3,16 +3,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SmartDashBoard extends Robot {
+public class SmartDashBoard {
     public void update() {
-        SmartDashboard.putNumber("Left Joystick value", leftJoystick.getY());
-        SmartDashboard.putNumber("Left Speed:", drive.getLeftSpeed());
-        SmartDashboard.putNumber("Right Speed:", drive.getRightSpeed());
+        SmartDashboard.putNumber("Left Joystick value", Robot.leftJoystick.getY());
+        SmartDashboard.putNumber("Left Speed:", Robot.drive.getLeftSpeed());
+        SmartDashboard.putNumber("Right Speed:", Robot.drive.getRightSpeed());
         // SMART Dashboard perfs
         GetPrefs();
         // Distance SmartDashboard stuff
-        SmartDashboard.putNumber("RightDistance", drive.getRightDistance());
-        SmartDashboard.putNumber("LeftDistance", drive.getLeftDistance());
+        SmartDashboard.putNumber("RightDistance", Robot.drive.getRightDistance());
+        SmartDashboard.putNumber("LeftDistance", Robot.drive.getLeftDistance());
         SmartDashboard.putNumber("TurretDistance", turret.getTurretDistance());
         SmartDashboard.putNumber("Right Distance inches", drive.getRightDistance() / (Constants.pulsesPerFoot / 12));
         SmartDashboard.putNumber("Left Distance inches", drive.getLeftDistance() / (Constants.pulsesPerFoot / 12));
@@ -27,8 +27,8 @@ public class SmartDashBoard extends Robot {
         SmartDashboard.putNumber("LeftDesired", drive.desiredLeft);
         // Pressure and solenoid SmartDashboard stuff
         // SmartDashboard.putNumber("Raw Pressure", pressure.getValue());
-        SmartDashboard.putNumber("Raw Pressure", pressure.getAverageValue());
-        SmartDashboard.putNumber("PSI", (pressure.getAverageValue() - 400) * (70.0 / 1250.0));
+        SmartDashboard.putNumber("Raw Pressure", Robot.pressure.getAverageValue());
+        SmartDashboard.putNumber("PSI", (Robot.pressure.getAverageValue() - 400) * (70.0 / 1250.0));
         SmartDashboard.putNumber("Turret Postion", (turretEncoder.getAverageValue()));
 
         SmartDashboard.putNumber("Angle", drive.getCurrentAngle());

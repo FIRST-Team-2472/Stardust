@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
   private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
   public static final Elevator elevator = new Elevator(Constants.ElevatorID);
-  public AnalogInput pressure = new AnalogInput(0);
+  public static final AnalogInput pressure = new AnalogInput(0);
   public AnalogInput turretEncoder = new AnalogInput(1);
   public PigeonIMU pigeon = new PigeonIMU(Constants.Pidgeon);
   public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
