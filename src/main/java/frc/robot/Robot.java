@@ -49,10 +49,9 @@ public class Robot extends TimedRobot {
   public static final SmartDashBoard smartDashBoard = new SmartDashBoard();
   public static final ActionLists actionList = new ActionLists();
   public static final TestMethods testMethods = new TestMethods();
+  public static final TeleopMethods teleopMethods = new TeleopMethods();
 
   double leftMotorSpeed, rightMotorSpeed, angle, change, change2;
-  int driveState;
-  boolean teleopShooting;
 
   @Override
   public void robotInit() {
@@ -134,77 +133,33 @@ public class Robot extends TimedRobot {
     autoActions.step();
   }
 
+  private final ActionQueue teleopActions = new ActionQueue();
+
+// Subdivide below
   @Override
   public void teleopInit() {
-    turret.zeroTurret();
-    drive.zeroCounters();
-    SmartDashboard.putString("RobotState", "TeleopEnabled");
-    driveState = 0;
+    teleopMethods.initialize();
   }
-
-  private final ActionQueue teleopActions = new ActionQueue();
   
   @Override
   public void teleopPeriodic() {
     smartDashBoard.GetPrefs();
 
-    //switches drive state from tank to acrade drive
-    if (leftJoystick.getRawButtonPressed(1)) {
-      driveState++;
-      if (driveState > 1) {
-        driveState = 0;
-      }
-    }
+    teleopMethods.driveTrain();
 
-    if (driveState == 0) {
-      //runs tank drive
-      drive.tankDriveVelocity(leftJoystick.getY() * -.5, rightJoystick.getY() * -.5);
-      SmartDashboard.putString("Drive State", "Tonk ;)");
-    }
-    else if (driveState == 1) {
-      //runs arcade drive
-      drive.arcadeDriveVelocity(leftJoystick.getY()*-.5, leftJoystick.getX()*-.5);
-      SmartDashboard.putString("Drive State", "Arcade");
-    }
+    teleopMethods.runTurret();
 
-    //runs the turret
-    if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kRight) > .6) turret.runTurret(-.25);
-    else if (xboxcontroller.getTriggerAxis(GenericHID.Hand.kLeft) > .6) turret.runTurret(.25);
-    else turret.runTurret(0);
+    teleopMethods.runCollector();
 
-    //runs the lower elevator and collector intake
-    if (Math.abs(xboxcontroller.getRawAxis(1)) > Math.abs(xboxcontroller.getRawAxis(5))) {
-      collector.runConveyor(.7 * -Math.abs(xboxcontroller.getRawAxis(1)));
-      collector.runFrontWheels(.5 * -Math.abs(xboxcontroller.getRawAxis(1)));
-    } else {
-      //runs the lower elevator and collector outtake
-      collector.runConveyor(.7 * Math.abs(xboxcontroller.getRawAxis(5)));
-      collector.runFrontWheels(.5 * Math.abs(xboxcontroller.getRawAxis(5)));
-    }
+    teleopMethods.shooting(teleopActions);
 
-    //pushes out pistons to collect balls
-    if (xboxcontroller.getBumper(GenericHID.Hand.kRight)) collector.pushoutfrontwheel();
-    else if (xboxcontroller.getBumper(GenericHID.Hand.kLeft)) collector.pushinfrontwheel();
-    else collector.pushofffrontwheel();
+    teleopMethods.runTopElevator();
 
-    //runs the fire action which autonomusly fires at the target
-    if (limelight.isTargetSpotted() && teleopShooting) teleopShooting = false;
-    if (!teleopShooting && xboxcontroller.getAButtonPressed() && limelight.isTargetSpotted()) {
-      teleopShooting = true;
-      actionList.FIRE(teleopActions);
-    }
-    if (xboxcontroller.getBButtonPressed()) {
-      teleopShooting = false;
-      teleopActions.abort();
-    }
-
-    //runs top elvator
-    if (xboxcontroller.getXButton()) elevator.runElevatorPower(0.5);
-    else elevator.runElevatorPower(0);
+    //teleopMethods.runClimber();
 
     teleopActions.step();
   }
-
+//Subdivide above
   @Override
   public void testInit() {
     // SMART Dashboard perfs

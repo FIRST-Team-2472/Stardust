@@ -36,6 +36,7 @@ public class TestMethods {
         }
       // Test case that run each different area of motors separately for testing.
     }
+
     public void case1() {
         if (Robot.xboxcontroller.getAButton()) {
             Robot.collector.runConveyor(.65);
@@ -79,6 +80,7 @@ public class TestMethods {
           }
         // Test case that runs all the pistons. Pistons that were for show, mostly.
     }
+
     public void case3() {
       if (Robot.xboxcontroller.getYButton()) {
         Robot.collector.pushoutfrontwheel();
@@ -93,6 +95,7 @@ public class TestMethods {
       }
     // Test case for tank drive.
     }
+    
     public void case4() {
       Robot.drive.tankDriveVelocity(1, 1);
         int leftSpeed = Robot.drive.getLeftSpeed();
