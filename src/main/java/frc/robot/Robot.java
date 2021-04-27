@@ -85,34 +85,6 @@ public class Robot extends TimedRobot {
     autoActions.clear();
     //Used to remove start problem DO NOT touch, Wes
     autoActions.addAction(new Wait(0));
-
-
-    //for turning right
-    
-    /*change = Math.random() * (50-20+1) +20;
-    change2 = (int)change;
-    leftMotorSpeed = change2/100;
-    change = Math.random() * ((leftMotorSpeed-.1)*100 +1);
-    change2 = (int)change;
-    rightMotorSpeed = change2/100;
-    angle = (int)(Math.random() * (180-10+1)+10);*/
-    
-
-    //for turning left
-    /*
-    change = Math.random() * (50-20+1) +20;
-    change2 = (int)change;
-    rightMotorSpeed = change2/100;
-    change = Math.random() * ((rightMotorSpeed-.1)*100+1);
-    change2 = (int)change;
-    leftMotorSpeed = change2/100;
-    angle = (int)(Math.random() * (180-10+1)+10);
-    */
-    
-
-    SmartDashboard.putNumber("Auto Left Motor Speed", leftMotorSpeed);
-    SmartDashboard.putNumber("Auto Right Motor Speed", rightMotorSpeed);
-    SmartDashboard.putNumber("Auto Heading", angle);
   }
 
   @Override
@@ -126,6 +98,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    teleopActions.clear();
     SmartDashboard.putString("RobotState", "Tele Operated");
     teleopMethods.initialize();
   }
