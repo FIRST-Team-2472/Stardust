@@ -101,7 +101,6 @@ public class Drive {
         
         
                 //setupMotionMagic(0, 0, 0, 0, 500, 100);
-
     }
 
     public static final int COUNTS_PER_FOOT = 5215;

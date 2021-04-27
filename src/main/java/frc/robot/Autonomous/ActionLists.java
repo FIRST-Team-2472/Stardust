@@ -1,9 +1,11 @@
 package frc.robot.Autonomous;
 
 import frc.actions.runners.ActionQueue;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.*;
 
 public class ActionLists {
+
     public void driveStraight(ActionQueue actions, double distance) {
         actions.addAction(new ZeroEncoder());
         actions.addAction(new Wait(0.01));
@@ -11,7 +13,55 @@ public class ActionLists {
         actions.addAction(new Correction(distance));
       }
     
-    public void trackDrive(ActionQueue actions) {
+      public void loadBallsAuto(ActionQueue actions) {
+        actions.addAction(new DriveStraightTime(.5, 5));
+        actions.addAction(new DumpBalls(3));
+      }
+    
+      public void seekTheFleshMeat(ActionQueue actions) {
+        actions.addAction(new TurnRobot(180));
+        actions.addAction(new Wait(5));
+        actions.addAction(new Seek());
+        actions.addAction(new Wait(5));
+        actions.addAction(new Aim());
+        actions.addAction(new Wait(5));
+      }
+    
+      public void FIRE(ActionQueue actions) {
+        actions.addAction(new Aim());
+        actions.addAction(new RangeFinding());
+        actions.addAction(new ShieldAim());
+        actions.addAction(new Shooting(5));
+      }
+
+      public void randomTurnRight (ActionQueue actions, int angle) {
+        double leftMotorSpeed, rightMotorSpeed;
+        
+        leftMotorSpeed = ((int)(Math.random() * (75) + 20))/100;
+        rightMotorSpeed = ((int)(Math.random() * ((leftMotorSpeed-.1)*100)))/100;
+        actions.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
+
+        SmartDashboard.putNumber("Random Left Motor Speed", leftMotorSpeed);
+        SmartDashboard.putNumber("Random Right Motor Speed", rightMotorSpeed);
+        SmartDashboard.putNumber("Set Heading", angle);
+      }
+
+      public void randomTurnLeft (ActionQueue actions, int angle) {
+        double leftMotorSpeed, rightMotorSpeed;
+        
+        rightMotorSpeed = ((int)(Math.random() * (75) + 20))/100;
+        leftMotorSpeed = ((int)(Math.random() * ((rightMotorSpeed-.1)*100)))/100;
+        actions.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
+
+        SmartDashboard.putNumber("Random Left Motor Speed", leftMotorSpeed);
+        SmartDashboard.putNumber("Random Right Motor Speed", rightMotorSpeed);
+        SmartDashboard.putNumber("Set Heading", angle);
+      }
+
+
+
+      //Usless
+      public void trackDrive(ActionQueue actions) {
         actions.clear();
         actions.addAction(new ZeroIMU());
         actions.addAction(new DriveStraightVelocity(0));
@@ -38,64 +88,6 @@ public class ActionLists {
         actionQueue.addAction(new DriveStraightVelocity(2));
         actionQueue.addAction(new DriveTowardHeading(0, .3, 180));
         */
-      }
-    
-      public void boringSlam(ActionQueue actions)
-      {
-        actions.addAction(new DriveStraightVelocity(3.0));
-        actions.addAction(new TurnRobot(90));
-        actions.addAction(new DriveStraightVelocity(4.5));
-        actions.addAction(new TurnRobot(0));
-        actions.addAction(new DriveStraightVelocity(16.5));
-        actions.addAction(new TurnRobot(-90));
-    
-        actions.addAction(new DriveStraightVelocity(4.0));
-        actions.addAction(new TurnRobot(0));
-        actions.addAction(new DriveStraightVelocity(4.5));
-        actions.addAction(new TurnRobot(90));
-        actions.addAction(new DriveStraightVelocity(4.5));
-        actions.addAction(new TurnRobot(180));
-        actions.addAction(new DriveStraightVelocity(4.5));
-        actions.addAction(new TurnRobot(270));
-        actions.addAction(new DriveStraightVelocity(4.5));
-        actions.addAction(new TurnRobot(180));
-        actions.addAction(new DriveStraightVelocity(16.0));
-        actions.addAction(new TurnRobot(90));
-        actions.addAction(new DriveStraightVelocity(4.0));
-        actions.addAction(new TurnRobot(180));
-        actions.addAction(new DriveStraightVelocity(3.0));
-      }
-    
-      public void zigZag(ActionQueue actions) {
-        actions.clear();
-        actions.addAction(new DriveTowardHeading(.6, .4, -20));
-        actions.addAction(new DriveTowardHeading(.4, .6, 20));
-        actions.addAction(new DriveTowardHeading(.6, .4, -20));
-        actions.addAction(new DriveTowardHeading(.4, .6, 20));
-        actions.addAction(new DriveTowardHeading(.6, .4, -20));
-        actions.addAction(new DriveTowardHeading(.4, .6, 20));
-      }
-    
-      public void loadBallsAuto(ActionQueue actions) {
-        actions.addAction(new DriveStraightTime(.5, 5));
-        actions.addAction(new DumpBalls(3));
-      }
-    
-      public void seekTheFleshMeat(ActionQueue actions) {
-        actions.addAction(new TurnRobot(180));
-        actions.addAction(new Wait(5));
-        actions.addAction(new Seek());
-        actions.addAction(new Wait(5));
-        actions.addAction(new Aim());
-        actions.addAction(new Wait(5));
-      }
-    
-      public void FIRE(ActionQueue actions) {
-        actions.clear();
-        actions.addAction(new Aim());
-        actions.addAction(new RangeFinding());
-        actions.addAction(new ShieldAim());
-        actions.addAction(new Shooting(5));
       }
     
       public void runBarrelRun(ActionQueue actions) {
@@ -156,7 +148,7 @@ public class ActionLists {
         actions.addAction(new Wait(0.1));
     
         actions.addAction(new DriveStraightVelocity(4.0));
-       //hope
+
         actions.addAction(new TurnRobot(180));
         actions.addAction(new ZeroCounters());
         actions.addAction(new Wait(0.1));
@@ -193,5 +185,41 @@ public class ActionLists {
         actions.addAction(new TurnRobot(90));
         actions.addAction(new ZeroCounters());
         actions.addAction(new DriveStraightVelocity(2.5));
+      }
+
+      public void boringSlam(ActionQueue actions)
+      {
+        actions.addAction(new DriveStraightVelocity(3.0));
+        actions.addAction(new TurnRobot(90));
+        actions.addAction(new DriveStraightVelocity(4.5));
+        actions.addAction(new TurnRobot(0));
+        actions.addAction(new DriveStraightVelocity(16.5));
+        actions.addAction(new TurnRobot(-90));
+    
+        actions.addAction(new DriveStraightVelocity(4.0));
+        actions.addAction(new TurnRobot(0));
+        actions.addAction(new DriveStraightVelocity(4.5));
+        actions.addAction(new TurnRobot(90));
+        actions.addAction(new DriveStraightVelocity(4.5));
+        actions.addAction(new TurnRobot(180));
+        actions.addAction(new DriveStraightVelocity(4.5));
+        actions.addAction(new TurnRobot(270));
+        actions.addAction(new DriveStraightVelocity(4.5));
+        actions.addAction(new TurnRobot(180));
+        actions.addAction(new DriveStraightVelocity(16.0));
+        actions.addAction(new TurnRobot(90));
+        actions.addAction(new DriveStraightVelocity(4.0));
+        actions.addAction(new TurnRobot(180));
+        actions.addAction(new DriveStraightVelocity(3.0));
+      }
+    
+      public void zigZag(ActionQueue actions) {
+        actions.clear();
+        actions.addAction(new DriveTowardHeading(.6, .4, -20));
+        actions.addAction(new DriveTowardHeading(.4, .6, 20));
+        actions.addAction(new DriveTowardHeading(.6, .4, -20));
+        actions.addAction(new DriveTowardHeading(.4, .6, 20));
+        actions.addAction(new DriveTowardHeading(.6, .4, -20));
+        actions.addAction(new DriveTowardHeading(.4, .6, 20));
       }
 }
