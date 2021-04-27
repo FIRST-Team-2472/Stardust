@@ -16,6 +16,7 @@ public class Collecting extends TimerBase {
         Robot.collector.runFrontWheels(-1);
         Robot.collector.runConveyor(1);
     }
+    
 	public void periodic() {
     }
 	

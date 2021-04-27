@@ -11,16 +11,11 @@ public class Shooting extends TimerBase {
 
     @Override
     public void startAction() {
-        int flyStartUp = 0;
-
         super.startAction();
         
         Robot.shooter.runFlyWheel(1);
-        if(flyStartUp >= 1000)
-        {
         Robot.collector.runConveyor(0.5);
         Robot.elevator.runElevatorPower(0.5);
-        } else flyStartUp++;
     }
 
     @Override

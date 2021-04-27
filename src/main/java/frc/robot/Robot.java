@@ -13,10 +13,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
-import frc.robot.Random.*;
-import frc.robot.Autonomous.*;
-import frc.robot.Telop.*;
-import frc.actions.*;
+import frc.robot.autonomous.*;
+import frc.robot.random.*;
+import frc.robot.telop.*;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
 import frc.subsystems.Elevator;
@@ -68,7 +67,7 @@ public class Robot extends TimedRobot {
   }
 
 
-  
+
 
   private final ActionQueue autoActions = new ActionQueue();
 
@@ -80,7 +79,6 @@ public class Robot extends TimedRobot {
     drive.zeroIMU();
     autoActions.clear();
     //Used to remove start problem DO NOT touch, Wes
-    autoActions.addAction(new Wait(0));
   }
 
   @Override

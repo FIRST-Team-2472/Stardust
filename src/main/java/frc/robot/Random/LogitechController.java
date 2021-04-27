@@ -1,4 +1,4 @@
-package frc.robot.Random;
+package frc.robot.random;
 
 import edu.wpi.first.wpilibj.GenericHID;
 

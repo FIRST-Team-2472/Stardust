@@ -1,4 +1,4 @@
-package frc.robot.Random;
+package frc.robot.random;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
