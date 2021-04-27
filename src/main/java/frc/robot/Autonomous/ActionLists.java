@@ -82,12 +82,8 @@ public class ActionLists {
       }
     
       public void seekTheFleshMeat(ActionQueue actions) {
-        actions.addAction(new TurnRobot(180));
-        actions.addAction(new Wait(5));
         actions.addAction(new Seek());
-        actions.addAction(new Wait(5));
         actions.addAction(new Aim());
-        actions.addAction(new Wait(5));
       }
     
       public void FIRE(ActionQueue actions) {
