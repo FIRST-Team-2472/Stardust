@@ -41,7 +41,6 @@ public class Robot extends TimedRobot {
   public static AnalogInput pressure = new AnalogInput(0);
   public static AnalogInput turretEncoder = new AnalogInput(1);
   public PigeonIMU pigeon = new PigeonIMU(Constants.Pidgeon);
-  public static final frc.subsystems.Turret Turret = new Turret(Constants.turret);
   public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(Constants.xboxcontroller);
   public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
   public static final Joystick leftJoystick = new Joystick(Constants.jstickL);
@@ -51,28 +50,25 @@ public class Robot extends TimedRobot {
   public static final TestMethods testMethods = new TestMethods();
   public static final TeleopMethods teleopMethods = new TeleopMethods();
 
-  double leftMotorSpeed, rightMotorSpeed, angle, change, change2;
-
   @Override
   public void robotInit() {
     pigeon.setFusedHeading(0.0, 30);
     SmartDashboard.putString("RobotState", "Robot On");
     compressor.setClosedLoopControl(true);
-    /*
-     * while (limelight.getPipeline() != 3) { limelight.setPipeline(3); }
-     */
+
     limelight.setLedMode(Limelight.LED_FORCE_OFF);
     limelight.setDriverCamMode(true);
   }
 
-  // Assorted SmartDashboard things. Both revolve around the Limelight's abilities
-  // to see the target and track it. Untested in serious play.
   @Override
   public void robotPeriodic() {
     drive.DoPigeon();
     limelight.distanceIN();
     smartDashBoard.update();
   }
+
+
+  
 
   private final ActionQueue autoActions = new ActionQueue();
 

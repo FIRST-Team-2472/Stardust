@@ -31,6 +31,7 @@ public class ActionLists {
         actions.addAction(new Aim());
         actions.addAction(new RangeFinding());
         actions.addAction(new ShieldAim());
+        actions.addAction(new StartFlyWheel(0.3));
         actions.addAction(new Shooting(5));
       }
 
@@ -48,7 +49,7 @@ public class ActionLists {
 
       public void randomTurnLeft (ActionQueue actions, int angle) {
         double leftMotorSpeed, rightMotorSpeed;
-        
+
         rightMotorSpeed = ((int)(Math.random() * (75) + 20))/100;
         leftMotorSpeed = ((int)(Math.random() * ((rightMotorSpeed-.1)*100)))/100;
         actions.addAction(new DriveTowardHeading(leftMotorSpeed, rightMotorSpeed, angle));
