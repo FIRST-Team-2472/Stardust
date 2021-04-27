@@ -58,9 +58,6 @@ public class Robot extends TimedRobot {
     pigeon.setFusedHeading(0.0, 30);
     SmartDashboard.putString("RobotState", "Robot On");
     compressor.setClosedLoopControl(true);
-    /*
-     * while (limelight.getPipeline() != 3) { limelight.setPipeline(3); }
-     */
     limelight.setLedMode(Limelight.LED_FORCE_OFF);
     limelight.setDriverCamMode(true);
   }

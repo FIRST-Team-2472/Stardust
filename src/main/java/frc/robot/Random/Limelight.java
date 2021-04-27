@@ -97,7 +97,7 @@ public class Limelight {
 
     //TODO DO NOT USE WILL SNAP NECK it is looking for target when it can't see it
 
-public double distanceIN() {
+    public double distanceIN() {
         double targetAngle = targetYAngleFromCenter();
         double cameraHeight = 44;
         double targetHeight = 73.5;
@@ -109,10 +109,11 @@ public double distanceIN() {
 
     
     }
-public double tangent() {
-    double targetAngle = targetYAngleFromCenter();
-    double cameraAngle = 1;
-    double t = (Math.tan(Math.toRadians(cameraAngle+targetAngle)));
-    return t;
-}
+    /*
+    public double tangent() {
+        double targetAngle = targetYAngleFromCenter();
+        double cameraAngle = 1;
+        double t = (Math.tan(Math.toRadians(cameraAngle+targetAngle)));
+        return t;
+    } */
 }
