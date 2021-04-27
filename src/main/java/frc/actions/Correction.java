@@ -2,8 +2,8 @@ package frc.actions;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.Actionable;
-import frc.robot.subdivison.Constants;
 import frc.robot.Robot;
+import frc.robot.Random.Constants;
 
 public class Correction implements Actionable {
 

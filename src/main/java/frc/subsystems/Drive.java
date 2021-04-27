@@ -162,11 +162,12 @@ public class Drive {
     }
 
     /** Run the back left moter at the given speed */
+    //Just for testing
     public void runBackLeft(double speed) {
         backLeft.set(ControlMode.Velocity, speed * 300);
     }
 
-//Just for testing.
+    //Just for testing.
     public void runFrontRight(double speed) {
         frontRight.set(ControlMode.Velocity, speed * 300);
     }
@@ -248,8 +249,8 @@ public class Drive {
 
     double currentAngularRate = xyz_dps[2];
     
-    SmartDashboard.putBoolean("AngleGood", angleIsGood);
-    SmartDashboard.putNumber("Angle", (int)currentAngle % 360);
+    SmartDashboard.putBoolean("Pigeon Is Working?", angleIsGood);
+    SmartDashboard.putNumber("Angle", yaw);
     SmartDashboard.putNumber("Rate", currentAngularRate);
 
     }

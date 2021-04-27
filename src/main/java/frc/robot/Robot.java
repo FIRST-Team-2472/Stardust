@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.actions.runners.ActionQueue;
+import frc.robot.Random.*;
+import frc.robot.Autonomous.*;
+import frc.robot.Telop.*;
 import frc.actions.*;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
@@ -23,7 +26,6 @@ import frc.subsystems.Collector;
 import frc.subsystems.Shield;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.AnalogInput;
-import frc.robot.subdivison.*;
 
 public class Robot extends TimedRobot {
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
@@ -61,7 +63,6 @@ public class Robot extends TimedRobot {
      */
     limelight.setLedMode(Limelight.LED_FORCE_OFF);
     limelight.setDriverCamMode(true);
-    smartDashBoard.GetPrefs();
   }
 
   // Assorted SmartDashboard things. Both revolve around the Limelight's abilities
@@ -75,25 +76,15 @@ public class Robot extends TimedRobot {
 
   private final ActionQueue autoActions = new ActionQueue();
 
-
-  
   @Override
   public void autonomousInit() {
+    SmartDashboard.putString("RobotState", "Autonomous");
+
     drive.zeroCounters();
     drive.zeroIMU();
     autoActions.clear();
-    smartDashBoard.GetPrefs();
     //Used to remove start problem DO NOT touch, Wes
     autoActions.addAction(new Wait(0));
-    autoActions.addAction(new DriveStraightIMU(20,0));
-    autoActions.addAction(new DriveStraightIMU(-20,0));
-    autoActions.addAction(new DriveStraightIMU(20,0));
-    autoActions.addAction(new DriveStraightIMU(-20,0));
-    autoActions.addAction(new DriveStraightIMU(20,0));
-    autoActions.addAction(new DriveStraightIMU(-20,0));
-
-
-
 
 
     //for turning right
@@ -126,22 +117,21 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    smartDashBoard.GetPrefs();
-
     autoActions.step();
   }
 
+
+
   private final ActionQueue teleopActions = new ActionQueue();
 
-// Subdivide below
   @Override
   public void teleopInit() {
+    SmartDashboard.putString("RobotState", "Tele Operated");
     teleopMethods.initialize();
   }
   
   @Override
   public void teleopPeriodic() {
-    smartDashBoard.GetPrefs();
 
     teleopMethods.driveTrain();
 
@@ -153,15 +143,12 @@ public class Robot extends TimedRobot {
 
     teleopMethods.runTopElevator();
 
-    //teleopMethods.runClimber();
-
     teleopActions.step();
   }
-//Subdivide above
+
   @Override
   public void testInit() {
-    // SMART Dashboard perfs
-    smartDashBoard.GetPrefs();
+    SmartDashboard.putString("RobotState", "Test");
   }
 
   int teststate = 0;
@@ -178,7 +165,9 @@ public class Robot extends TimedRobot {
       }
       System.out.println(teststate);
     }
+
     SmartDashboard.putNumber("teststate", teststate);
+
     switch (teststate) {
       // Test case that has the xboxcontroller independently control each motor.
       case 0:

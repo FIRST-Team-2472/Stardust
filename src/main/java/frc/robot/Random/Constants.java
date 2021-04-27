@@ -1,4 +1,4 @@
-package frc.robot.subdivison;
+package frc.robot.Random;
 
 // These can probably all be sent to the smart dashboard as preferences for configuration during debugging
 // and for driver preference
