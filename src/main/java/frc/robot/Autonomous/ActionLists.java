@@ -1,13 +1,16 @@
 package frc.robot.autonomous;
 
-import frc.actions.runners.ActionQueue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.actions.*;
-import frc.actions.driveStraightActions.*;
+import frc.automatic.actions.driveStraight.*;
+import frc.automatic.actions.random.*;
+import frc.automatic.actions.shooting.*;
+import frc.automatic.actions.zeroSensors.*;
+
+import frc.automatic.runners.ActionQueue;
 
 public class ActionLists {
 
-    public void driveStraight(ActionQueue actions, double distance) {
+      public void driveStraight(ActionQueue actions, double distance) {
         actions.addAction(new ZeroEncoder());
         actions.addAction(new Wait(0.01));
         actions.addAction(new DriveStraightVelocity(distance));
@@ -62,7 +65,7 @@ public class ActionLists {
 
 
 
-      //Usless
+      //Useless
       public void trackDrive(ActionQueue actions) {
         actions.clear();
         actions.addAction(new ZeroIMU());

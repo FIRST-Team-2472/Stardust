@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.actions.runners.ActionQueue;
+import frc.automatic.runners.ActionQueue;
 import frc.robot.autonomous.*;
 import frc.robot.random.*;
 import frc.robot.telop.*;
