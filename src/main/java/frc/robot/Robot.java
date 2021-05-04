@@ -12,18 +12,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AnalogInput;
+import com.ctre.phoenix.sensors.PigeonIMU;
+
 import frc.automatic.runners.ActionQueue;
 import frc.robot.random.*;
 import frc.robot.robotmethods.*;
-import frc.subsystems.Climber;
-import frc.subsystems.Drive;
-import frc.subsystems.Elevator;
-import frc.subsystems.Shooter;
-import frc.subsystems.Turret;
-import frc.subsystems.Collector;
-import frc.subsystems.Shield;
-import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.wpilibj.AnalogInput;
+import frc.subsystems.*;
+
 
 public class Robot extends TimedRobot {
   public static final Drive drive = new Drive(Constants.motorBL, Constants.motorBR, Constants.motorFL, Constants.motorFR);
@@ -48,8 +44,12 @@ public class Robot extends TimedRobot {
   public static final TestMethods testMethods = new TestMethods();
   public static final TeleopMethods teleopMethods = new TeleopMethods();
 
+  private final ActionQueue autoActions = new ActionQueue();
+  private final ActionQueue teleopActions = new ActionQueue();
+
+
   @Override
-  public void robotInit() {
+  public void robotInit() { //runs when the robot first starts up
     pigeon.setFusedHeading(0.0, 30);
     SmartDashboard.putString("RobotState", "Robot On");
     compressor.setClosedLoopControl(true);
@@ -58,16 +58,13 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void robotPeriodic() {
+  public void robotPeriodic() { //runs constantly no matter what state the robot is in
     drive.DoPigeon();
     limelight.distanceIN();
     smartDashBoard.update();
   }
 
 
-
-
-  private final ActionQueue autoActions = new ActionQueue();
 
   @Override
   public void autonomousInit() {
@@ -85,7 +82,6 @@ public class Robot extends TimedRobot {
 
 
 
-  private final ActionQueue teleopActions = new ActionQueue();
 
   @Override
   public void teleopInit() {
@@ -115,11 +111,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("RobotState", "Test");
   }
 
-  int teststate = 0;
-  
-
   @Override
   public void testPeriodic() {
+    int teststate = 0;
+
     if (rightJoystick.getRawButtonPressed(1)) {
       while (rightJoystick.getRawButtonPressed(1)) {
       }
