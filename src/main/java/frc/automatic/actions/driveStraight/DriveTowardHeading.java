@@ -1,4 +1,4 @@
-package frc.automatic.actions.driveStraight;
+package frc.automatic.actions.drivestraight;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.automatic.runners.Actionable;

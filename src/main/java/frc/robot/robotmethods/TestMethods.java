@@ -1,4 +1,4 @@
-package frc.robot.telop;
+package frc.robot.robotmethods;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;

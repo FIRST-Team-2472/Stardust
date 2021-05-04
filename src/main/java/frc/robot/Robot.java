@@ -13,9 +13,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.automatic.runners.ActionQueue;
-import frc.robot.autonomous.*;
 import frc.robot.random.*;
-import frc.robot.telop.*;
+import frc.robot.robotmethods.*;
 import frc.subsystems.Climber;
 import frc.subsystems.Drive;
 import frc.subsystems.Elevator;
@@ -77,7 +76,6 @@ public class Robot extends TimedRobot {
     drive.zeroCounters();
     drive.zeroIMU();
     autoActions.clear();
-    //Used to remove start problem DO NOT touch, Wes
   }
 
   @Override

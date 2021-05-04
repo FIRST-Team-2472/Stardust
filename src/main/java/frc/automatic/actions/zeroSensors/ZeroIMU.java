@@ -1,4 +1,4 @@
-package frc.automatic.actions.zeroSensors;
+package frc.automatic.actions.zerosensors;
 
 import frc.automatic.runners.Actionable;
 import frc.robot.Robot;

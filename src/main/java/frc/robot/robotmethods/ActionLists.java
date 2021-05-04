@@ -1,11 +1,10 @@
-package frc.robot.autonomous;
+package frc.robot.robotmethods;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.automatic.actions.driveStraight.*;
+import frc.automatic.actions.drivestraight.*;
 import frc.automatic.actions.random.*;
 import frc.automatic.actions.shooting.*;
-import frc.automatic.actions.zeroSensors.*;
-
+import frc.automatic.actions.zerosensors.*;
 import frc.automatic.runners.ActionQueue;
 
 public class ActionLists {
