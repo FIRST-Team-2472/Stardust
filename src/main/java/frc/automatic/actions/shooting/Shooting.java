@@ -13,8 +13,8 @@ public class Shooting extends TimerBase {
     public void startAction() {
         super.startAction();
         
-        Robot.shooter.runFlyWheel(1);
-        Robot.collector.runConveyor(0.5);
+        Robot.shooter.runFlyWheelPower(1);
+        Robot.collector.runConveyorPower(0.5);
         Robot.elevator.runElevatorPower(0.5);
     }
 
@@ -25,8 +25,8 @@ public class Shooting extends TimerBase {
 
     @Override
     public void endAction() {
-        Robot.shooter.runFlyWheel(0);
-        Robot.collector.runConveyor(0);
+        Robot.shooter.runFlyWheelPower(0);
+        Robot.collector.runConveyorPower(0);
         Robot.elevator.runElevatorPower(0);
     }
 

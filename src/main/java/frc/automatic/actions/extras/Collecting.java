@@ -14,7 +14,7 @@ public class Collecting extends TimerBase {
         super.startAction();
         SmartDashboard.putString("ActionName", "Collecting");
         Robot.collector.runFrontWheels(-1);
-        Robot.collector.runConveyor(1);
+        Robot.collector.runConveyorPower(1);
     }
     
 	public void periodic() {
@@ -22,6 +22,6 @@ public class Collecting extends TimerBase {
 	
 	public void endAction() {
         Robot.collector.runFrontWheels(0);
-        Robot.collector.runConveyor(0);
+        Robot.collector.runConveyorPower(0);
     }
 }

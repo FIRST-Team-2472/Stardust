@@ -13,7 +13,7 @@ public class DumpBalls extends TimerBase {
     public void startAction() {
         super.startAction();
         SmartDashboard.putString("ActionName", "Collecting");
-        Robot.collector.runConveyor(.7);
+        Robot.collector.runConveyorPower(.7);
     }
 	public void periodic() {
     }

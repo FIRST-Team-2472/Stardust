@@ -8,7 +8,7 @@ public class TestMethods {
   public double suggestKF = 0;
 
     public void case0() {
-      Robot.collector.runConveyor(-Robot.xboxcontroller.getY(Joystick.Hand.kLeft));
+      Robot.collector.runConveyorPower(-Robot.xboxcontroller.getY(Joystick.Hand.kLeft));
       Robot.collector.runFrontWheels(-Robot.xboxcontroller.getY(Joystick.Hand.kRight));
         if (Robot.xboxcontroller.getAButton()) {
           Robot.drive.runBackLeft(.25);
@@ -39,10 +39,10 @@ public class TestMethods {
 
     public void case1() {
         if (Robot.xboxcontroller.getAButton()) {
-            Robot.collector.runConveyor(.65);
+            Robot.collector.runConveyorPower(.65);
             SmartDashboard.putString("MotorsTest", "runCollector");
           } else {
-            Robot.collector.runConveyor(0);
+            Robot.collector.runConveyorPower(0);
   
           }
           if (Robot.xboxcontroller.getBButton()) {
@@ -58,10 +58,10 @@ public class TestMethods {
             turret.runTurret(0);
           }*/
           if (Robot.xboxcontroller.getYButton()) {
-            Robot.shooter.runFlyWheel(.25);
+            Robot.shooter.runFlyWheelPower(.25);
             SmartDashboard.putString("MotorsTest", "runShooter");
           } else {
-            Robot.shooter.runFlyWheel(0);
+            Robot.shooter.runFlyWheelPower(0);
           }
         // Climber test case. Made during one of the only competitions in 2020, the
         // Grand Forks Great Northern competition.
@@ -105,12 +105,12 @@ public class TestMethods {
     }
     public void shooterKF(int joystickButton) {
       if (Robot.rightJoystick.getRawButton(joystickButton)) {
-        Robot.shooter.runFlyWheel(.75);
+        Robot.shooter.runFlyWheelPower(.75);
         suggestKF = .75 * 1023 / Robot.shooter.runSensorVelocity();
         System.out.print("Suggested kF: ");
         System.out.println(suggestKF);
       } else {
-        Robot.shooter.runFlyWheel(0);
+        Robot.shooter.runFlyWheelPower(0);
       }
     }
     public void drivetrainKF(int joystickButton) {

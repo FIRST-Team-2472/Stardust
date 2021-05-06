@@ -18,10 +18,10 @@ public class Conveyor extends TimerBase {
         SmartDashboard.putString("ActionName", "Conveyor");
     }
 	public void periodic() {
-        Robot.collector.runConveyor(speed);
+        Robot.collector.runConveyorPower(speed);
     }
 	
 	public void endAction() {
-        Robot.collector.runConveyor(0);
+        Robot.collector.runConveyorPower(0);
     }
 }

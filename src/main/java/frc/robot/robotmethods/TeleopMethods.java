@@ -86,9 +86,18 @@ boolean teleopShooting;
             Robot.collector.runConveyorPower(0);
         }
 
-        if (Robot.xboxcontroller.getPOV() < 30 && Robot.xboxcontroller.getPOV() > 330) Robot.shield.runShieldVelocity(.2);
-        else if (Robot.xboxcontroller.getPOV() < 210 && Robot.xboxcontroller.getPOV() > 150) Robot.shield.runShieldVelocity(-.2);
-        else Robot.shield.runShieldVelocity(0);
+        if (Robot.xboxcontroller.getPOV() < 30 && Robot.xboxcontroller.getPOV() > 330) {
+            //Robot.shield.runShieldVelocity(.2);
+            SmartDashboard.putNumber("POV?", 1);
+        }
+        else if (Robot.xboxcontroller.getPOV() < 210 && Robot.xboxcontroller.getPOV() > 150) {
+            //Robot.shield.runShieldVelocity(-.2);
+            SmartDashboard.putNumber("POV?", -1);
+        }
+        else {
+            //Robot.shield.runShieldVelocity(0);
+            SmartDashboard.putNumber("POV?", 0);
+        }
     }
     
     public void runClimber(){
