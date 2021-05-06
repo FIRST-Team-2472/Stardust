@@ -44,7 +44,7 @@ public class Shooter {
       flyWheel.config_kF(0, f);
     }
 
-    public void runFlyWheelPower(final double speed) {
+    public void runFlyWheelPower(double speed) {
       flyWheel.set(ControlMode.PercentOutput, speed);    
     }
 

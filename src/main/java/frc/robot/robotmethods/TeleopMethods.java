@@ -76,30 +76,31 @@ boolean teleopShooting;
     public void manualFire(){
          //runs top elvator
         if (Robot.xboxcontroller.getXButton()) {
+            Robot.shooter.runFlyWheelPower(-1);
             Robot.elevator.runElevatorPower(0.5);
-            Robot.shooter.runFlyWheelPower(1);
-            Robot.collector.runConveyorPower(.5);
         }
         else {
-            Robot.elevator.runElevatorPower(0);
             Robot.shooter.runFlyWheelPower(0);
-            Robot.collector.runConveyorPower(0);
+            Robot.elevator.runElevatorPower(0);
         }
 
-        if (Robot.xboxcontroller.getPOV() < 30 && Robot.xboxcontroller.getPOV() > 330) {
-            //Robot.shield.runShieldVelocity(.2);
-            SmartDashboard.putNumber("POV?", 1);
+        if (Robot.xboxcontroller.getPOV() == 0 || Robot.xboxcontroller.getPOV() == 45 || Robot.xboxcontroller.getPOV() == 315) {
+            Robot.shield.runShieldVelocity(.2);
         }
-        else if (Robot.xboxcontroller.getPOV() < 210 && Robot.xboxcontroller.getPOV() > 150) {
-            //Robot.shield.runShieldVelocity(-.2);
-            SmartDashboard.putNumber("POV?", -1);
+        else if (Robot.xboxcontroller.getPOV() == 180 || Robot.xboxcontroller.getPOV() == 135 || Robot.xboxcontroller.getPOV() == 270) {
+            Robot.shield.runShieldVelocity(-.2);
         }
         else {
-            //Robot.shield.runShieldVelocity(0);
-            SmartDashboard.putNumber("POV?", 0);
+            Robot.shield.runShieldVelocity(0);
         }
     }
     
+    public void moveFrontWheels(){
+        if (Robot.leftJoystick.getRawButtonPressed(3)) Robot.collector.pushoutfrontwheel();
+        else if (Robot.leftJoystick.getRawButtonPressed(2)) Robot.collector.pushinfrontwheel();
+        else Robot.collector.pushofffrontwheel();
+    }
+
     public void runClimber(){
         //would run climber if we had one
         if (Robot.leftJoystick.getRawButtonPressed(3) && Robot.rightJoystick.getRawButton(3)) {
