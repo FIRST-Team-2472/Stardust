@@ -47,11 +47,11 @@ boolean teleopShooting;
     public void runCollector() {
         if (Math.abs(Robot.xboxcontroller.getRawAxis(1)) > Math.abs(Robot.xboxcontroller.getRawAxis(5))) {
             //runs the intake for the lower elvator and collector wheels
-            Robot.collector.runConveyor(.7 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
+            Robot.collector.runConveyorPower(.7 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
             Robot.collector.runFrontWheels(.5 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
         } else {
             //runs the outtake for the lower elvator and collector wheels
-            Robot.collector.runConveyor(.7 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
+            Robot.collector.runConveyorPower(.7 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
             Robot.collector.runFrontWheels(.5 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
         }
 
@@ -73,10 +73,22 @@ boolean teleopShooting;
         }
     }
 
-    public void runTopElevator(){
+    public void manualFire(){
          //runs top elvator
-        if (Robot.xboxcontroller.getXButton()) Robot.elevator.runElevatorPower(0.5);
-        else Robot.elevator.runElevatorPower(0);
+        if (Robot.xboxcontroller.getXButton()) {
+            Robot.elevator.runElevatorPower(0.5);
+            Robot.shooter.runFlyWheelPower(1);
+            Robot.collector.runConveyorPower(.5);
+        }
+        else {
+            Robot.elevator.runElevatorPower(0);
+            Robot.shooter.runFlyWheelPower(0);
+            Robot.collector.runConveyorPower(0);
+        }
+
+        if (Robot.xboxcontroller.getPOV() < 30 && Robot.xboxcontroller.getPOV() > 330) Robot.shield.runShieldVelocity(.2);
+        else if (Robot.xboxcontroller.getPOV() < 210 && Robot.xboxcontroller.getPOV() > 150) Robot.shield.runShieldVelocity(-.2);
+        else Robot.shield.runShieldVelocity(0);
     }
     
     public void runClimber(){

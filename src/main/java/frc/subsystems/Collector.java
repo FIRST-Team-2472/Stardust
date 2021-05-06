@@ -37,7 +37,7 @@ public class Collector {
      */
     public void runCollector(double speed) {
         runFrontWheels(-speed);
-        runConveyor(speed);
+        runConveyorPower(speed);
     }
 
     /**
@@ -54,7 +54,7 @@ public class Collector {
      * Positive numbers intake balls
      * @param speed [-1.0, 1.0] value to run the motor at
      */
-    public void runConveyor(double speed) {
+    public void runConveyorPower(double speed) {
         conveyor.set(ControlMode.PercentOutput, speed);
     }
 

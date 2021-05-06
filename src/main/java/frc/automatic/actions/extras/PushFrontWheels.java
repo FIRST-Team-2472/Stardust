@@ -1,4 +1,4 @@
-package frc.automatic.actions.random;
+package frc.automatic.actions.extras;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.automatic.runners.TimerBase;

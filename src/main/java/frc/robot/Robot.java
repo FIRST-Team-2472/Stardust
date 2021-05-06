@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
 
     teleopMethods.shooting(teleopActions);
 
-    teleopMethods.runTopElevator();
+    teleopMethods.manualFire();
 
     teleopActions.step();
   }

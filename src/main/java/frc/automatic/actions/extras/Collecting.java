@@ -1,27 +1,27 @@
-package frc.automatic.actions.random;
+package frc.automatic.actions.extras;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.automatic.runners.TimerBase;
 import frc.robot.Robot;
 
-public class Conveyor extends TimerBase {
+public class Collecting extends TimerBase {
 
-    public double speed;
-
-	public Conveyor(double lifetime, double givenSpeed) {
+	public Collecting(double lifetime) {
         super(lifetime);
-        speed = givenSpeed;
     }
 
     public void startAction() {
         super.startAction();
-        SmartDashboard.putString("ActionName", "Conveyor");
+        SmartDashboard.putString("ActionName", "Collecting");
+        Robot.collector.runFrontWheels(-1);
+        Robot.collector.runConveyor(1);
     }
+    
 	public void periodic() {
-        Robot.collector.runConveyor(speed);
     }
 	
 	public void endAction() {
+        Robot.collector.runFrontWheels(0);
         Robot.collector.runConveyor(0);
     }
 }
