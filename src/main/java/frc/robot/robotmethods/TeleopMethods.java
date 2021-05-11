@@ -6,14 +6,16 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
 
 public class TeleopMethods {
-int driveState;
-boolean teleopShooting;
+int driveState, cooldown;
+boolean teleopShooting, changePistons;
 
     public void initialize() {
         Robot.turret.zeroTurret();
         Robot.drive.zeroCounters();
+        Robot.shield.zeroCounters();
         SmartDashboard.putString("RobotState", "TeleopEnabled");
         driveState = 0;
+        cooldown = 0;
     }
 
     public void driveTrain() {
@@ -55,10 +57,7 @@ boolean teleopShooting;
             Robot.collector.runFrontWheels(.5 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
         }
 
-        //pushes out pistons to collect balls
-        if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight)) Robot.collector.pushoutfrontwheel();
-        else if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kLeft)) Robot.collector.pushinfrontwheel();
-        else Robot.collector.pushofffrontwheel();
+        
     }
 
     public void shooting(ActionQueue teleopActions) {
@@ -85,20 +84,31 @@ boolean teleopShooting;
         }
 
         if (Robot.xboxcontroller.getPOV() == 0 || Robot.xboxcontroller.getPOV() == 45 || Robot.xboxcontroller.getPOV() == 315) {
-            Robot.shield.runShieldVelocity(.2);
+            Robot.shield.runShieldPower(.2);
         }
         else if (Robot.xboxcontroller.getPOV() == 180 || Robot.xboxcontroller.getPOV() == 135 || Robot.xboxcontroller.getPOV() == 270) {
-            Robot.shield.runShieldVelocity(-.2);
+            Robot.shield.runShieldPower(-.2);
         }
         else {
-            Robot.shield.runShieldVelocity(0);
+            Robot.shield.runShieldPower(0);
         }
     }
     
     public void moveFrontWheels(){
-        if (Robot.leftJoystick.getRawButtonPressed(3)) Robot.collector.pushoutfrontwheel();
-        else if (Robot.leftJoystick.getRawButtonPressed(2)) Robot.collector.pushinfrontwheel();
-        else Robot.collector.pushofffrontwheel();
+        //pushes out pistons to collect balls
+        if (cooldown > 200) {
+            if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight) && changePistons == false) {
+                Robot.collector.pushoutfrontwheel();
+                changePistons = true;
+                cooldown = 0;
+            }
+            else if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight) && changePistons == true) {
+                Robot.collector.pushinfrontwheel();
+                changePistons = false;
+                cooldown = 0;
+            }
+            else Robot.collector.pushofffrontwheel();
+        } else cooldown++;
     }
 
     public void runClimber(){
@@ -113,6 +123,6 @@ boolean teleopShooting;
             Robot.climb.runClimber(-1);
           } else {
             Robot.climb.runClimber(0);
-          }
+        }
     }
 }

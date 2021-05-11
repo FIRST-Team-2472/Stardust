@@ -10,13 +10,14 @@ public class Shield {
 
     public Shield(int ShieldID) {
         Shield = new TalonSRX(ShieldID);
+        Shield.setInverted(false);
 
         Shield.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
         Shield.setSensorPhase(true);
     }
 
     public void runShieldVelocity(double speed) {
-        Shield.set(ControlMode.Velocity, speed * 300);
+        Shield.set(ControlMode.Velocity, speed * 6250);
     }
 
     public void runShieldPower(double power) {
@@ -33,5 +34,9 @@ public class Shield {
 
     public void zeroCounters() {
         Shield.setSelectedSensorPosition(0);
+        Shield.configForwardSoftLimitEnable(true);
+        Shield.configForwardSoftLimitThreshold(100000);
+        Shield.configReverseSoftLimitEnable(true);
+        Shield.configReverseSoftLimitThreshold(-100000);
     }
 }

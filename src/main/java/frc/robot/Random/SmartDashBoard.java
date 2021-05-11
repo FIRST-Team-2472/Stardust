@@ -47,7 +47,8 @@ public class SmartDashBoard {
         SmartDashboard.putBoolean("seeing target?", Robot.limelight.isTargetSpotted());
         SmartDashboard.putNumber("y degrees off", Robot.limelight.targetYAngleFromCenter());
         SmartDashboard.putNumber("DistanceFromFiring", Robot.limelight.distanceIN());
-
+        
+        SmartDashboard.putNumber("Shield Height", Robot.shield.getShieldDistance());
     }
 
     public void GetPrefs() {
