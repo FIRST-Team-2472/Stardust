@@ -2,6 +2,8 @@ package frc.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 
@@ -14,6 +16,8 @@ public class Shield {
 
         Shield.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
         Shield.setSensorPhase(true);
+        //Shield.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,100000);
+        Shield.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,0);
     }
 
     public void runShieldVelocity(double speed) {
@@ -35,8 +39,12 @@ public class Shield {
     public void zeroCounters() {
         Shield.setSelectedSensorPosition(0);
         Shield.configForwardSoftLimitEnable(true);
-        Shield.configForwardSoftLimitThreshold(100000);
-        Shield.configReverseSoftLimitEnable(true);
-        Shield.configReverseSoftLimitThreshold(-100000);
+        Shield.configForwardSoftLimitThreshold(430000);
+        Shield.configReverseSoftLimitEnable(false);
+
+    }
+
+    public void resetEncoders() {
+    
     }
 }

@@ -86,7 +86,7 @@ boolean teleopShooting, changePistons;
         if (Robot.xboxcontroller.getPOV() == 0 || Robot.xboxcontroller.getPOV() == 45 || Robot.xboxcontroller.getPOV() == 315) {
             Robot.shield.runShieldPower(.2);
         }
-        else if (Robot.xboxcontroller.getPOV() == 180 || Robot.xboxcontroller.getPOV() == 135 || Robot.xboxcontroller.getPOV() == 270) {
+        else if (Robot.xboxcontroller.getPOV() == 180 || Robot.xboxcontroller.getPOV() == 135 || Robot.xboxcontroller.getPOV() == 225) {
             Robot.shield.runShieldPower(-.2);
         }
         else {

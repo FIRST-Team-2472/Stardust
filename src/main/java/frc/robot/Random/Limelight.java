@@ -95,11 +95,9 @@ public class Limelight {
         limelight.getEntry("pipeLine").setNumber(snapshotMode);
     }
 
-    //TODO DO NOT USE WILL SNAP NECK it is looking for target when it can't see it
-
     public double distanceIN() {
         double targetAngle = targetYAngleFromCenter();
-        double cameraHeight = 44;
+        double cameraHeight = 32;
         double targetHeight = 73.5;
         double cameraAngle = 1;
         double d = (targetHeight-cameraHeight) / (Math.tan(Math.toRadians(cameraAngle+targetAngle)));
