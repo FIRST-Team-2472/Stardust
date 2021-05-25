@@ -33,7 +33,6 @@ public class Robot extends TimedRobot {
   public static Timer timer;
   public static final Elevator elevator = new Elevator(Constants.ElevatorID);
   public static AnalogInput pressure = new AnalogInput(0);
-  public static AnalogInput turretEncoder = new AnalogInput(1);
   public PigeonIMU pigeon = new PigeonIMU(Constants.Pidgeon);
   public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(Constants.xboxcontroller);
   public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
@@ -73,6 +72,7 @@ public class Robot extends TimedRobot {
 
     drive.zeroCounters();
     drive.zeroIMU();
+    turret.zeroTurret();
     autoActions.clear();
   }
 
@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
     teleopActions.clear();
     SmartDashboard.putString("RobotState", "Tele Operated");
     limelight.setLedMode(Limelight.LED_FORCE_ON);
-    teleopMethods.initialize();
+    teleopMethods.initialize(teleopActions);
   }
   
   @Override
@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
 
     teleopMethods.shooting(teleopActions);
 
-    teleopMethods.manualFire();
+    teleopMethods.manualFire(teleopActions);
 
     teleopActions.step();
   }

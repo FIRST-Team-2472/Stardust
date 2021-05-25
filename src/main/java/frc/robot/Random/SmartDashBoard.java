@@ -33,7 +33,6 @@ public class SmartDashBoard {
         // SmartDashboard.putNumber("Raw Pressure", pressure.getValue());
         SmartDashboard.putNumber("Raw Pressure", Robot.pressure.getAverageValue());
         SmartDashboard.putNumber("PSI", (Robot.pressure.getAverageValue() - 400) * (70.0 / 1250.0));
-        SmartDashboard.putNumber("Turret Postion", (Robot.turretEncoder.getAverageValue()));
 
         SmartDashboard.putNumber("Angle", Robot.drive.getCurrentAngle());
         // PID
@@ -49,6 +48,10 @@ public class SmartDashBoard {
         SmartDashboard.putNumber("DistanceFromFiring", Robot.limelight.distanceIN());
         
         SmartDashboard.putNumber("Shield Height", Robot.shield.getShieldDistance());
+    
+        SmartDashboard.putBoolean("Shield LimitSwitch", Robot.shield.getLimitSwitchOn());
+        SmartDashboard.putBoolean("Xbutton", Robot.xboxcontroller.getXButton());
+
     }
 
     public void GetPrefs() {

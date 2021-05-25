@@ -14,6 +14,8 @@ public class Turret {
         turret = new TalonSRX(turretID);
 
         turret.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+        turret.setSelectedSensorPosition(0);
+
         turret.setSensorPhase(true);
     }
 
@@ -34,9 +36,9 @@ public class Turret {
     public void zeroTurret() {
         turret.setSelectedSensorPosition(0);
         turret.configForwardSoftLimitEnable(true);
-        turret.configForwardSoftLimitThreshold(450000);
+        turret.configForwardSoftLimitThreshold(200000);
         turret.configReverseSoftLimitEnable(true);
-        turret.configReverseSoftLimitThreshold(-450000);
+        turret.configReverseSoftLimitThreshold(-200000);
     }
 }
 

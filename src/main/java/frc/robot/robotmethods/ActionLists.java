@@ -35,7 +35,7 @@ public class ActionLists {
         //actions.addAction(new RangeFinding());
         //actions.addAction(new ShieldAim());
         actions.addAction(new StartFlyWheel(1.5));
-        actions.addAction(new Shooting(5));
+        //actions.addAction(new Shooting(5));
       }
 
       public void randomTurnRight (ActionQueue actions, int angle) {
@@ -226,4 +226,6 @@ public class ActionLists {
         actions.addAction(new DriveTowardHeading(.6, .4, -20));
         actions.addAction(new DriveTowardHeading(.4, .6, 20));
       }
+
+
 }

@@ -44,6 +44,10 @@ public class Shield {
 
     }
 
+    public boolean getLimitSwitchOn() {
+        return Shield.getSensorCollection().isRevLimitSwitchClosed();
+    }
+
     public void resetEncoders() {
     
     }

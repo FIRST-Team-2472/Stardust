@@ -12,12 +12,13 @@ public class StartFlyWheel extends TimerBase{
     @Override
     public void startAction() {
         super.startAction();
+        Robot.shooter.runFlyWheelPower(-1);
+
         
     }
 
     @Override
     public void periodic() {
-        Robot.shooter.runFlyWheelPower(-1);
     }
 
     @Override
