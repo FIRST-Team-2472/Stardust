@@ -33,6 +33,9 @@ public class TeleopMethods {
             }
         }
 
+        Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
+            SmartDashboard.putString("Drive State", "Arcade");
+        /*
         if (driveState == 1) {
             // runs tank drive
             Robot.drive.tankDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.rightJoystick.getY() * -.5);
@@ -42,6 +45,7 @@ public class TeleopMethods {
             Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
             SmartDashboard.putString("Drive State", "Arcade");
         }
+        */
     }
 
     public void runTurret() {
@@ -57,11 +61,11 @@ public class TeleopMethods {
     public void runCollector() {
         if (Math.abs(Robot.xboxcontroller.getRawAxis(1)) > Math.abs(Robot.xboxcontroller.getRawAxis(5))) {
             // runs the intake for the lower elvator and collector wheels
-            Robot.collector.runConveyorPower(.7 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
+            Robot.collector.runConveyorPower(.3 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
             Robot.collector.runFrontWheels(.5 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
         } else {
             // runs the outtake for the lower elvator and collector wheels
-            Robot.collector.runConveyorPower(.7 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
+            Robot.collector.runConveyorPower(.3 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
             Robot.collector.runFrontWheels(.5 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
         }
 
