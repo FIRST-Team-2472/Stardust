@@ -26,6 +26,9 @@ public class TeleopMethods {
 
     public void driveTrain() {
         // switches drive state from tank to acrade drive
+        Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
+            SmartDashboard.putString("Drive State", "Arcade");
+        /*
         if (Robot.leftJoystick.getRawButtonPressed(1)) {
             driveState++;
             if (driveState > 1) {
@@ -42,6 +45,7 @@ public class TeleopMethods {
             Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
             SmartDashboard.putString("Drive State", "Arcade");
         }
+        */
     }
 
     public void runTurret() {
@@ -57,11 +61,11 @@ public class TeleopMethods {
     public void runCollector() {
         if (Math.abs(Robot.xboxcontroller.getRawAxis(1)) > Math.abs(Robot.xboxcontroller.getRawAxis(5))) {
             // runs the intake for the lower elvator and collector wheels
-            Robot.collector.runConveyorPower(.7 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
+            Robot.collector.runConveyorPower(.3 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
             Robot.collector.runFrontWheels(.5 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
         } else {
             // runs the outtake for the lower elvator and collector wheels
-            Robot.collector.runConveyorPower(.7 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
+            Robot.collector.runConveyorPower(.3 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
             Robot.collector.runFrontWheels(.5 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
         }
 
@@ -107,6 +111,10 @@ public class TeleopMethods {
 
     public void moveFrontWheels() {
         // pushes out pistons to collect balls
+        if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight)) Robot.collector.pushoutfrontwheel();
+        if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kLeft)) Robot.collector.pushinfrontwheel();
+
+        /*
         if (cooldown > 200) {
             if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight) && changePistons == false) {
                 Robot.collector.pushoutfrontwheel();
@@ -115,11 +123,13 @@ public class TeleopMethods {
             } else if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight) && changePistons == true) {
                 Robot.collector.pushinfrontwheel();
                 changePistons = false;
+     
                 cooldown = 0;
             } else
                 Robot.collector.pushofffrontwheel();
         } else
             cooldown++;
+            */
     }
 
     public void runClimber() {

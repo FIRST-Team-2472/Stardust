@@ -101,6 +101,8 @@ public class Robot extends TimedRobot {
 
     teleopMethods.runCollector();
 
+    teleopMethods.moveFrontWheels();
+
     teleopMethods.shooting(teleopActions);
 
     teleopMethods.manualFire(teleopActions);
