@@ -33,7 +33,6 @@ public class Robot extends TimedRobot {
   public static Timer timer;
   public static final Elevator elevator = new Elevator(Constants.ElevatorID);
   public static AnalogInput pressure = new AnalogInput(0);
-  public static AnalogInput turretEncoder = new AnalogInput(1);
   public PigeonIMU pigeon = new PigeonIMU(Constants.Pidgeon);
   public static final edu.wpi.first.wpilibj.XboxController xboxcontroller = new XboxController(Constants.xboxcontroller);
   public static final Joystick rightJoystick = new Joystick(Constants.jstickR);
@@ -53,7 +52,7 @@ public class Robot extends TimedRobot {
     pigeon.setFusedHeading(0.0, 30);
     SmartDashboard.putString("RobotState", "Robot On");
     compressor.setClosedLoopControl(true);
-    limelight.setLedMode(Limelight.LED_FORCE_OFF);
+    //limelight.setLedMode(Limelight.LED_FORCE_ON);
     limelight.setDriverCamMode(true);
   }
 
@@ -61,6 +60,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() { //runs constantly no matter what state the robot is in
     drive.DoPigeon();
     limelight.distanceIN();
+    limelight.setLedMode(Limelight.LED_FORCE_ON);
     smartDashBoard.update();
   }
 
@@ -72,6 +72,7 @@ public class Robot extends TimedRobot {
 
     drive.zeroCounters();
     drive.zeroIMU();
+    turret.zeroTurret();
     autoActions.clear();
   }
 
@@ -87,7 +88,8 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     teleopActions.clear();
     SmartDashboard.putString("RobotState", "Tele Operated");
-    teleopMethods.initialize();
+    limelight.setLedMode(Limelight.LED_FORCE_ON);
+    teleopMethods.initialize(teleopActions);
   }
   
   @Override
@@ -101,7 +103,7 @@ public class Robot extends TimedRobot {
 
     teleopMethods.shooting(teleopActions);
 
-    teleopMethods.manualFire();
+    teleopMethods.manualFire(teleopActions);
 
     teleopActions.step();
   }

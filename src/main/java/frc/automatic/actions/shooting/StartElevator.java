@@ -2,32 +2,26 @@ package frc.automatic.actions.shooting;
 
 import frc.automatic.runners.TimerBase;
 import frc.robot.Robot;
+import frc.subsystems.Elevator;
 
-public class Shooting extends TimerBase {
-
-    public Shooting(double lifetime) {
+public class StartElevator extends TimerBase {
+    
+    public StartElevator(double lifetime) {
         super(lifetime);
     }
 
     @Override
     public void startAction() {
         super.startAction();
-        
-        Robot.shooter.runFlyWheelPower(1);
-        Robot.collector.runConveyorPower(0.5);
         Robot.elevator.runElevatorPower(0.5);
+       
     }
 
     @Override
     public void periodic() {
-        
     }
 
     @Override
     public void endAction() {
-        Robot.shooter.runFlyWheelPower(0);
-        Robot.collector.runConveyorPower(0);
-        Robot.elevator.runElevatorPower(0);
     }
-
 }
