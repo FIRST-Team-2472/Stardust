@@ -26,11 +26,11 @@ public class Constants {
     public static final int jstickR = 1;
 	public static final int xboxcontroller = 2;
 	//Pistons
-	public static final int IndexerF = 3;
-	public static final int IndexerR = 2;
+	public static final int IndexerF = 1;
+	public static final int IndexerR = 0;
 	public static final int PCMID = 16;
-	public static final int COLLECTOR_WHEEL_PUSH_FORWARD = 0;
-	public static final int COLLECTOR_WHEEL_PUSH_REVERSE = 1;
+	public static final int COLLECTOR_WHEEL_PUSH_FORWARD = 3;
+	public static final int COLLECTOR_WHEEL_PUSH_REVERSE = 2;
 	//Compressor
 	public static final int COMPRESSOR = 16;
 	//IMUs

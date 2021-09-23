@@ -17,6 +17,7 @@ public class TeleopMethods {
     public void initialize(ActionQueue teleopActions) {
         Robot.turret.zeroTurret();
         Robot.drive.zeroCounters();
+        Robot.collector.pushoutfrontwheel();
         teleopActions.addAction(new SetShield());
         SmartDashboard.putString("RobotState", "TeleopEnabled");
         driveState = 0;
@@ -111,8 +112,10 @@ public class TeleopMethods {
     public void moveFrontWheels() {
         // pushes out pistons to collect balls
         if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight)) Robot.collector.pushoutfrontwheel();
-        if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kLeft)) Robot.collector.pushinfrontwheel();
+        //if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kLeft)) Robot.collector.pushinfrontwheel();
 
+
+        //Max no understand this
         /*
         if (cooldown > 200) {
             if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight) && changePistons == false) {
@@ -129,6 +132,7 @@ public class TeleopMethods {
         } else
             cooldown++;
             */
+            
     }
 
     public void runClimber() {
