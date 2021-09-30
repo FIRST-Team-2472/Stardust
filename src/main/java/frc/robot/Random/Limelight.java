@@ -79,6 +79,7 @@ public class Limelight {
 
     public void setDriverCamMode(boolean yes) {
         assert limelight.getEntry("ledMode").setNumber(yes ? 1 : 0 );
+        // ?: operater means if yes is true assign the value of 1 to result otherwise use value of 2
     }
 
     public void setPipeLine(int pipelineMode) {
