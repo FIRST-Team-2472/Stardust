@@ -2,7 +2,7 @@ package frc.robot.robotmethods;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.automatic.actions.extras.SetShield;
-import frc.automatic.actions.shooting.Aim;
+import frc.automatic.actions.shooting.AimHorizontally;
 import frc.automatic.actions.shooting.StartElevator;
 import frc.automatic.actions.shooting.StartFlyWheel;
 import frc.automatic.actions.shooting.StartShooting;
@@ -17,7 +17,6 @@ public class TeleopMethods {
     public void initialize(ActionQueue teleopActions) {
         Robot.turret.zeroTurret();
         Robot.drive.zeroCounters();
-        Robot.collector.pushoutfrontwheel();
         teleopActions.addAction(new SetShield());
         SmartDashboard.putString("RobotState", "TeleopEnabled");
         driveState = 0;
@@ -26,9 +25,8 @@ public class TeleopMethods {
 
     public void driveTrain() {
         // switches drive state from tank to acrade drive
-        Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
-            SmartDashboard.putString("Drive State", "Arcade");
-        /*
+
+        
         if (Robot.leftJoystick.getRawButtonPressed(1)) {
             driveState++;
             if (driveState > 1) {
@@ -45,7 +43,7 @@ public class TeleopMethods {
             Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
             SmartDashboard.putString("Drive State", "Arcade");
         }
-        */
+        
     }
 
     public void runTurret() {
@@ -95,7 +93,7 @@ public class TeleopMethods {
 
         if(Robot.xboxcontroller.getAButtonPressed() && Robot.limelight.isTargetSpotted())
         {
-            teleopActions.addAction(new Aim());
+            teleopActions.addAction(new AimHorizontally());
         }
 
         if (Robot.xboxcontroller.getPOV() == 0 || Robot.xboxcontroller.getPOV() == 45
@@ -112,7 +110,7 @@ public class TeleopMethods {
     public void moveFrontWheels() {
         // pushes out pistons to collect balls
         if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight)) Robot.collector.pushoutfrontwheel();
-        //if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kLeft)) Robot.collector.pushinfrontwheel();
+        if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kLeft)) Robot.collector.pushinfrontwheel();
 
 
         //Max no understand this

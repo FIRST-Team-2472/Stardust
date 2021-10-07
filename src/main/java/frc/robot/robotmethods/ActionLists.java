@@ -26,12 +26,12 @@ public class ActionLists {
         actions.addAction(new Wait(5));
         actions.addAction(new Seek());
         actions.addAction(new Wait(5));
-        actions.addAction(new Aim());
+        actions.addAction(new AimHorizontally());
         actions.addAction(new Wait(5));
       }
     
       public void FIRE(ActionQueue actions) {
-        actions.addAction(new Aim());
+        actions.addAction(new AimHorizontally());
         //actions.addAction(new RangeFinding());
         //actions.addAction(new ShieldAim());
         actions.addAction(new StartFlyWheel(1.5));
