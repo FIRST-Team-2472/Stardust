@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   public static final Climber climb = new Climber(Constants.CLIMBER);
   public static final Turret turret = new Turret(Constants.turret);
   public static final Limelight limelight = new Limelight();
-  private static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
+  public static final Compressor compressor = new Compressor(Constants.COMPRESSOR);
   public static Timer timer;
   public static final Elevator elevator = new Elevator(Constants.ElevatorID);
   public static AnalogInput pressure = new AnalogInput(0);
