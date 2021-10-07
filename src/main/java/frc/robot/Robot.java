@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
     pigeon.setFusedHeading(0.0, 30);
     SmartDashboard.putString("RobotState", "Robot On");
     collector.pushinfrontwheel();
-    compressor.setClosedLoopControl(false);
+    compressor.setClosedLoopControl(true);
     limelight.setDriverCamMode(true);
   }
 
@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() { //runs constantly no matter what state the robot is in
     drive.DoPigeon();
     limelight.distanceIN();
-    limelight.setLedMode(Limelight.LED_FORCE_BLINK);
+    //limelight.setLedMode(Limelight.LED_FORCE_BLINK);
 
     //limelight.setLedMode(Limelight.LED_FORCE_ON);
     smartDashBoard.update();

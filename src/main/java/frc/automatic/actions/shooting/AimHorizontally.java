@@ -5,7 +5,7 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class Aim implements Actionable {
+public class AimHorizontally implements Actionable {
 
 	@Override
 	public void startAction() {
