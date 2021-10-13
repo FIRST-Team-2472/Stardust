@@ -108,9 +108,8 @@ public class Limelight {
 
     public boolean is_target_in_shooting_range() {
         //TODO fix placeholdoer values
-        int lower_range = 156;
-        int upper_range = 180;
-        return get_distance_in() > lower_range && get_distance_in() < upper_range;
+        int lower_range = 180;
+        return get_distance_in() > lower_range;
     }
     /*
     public double tangent() {

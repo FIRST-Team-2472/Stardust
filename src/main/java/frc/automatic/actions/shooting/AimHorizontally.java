@@ -12,7 +12,7 @@ public class AimHorizontally implements Actionable {
 		SmartDashboard.putString("ActionName", "Aiming Horizontally");
 	}
 	
-	private double TurretSpeed = .2;
+	private double TurretSpeed = .1;
 
 	@Override
 	public void periodic() {

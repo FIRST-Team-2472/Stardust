@@ -28,7 +28,7 @@ public class TeleopMethods {
 
     public void driveTrain() {
         // switches drive state from tank to acrade drive
-        if (Robot.leftJoystick.getRawButtonPressed(5)) {
+        if (Robot.leftJoystick.getRawButtonPressed(11)) {
             driveState++;
             if (driveState > 1) {
                 driveState = 0;
@@ -73,11 +73,10 @@ public class TeleopMethods {
     public void shooting(ActionQueue teleopActions) {
         if (Robot.xboxcontroller.getAButtonPressed() && Robot.limelight.isTargetSpotted()) {
             teleopActions.addAction(new AimHorizontally());
-            teleopActions.addAction(new RangeFinding());
-            teleopActions.addAction(new AimHorizontally());
+            //teleopActions.addAction(new RangeFinding());
             teleopActions.addAction(new AimVertically());
         }
-
+        //winning broskys
         if (Robot.xboxcontroller.getXButtonPressed()) {
             teleopActions.clear();
             teleopActions.addAction(new StartFlyWheel(2));
