@@ -13,7 +13,7 @@ public class AimVertically implements Actionable {
 	@Override
 	public void startAction() {
         SmartDashboard.putString("ActionName", "Aiming vertical");
-        distance = Robot.limelight.distanceIN();
+        distance = Robot.limelight.get_distance_in();
         wantedShieldHeight = (0.00089765*distance) -29.123;     //where formal goes
     }
     
@@ -21,7 +21,7 @@ public class AimVertically implements Actionable {
 
 	@Override
 	public void periodic() {
-        if (Robot.shield.getShieldDistance() > wantedShieldHeight){
+        if (Robot.shield.getShieldHeight() > wantedShieldHeight){
             Robot.shield.runShieldPower(0.2); 
 
         } else {
@@ -38,7 +38,7 @@ public class AimVertically implements Actionable {
 	@Override
 	public boolean isFinished() {
         if (Robot.limelight.isTargetSpotted()) {
-        return Math.abs(Robot.shield.getShieldDistance() - wantedShieldHeight) < 100;
+        return Math.abs(Robot.shield.getShieldHeight() - wantedShieldHeight) < 100;
         } else return true;
     }
 }

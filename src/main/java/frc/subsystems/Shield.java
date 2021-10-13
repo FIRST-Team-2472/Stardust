@@ -32,7 +32,7 @@ public class Shield {
         return (int)Shield.getSelectedSensorVelocity();
     }
 
-    public double getShieldDistance() {
+    public double getShieldHeight() {
         return Shield.getSelectedSensorPosition();
     }
 
