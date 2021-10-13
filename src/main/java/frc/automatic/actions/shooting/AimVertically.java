@@ -7,12 +7,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class AimVertically implements Actionable {
-    private int wantedShieldHeight = 0;
+    private double wantedShieldHeight = 0;
+    private double distance = 0;
 
 	@Override
 	public void startAction() {
-        SmartDashboard.putString("ActionName", "Aiming verticaly");
-		wantedShieldHeight = 0;     //where formal goes
+        SmartDashboard.putString("ActionName", "Aiming vertical");
+        distance = Robot.limelight.get_distance_in();
+        wantedShieldHeight = (0.00089765*distance) -29.123;     //where formal goes
     }
     
 	
@@ -20,10 +22,10 @@ public class AimVertically implements Actionable {
 	@Override
 	public void periodic() {
         if (Robot.shield.getShieldHeight() > wantedShieldHeight){
-            Robot.shield.runShieldPower(-0.2); 
+            Robot.shield.runShieldPower(0.2); 
 
         } else {
-            Robot.shield.runShieldPower(0.2); 
+            Robot.shield.runShieldPower(-0.2); 
 
         }
 	}
