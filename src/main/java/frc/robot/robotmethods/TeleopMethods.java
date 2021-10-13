@@ -17,6 +17,8 @@ public class TeleopMethods {
     public void initialize(ActionQueue teleopActions) {
         Robot.turret.zeroTurret();
         Robot.drive.zeroCounters();
+        Robot.collector.pushoutfrontwheel();
+        Robot.compressor.setClosedLoopControl(true);
         teleopActions.addAction(new SetShield());
         SmartDashboard.putString("RobotState", "TeleopEnabled");
         driveState = 0;
@@ -98,10 +100,10 @@ public class TeleopMethods {
 
         if (Robot.xboxcontroller.getPOV() == 0 || Robot.xboxcontroller.getPOV() == 45
                 || Robot.xboxcontroller.getPOV() == 315) {
-            Robot.shield.runShieldPower(.2);
+            Robot.shield.runShieldPower(.1);
         } else if (Robot.xboxcontroller.getPOV() == 180 || Robot.xboxcontroller.getPOV() == 135
                 || Robot.xboxcontroller.getPOV() == 225) {
-            Robot.shield.runShieldPower(-.2);
+            Robot.shield.runShieldPower(-.1);
         } else {
             Robot.shield.runShieldPower(0);
         }
