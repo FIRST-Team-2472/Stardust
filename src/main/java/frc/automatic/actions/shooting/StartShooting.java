@@ -2,7 +2,6 @@ package frc.automatic.actions.shooting;
 
 import frc.automatic.runners.Actionable;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class StartShooting implements Actionable {
 

@@ -3,6 +3,7 @@ package frc.robot.robotmethods;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.automatic.actions.extras.SetShield;
 import frc.automatic.actions.shooting.AimHorizontally;
+import frc.automatic.actions.shooting.AimVertically;
 import frc.automatic.actions.shooting.StartElevator;
 import frc.automatic.actions.shooting.StartFlyWheel;
 import frc.automatic.actions.shooting.StartShooting;
@@ -96,6 +97,7 @@ public class TeleopMethods {
         if(Robot.xboxcontroller.getAButtonPressed() && Robot.limelight.isTargetSpotted())
         {
             teleopActions.addAction(new AimHorizontally());
+            teleopActions.addAction(new AimVertically());
         }
 
         if (Robot.xboxcontroller.getPOV() == 0 || Robot.xboxcontroller.getPOV() == 45

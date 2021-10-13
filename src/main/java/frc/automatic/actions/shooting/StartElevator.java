@@ -2,7 +2,6 @@ package frc.automatic.actions.shooting;
 
 import frc.automatic.runners.TimerBase;
 import frc.robot.Robot;
-import frc.subsystems.Elevator;
 
 public class StartElevator extends TimerBase {
     
