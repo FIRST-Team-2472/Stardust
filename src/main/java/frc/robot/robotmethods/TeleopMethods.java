@@ -5,7 +5,6 @@ import frc.automatic.actions.extras.SetShield;
 import frc.automatic.actions.shooting.AimHorizontally;
 import frc.automatic.actions.shooting.AimVertically;
 import frc.automatic.actions.shooting.RangeFinding;
-import frc.automatic.actions.shooting.StartElevator;
 import frc.automatic.actions.shooting.StartFlyWheel;
 import frc.automatic.actions.shooting.StartShooting;
 import frc.automatic.runners.ActionQueue;
@@ -81,7 +80,7 @@ public class TeleopMethods {
 
         if (Robot.xboxcontroller.getXButtonPressed()) {
             teleopActions.clear();
-            teleopActions.addAction(new StartFlyWheel(1));
+            teleopActions.addAction(new StartFlyWheel(2));
             teleopActions.addAction(new StartShooting());
         }
 

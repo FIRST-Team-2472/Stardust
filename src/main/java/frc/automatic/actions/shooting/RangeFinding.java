@@ -17,10 +17,10 @@ public class RangeFinding implements Actionable {
 
     @Override
     public void periodic() {
-        if (currentDistance < 96) {
+        if (currentDistance < 180) {
             Robot.drive.tankDriveVelocity(0.3, 0.3);
         }
-        else if (currentDistance > 120) {
+        else if (currentDistance > 156) {
             Robot.drive.tankDriveVelocity(-0.3, -0.3);
         }
     }
@@ -32,7 +32,7 @@ public class RangeFinding implements Actionable {
 
     @Override
     public boolean isFinished() {
-    if (currentDistance < 120 && currentDistance > 96 && Robot.limelight.isTargetSpotted() == true)
+    if (currentDistance < 180 && currentDistance > 156 && Robot.limelight.isTargetSpotted() == true)
         return true;
     else 
         return false;
