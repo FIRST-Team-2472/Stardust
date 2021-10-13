@@ -12,8 +12,6 @@ public class SmartDashBoard {
         SmartDashboard.putNumber("Left Joystick value", Robot.leftJoystick.getY());
         SmartDashboard.putNumber("Left Speed:", Robot.drive.getLeftSpeed());
         SmartDashboard.putNumber("Right Speed:", Robot.drive.getRightSpeed());
-        // SMART Dashboard perfs
-        GetPrefs();
         // Distance SmartDashboard stuff
         SmartDashboard.putNumber("RightDistance", Robot.drive.getRightDistance());
         SmartDashboard.putNumber("LeftDistance", Robot.drive.getLeftDistance());
@@ -35,23 +33,14 @@ public class SmartDashBoard {
         SmartDashboard.putNumber("PSI", (Robot.pressure.getAverageValue() - 400) * (70.0 / 1250.0));
 
         SmartDashboard.putNumber("Angle", Robot.drive.getCurrentAngle());
-        // PID
-        SmartDashboard.putNumber("KP", 0.005);
-        SmartDashboard.putNumber("KI", 0);
-        SmartDashboard.putNumber("KD", 0.05);
-        SmartDashboard.putNumber("KF", .164);
+
         // Limelight stuff
         SmartDashboard.putNumber("x degrees off", Robot.limelight.targetXAngleFromCenter());
         SmartDashboard.putBoolean("Aimed", Math.abs(Robot.limelight.targetXAngleFromCenter()) < 1.5);
         SmartDashboard.putBoolean("seeing target?", Robot.limelight.isTargetSpotted());
-        SmartDashboard.putNumber("y degrees off", Robot.limelight.targetYAngleFromCenter());
-        SmartDashboard.putNumber("DistanceFromFiring", Robot.limelight.distanceIN());
-        
-        SmartDashboard.putNumber("Shield Height", Robot.shield.getShieldDistance());
-    
-        SmartDashboard.putBoolean("Shield LimitSwitch", Robot.shield.getLimitSwitchOn());
-        SmartDashboard.putBoolean("Xbutton", Robot.xboxcontroller.getXButton());
-
+        SmartDashboard.putNumber("DistanceFromFiring", Robot.limelight.get_distance_in());
+        SmartDashboard.putBoolean("In Firing Range?", Robot.limelight.is_target_in_shooting_range());
+        SmartDashboard.putNumber("Shield Height", Robot.shield.getShieldHeight());
     }
 
     public void GetPrefs() {

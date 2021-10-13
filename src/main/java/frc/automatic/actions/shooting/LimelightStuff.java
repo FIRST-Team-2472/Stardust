@@ -7,9 +7,9 @@ import frc.robot.Robot;
 //WARNING: THIS IS WES JUST MESSING WITH LIMELIGHT CODE. DO NOT TAKE THIS SERIOUSLY UNLESS IT SOMEHOW WORKS.
 public class LimelightStuff implements Actionable {
 
-    private double currentDistance = Robot.limelight.distanceIN();
-    private double distanceErrorForward = 96-Robot.limelight.distanceIN();
-    private double distanceErrorBackward = 120+Robot.limelight.distanceIN();
+    private double currentDistance = Robot.limelight.get_distance_in();
+    private double distanceErrorForward = 96-Robot.limelight.get_distance_in();
+    private double distanceErrorBackward = 120+Robot.limelight.get_distance_in();
     private double KpAim = -0.1;
 
     @Override

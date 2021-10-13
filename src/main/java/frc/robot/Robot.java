@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() { //runs constantly no matter what state the robot is in
     drive.DoPigeon();
-    limelight.distanceIN();
+    limelight.get_distance_in();
     //limelight.setLedMode(Limelight.LED_FORCE_BLINK);
 
     //limelight.setLedMode(Limelight.LED_FORCE_ON);

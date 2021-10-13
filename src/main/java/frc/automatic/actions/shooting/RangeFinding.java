@@ -6,7 +6,7 @@ import frc.robot.Robot;
 
 public class RangeFinding implements Actionable {
 
-    private double currentDistance = Robot.limelight.distanceIN();
+    private double currentDistance = Robot.limelight.get_distance_in();
     //private double distanceErrorForward = 96-Robot.limelight.distanceIN();
     //private double distanceErrorBackward = 120+Robot.limelight.distanceIN();
 

@@ -96,17 +96,21 @@ public class Limelight {
         limelight.getEntry("pipeLine").setNumber(snapshotMode);
     }
 
-    public double distanceIN() {
+    public double get_distance_in() {
         double targetAngle = targetYAngleFromCenter();
         double cameraHeight = 28;
         double targetHeight = 98;
         double cameraAngle = 1;
         double d = (targetHeight-cameraHeight) / (Math.tan(Math.toRadians(cameraAngle+targetAngle)));
-        //d = (h2-h1) / tan(a1+a2)
+        //The equation: d = (h2-h1) / tan(a1+a2)
         return d;
-        //targetHeight = 98
+    }
 
-    
+    public boolean is_target_in_shooting_range() {
+        //TODO fix placeholdoer values
+        int lower_range = 150;
+        int upper_range = 200;
+        return get_distance_in() > lower_range && get_distance_in() < upper_range;
     }
     /*
     public double tangent() {

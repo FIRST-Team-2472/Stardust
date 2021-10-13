@@ -14,12 +14,12 @@ public class ShieldAim implements Actionable{
     @Override
 	public void startAction() {
         SmartDashboard.putString("ActionName", "Sheild Aim");
-        distance = Robot.limelight.distanceIN(); //+ regression model
+        distance = Robot.limelight.get_distance_in(); //+ regression model
     }
 
 	@Override
 	public void periodic() {
-        speed = distance - ((distance-Robot.shield.getShieldDistance())*kP);
+        speed = distance - ((distance-Robot.shield.getShieldHeight())*kP);
         Robot.shield.runShieldPower(speed);
 	}
 
@@ -30,7 +30,7 @@ public class ShieldAim implements Actionable{
 
 	@Override
 	public boolean isFinished() {
-        if (Robot.shield.getShieldDistance() < distance) return true;
+        if (Robot.shield.getShieldHeight() < distance) return true;
         else return false;
     }
 }

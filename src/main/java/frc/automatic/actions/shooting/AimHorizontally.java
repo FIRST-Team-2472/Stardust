@@ -9,17 +9,18 @@ public class AimHorizontally implements Actionable {
 
 	@Override
 	public void startAction() {
-		SmartDashboard.putString("ActionName", "Aiming");
+		SmartDashboard.putString("ActionName", "Aiming Horizontally");
 	}
 	
-	private static final double kP = -.027;
-	private double TurretSpeed = 0;
+	private double TurretSpeed = .2;
 
 	@Override
 	public void periodic() {
-		if (Robot.limelight.isTargetSpotted()) {
-			TurretSpeed = Robot.limelight.targetXAngleFromCenter() * kP; 
-			Robot.turret.runTurret (TurretSpeed);
+		if (Robot.limelight.targetXAngleFromCenter() > 0) {
+			Robot.turret.runTurret(-TurretSpeed);
+		}
+		else if (Robot.limelight.targetXAngleFromCenter() < 0) {
+			Robot.turret.runTurret(TurretSpeed);
 		}
 	}
 
