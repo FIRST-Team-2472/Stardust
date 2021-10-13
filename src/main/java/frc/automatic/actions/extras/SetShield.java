@@ -1,9 +1,7 @@
 package frc.automatic.actions.extras;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.automatic.runners.ActionQueue;
 import frc.automatic.runners.Actionable;
-import frc.automatic.runners.TimerBase;
 import frc.robot.Robot;
 
 public class SetShield implements Actionable {
