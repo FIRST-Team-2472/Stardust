@@ -31,7 +31,7 @@ public class AimHorizontally implements Actionable {
 
 	@Override
 	public boolean isFinished() {
-		if (Robot.limelight.isTargetSpotted()) return Math.abs(Robot.limelight.targetXAngleFromCenter()) < 0.5;
+		if (Robot.limelight.isTargetSpotted()) return Math.abs(Robot.limelight.targetXAngleFromCenter()) < 2;
 		else return true;
     }
 }

@@ -21,22 +21,14 @@ public class ActionLists {
         actions.addAction(new DumpBalls(3));
       }
     
-      public void seekTheFleshMeat(ActionQueue actions) {
-        actions.addAction(new TurnRobot(180));
-        actions.addAction(new Wait(5));
-        actions.addAction(new Seek());
-        actions.addAction(new Wait(5));
-        actions.addAction(new AimHorizontally());
-        actions.addAction(new Wait(5));
-      }
-
       public void Aim(ActionQueue actions) {
+        actions.addAction(new Wait(0.1));
         actions.addAction(new AimHorizontally());
         actions.addAction(new AimVertically());
       }
     
       public void FIRE_telop(ActionQueue actions) {
-        actions.addAction(new StartFlyWheel(1.5));
+        actions.addAction(new StartFlyWheel(2));
         actions.addAction(new Shoot());
       }
 
@@ -67,5 +59,13 @@ public class ActionLists {
         SmartDashboard.putNumber("Random Left Motor Speed", leftMotorSpeed);
         SmartDashboard.putNumber("Random Right Motor Speed", rightMotorSpeed);
         SmartDashboard.putNumber("Set Heading", angle);
+      }
+
+      public void newAtonomose (ActionQueue actions) {
+        actions.addAction(new DriveStraightIMU(0, 10));
+        actions.addAction(new TurnRobot(180));
+        Aim(actions);
+        FIRE_auto(actions);
+
       }
 }
