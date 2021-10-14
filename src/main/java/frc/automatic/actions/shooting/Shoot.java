@@ -3,9 +3,9 @@ package frc.automatic.actions.shooting;
 import frc.automatic.runners.Actionable;
 import frc.robot.Robot;
 
-public class StartShooting implements Actionable {
+public class Shoot implements Actionable {
 
-    public StartShooting() {
+    public Shoot() {
     }
 
     @Override

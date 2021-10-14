@@ -29,13 +29,20 @@ public class ActionLists {
         actions.addAction(new AimHorizontally());
         actions.addAction(new Wait(5));
       }
-    
-      public void FIRE(ActionQueue actions) {
+
+      public void Aim(ActionQueue actions) {
         actions.addAction(new AimHorizontally());
-        actions.addAction(new RangeFinding());
-        //actions.addAction(new ShieldAim());
+        actions.addAction(new AimVertically());
+      }
+    
+      public void FIRE_telop(ActionQueue actions) {
         actions.addAction(new StartFlyWheel(1.5));
-        //actions.addAction(new Shooting(5));
+        actions.addAction(new Shoot());
+      }
+
+      public void FIRE_auto(ActionQueue actions) {
+        actions.addAction(new StartFlyWheel(1.5));
+        actions.addAction(new Shoot_Auto(3));
       }
 
       public void randomTurnRight (ActionQueue actions, int angle) {
@@ -61,11 +68,4 @@ public class ActionLists {
         SmartDashboard.putNumber("Random Right Motor Speed", rightMotorSpeed);
         SmartDashboard.putNumber("Set Heading", angle);
       }
-
-
-
-
-    
-
-
 }

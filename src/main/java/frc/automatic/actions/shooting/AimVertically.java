@@ -3,20 +3,19 @@ package frc.automatic.actions.shooting;
 
 import frc.automatic.runners.Actionable;
 import frc.robot.Robot;
-import frc.robot.random.SmartDashBoard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class AimVertically implements Actionable {
     private double wantedShieldHeight = 0;
-    private double distance = Robot.limelight.get_distance_in();
+    private double distance = 0;
 
 	@Override
 	public void startAction() {
         SmartDashboard.putString("ActionName", "Aiming vertical");
         distance = Robot.limelight.get_distance_in();
-        //wantedShieldHeight = ((0.00089765)*(Robot.limelight.get_distance_in())) - 29.123;     //where formal goes
-        wantedShieldHeight = 1100 * (Robot.limelight.get_distance_in() - 160) + 210000;
+        //wantedShieldHeight = 1100 * (distance - 160) + 210000;
+        wantedShieldHeight = 1005.7 * distance + 50749.7;
         SmartDashboard.putNumber("Wanted Shield Height", wantedShieldHeight);
     }
     

@@ -71,11 +71,13 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     SmartDashboard.putString("RobotState", "Autonomous");
+
     Robot.collector.pushoutfrontwheel();
     drive.zeroCounters();
     drive.zeroIMU();
     turret.zeroTurret();
-    autoActions.clear();
+
+    
   }
 
   @Override

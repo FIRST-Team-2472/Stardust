@@ -1,12 +1,6 @@
 package frc.robot.robotmethods;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.automatic.actions.extras.SetShield;
-import frc.automatic.actions.shooting.AimHorizontally;
-import frc.automatic.actions.shooting.AimVertically;
-import frc.automatic.actions.shooting.RangeFinding;
-import frc.automatic.actions.shooting.StartFlyWheel;
-import frc.automatic.actions.shooting.StartShooting;
 import frc.automatic.runners.ActionQueue;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -20,8 +14,9 @@ public class TeleopMethods {
         Robot.drive.zeroCounters();
         Robot.collector.pushoutfrontwheel();
         Robot.compressor.setClosedLoopControl(true);
-        teleopActions.addAction(new SetShield());
+
         SmartDashboard.putString("RobotState", "TeleopEnabled");
+
         driveState = 0;
         cooldown = 0;
     }
@@ -71,28 +66,14 @@ public class TeleopMethods {
     }
 
     public void shooting(ActionQueue teleopActions) {
-        if (Robot.xboxcontroller.getAButtonPressed() && Robot.limelight.isTargetSpotted()) {
-            teleopActions.addAction(new AimHorizontally());
-            //teleopActions.addAction(new RangeFinding());
-            teleopActions.addAction(new AimVertically());
-        }
-        //winning broskys
-        if (Robot.xboxcontroller.getXButtonPressed()) {
-            teleopActions.clear();
-            teleopActions.addAction(new StartFlyWheel(2));
-            teleopActions.addAction(new StartShooting());
-        }
+        if (Robot.xboxcontroller.getAButtonPressed() && Robot.limelight.isTargetSpotted()) Robot.actionList.Aim(teleopActions);
 
-        if (Robot.xboxcontroller.getBButtonPressed()) {
-            teleopActions.abort();
-        } 
+        if (Robot.xboxcontroller.getXButtonPressed()) Robot.actionList.FIRE_telop(teleopActions);
+
+        if (Robot.xboxcontroller.getBButtonPressed()) teleopActions.abort();
     }
 
     public void manualFire(ActionQueue teleopActions) {
-        // runs top elvator
-        
-
-
         if (Robot.xboxcontroller.getPOV() == 0 || Robot.xboxcontroller.getPOV() == 45
                 || Robot.xboxcontroller.getPOV() == 315) {
             Robot.shield.runShieldPower(.1);
