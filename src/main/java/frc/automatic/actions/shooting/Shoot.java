@@ -10,13 +10,12 @@ public class Shoot implements Actionable {
 
     @Override
     public void startAction() {
-        Robot.collector.runConveyorPower(-0.5);
         Robot.elevator.runElevatorPower(0.5);
     }
 
     @Override
     public void periodic() {
-
+        Robot.collector.runConveyorPower(-0.5);    
     }
 
     @Override

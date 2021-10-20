@@ -62,8 +62,8 @@ public class ActionLists {
       }
 
       public void newAtonomose (ActionQueue actions) {
-        actions.addAction(new DriveStraightIMU(0, 10));
-        actions.addAction(new TurnRobot(180));
+        actions.addAction(new DriveStraightTime(.5,.7));
+        actions.addAction(new DriveStraightTime(-.5, 1.4));
         Aim(actions);
         FIRE_auto(actions);
 

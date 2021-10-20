@@ -11,6 +11,7 @@ public class Shoot_Auto extends TimerBase{
 
     @Override
     public void startAction() {
+        super.startAction();
         Robot.collector.runConveyorPower(-0.5);
         Robot.elevator.runElevatorPower(0.5);
     }

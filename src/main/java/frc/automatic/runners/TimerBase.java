@@ -6,8 +6,8 @@ public abstract class TimerBase implements Actionable{
 	private final double lifetime;
 	
 
-	public TimerBase (double lifetime) {
-		this.lifetime = lifetime;
+	public TimerBase (double getLifetime) {
+		lifetime = getLifetime;
 	}
 	
 	@Override

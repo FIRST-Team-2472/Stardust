@@ -12,12 +12,13 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 
 public class ActionQueue {
 	
-	private final Queue<Actionable> steps;
+	private Queue<Actionable> steps;
 	
-	boolean done = true;
+	boolean inProgress = true;
 	
 	public ActionQueue() {
 		steps = new ArrayDeque<Actionable>();
@@ -32,19 +33,24 @@ public class ActionQueue {
 	public void addAction(Actionable action) {
 		steps.add(action);
 	}
-
-	public void abort() {
-		try { steps.element().endAction();} catch (NoSuchElementException e) {};
+	
+	public void abortShooter() {
+		try 
+		{
+			steps.element().endAction();
+			Robot.shooter.runFlyWheelPower(0);
+			Robot.elevator.runElevatorPower(0);
+		} catch (NoSuchElementException e) {};
 		clear();
 	}
-	
 	
 	public boolean step() {
 		try {
 			Actionable action = steps.element();
 			
 			action.periodic();
-						
+
+			inProgress = true;	
 			
 			if (action.isFinished()) {
                 System.out.println("next action");
@@ -61,12 +67,15 @@ public class ActionQueue {
 			return false;
 			
 		} catch (NoSuchElementException e) {
-			if (done) {
 				System.out.println("Nothing in queue I am done");
 				SmartDashboard.putString("ActionName", "Action Queue Done");
-				done=false;
-			}
+				inProgress = false;
+				clear();
 			return true;
 		}
+	}
+
+	public boolean isInProgress() {
+		return inProgress;
 	}
 }
