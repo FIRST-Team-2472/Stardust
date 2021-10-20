@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import frc.automatic.actions.extras.SetShield;
-import frc.automatic.actions.extras.Wait;
 import frc.automatic.runners.ActionQueue;
 import frc.robot.random.*;
 import frc.robot.robotmethods.*;
@@ -79,6 +78,7 @@ public class Robot extends TimedRobot {
     drive.zeroIMU();
     turret.zeroTurret();
     autoActions.addAction(new SetShield());
+    actionList.newAtonomose(autoActions);
 
 
   }
@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
 
     teleopMethods.runTurret();
 
-    teleopMethods.runCollector();
+    teleopMethods.runCollector(teleopActions);
 
     teleopMethods.moveFrontWheels();
 

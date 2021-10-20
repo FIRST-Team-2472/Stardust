@@ -40,7 +40,7 @@ public class AimVertically implements Actionable {
 	@Override
 	public boolean isFinished() {
         if (Robot.limelight.isTargetSpotted()) {
-        return Math.abs(Robot.shield.getShieldHeight() - wantedShieldHeight) < 1000;
+        return Math.abs(Robot.shield.getShieldHeight() - wantedShieldHeight) < 2000;
         } else return true;
     }
 }

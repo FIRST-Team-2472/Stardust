@@ -1,25 +1,19 @@
 package frc.robot.robotmethods;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.automatic.actions.extras.SetShield;
-import frc.automatic.actions.extras.Wait;
-import frc.automatic.actions.shooting.Shoot;
-import frc.automatic.actions.shooting.StartFlyWheel;
 import frc.automatic.runners.ActionQueue;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
 
 public class TeleopMethods {
     int driveState, cooldown;
-    boolean teleopShooting;
 
     public void initialize(ActionQueue teleopActions) {
         Robot.turret.zeroTurret();
         Robot.drive.zeroCounters();
         Robot.collector.pushoutfrontwheel();
         Robot.compressor.setClosedLoopControl(true);
-        teleopActions.addAction(new SetShield());
-
+        //teleopActions.addAction(new SetShield());
         SmartDashboard.putString("RobotState", "TeleopEnabled");
 
         driveState = 0;
@@ -27,7 +21,11 @@ public class TeleopMethods {
     }
 
     public void driveTrain() {
+        Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
+        SmartDashboard.putString("Drive State", "Arcade");
+
         // switches drive state from tank to acrade drive
+        /*
         if (Robot.leftJoystick.getRawButtonPressed(11)) {
             driveState++;
             if (driveState > 1) {
@@ -45,6 +43,7 @@ public class TeleopMethods {
             Robot.drive.tankDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.rightJoystick.getY() * -.5);
             SmartDashboard.putString("Drive State", "Tonk ;)");
         }
+        */
     }
 
     public void runTurret() {
@@ -57,30 +56,27 @@ public class TeleopMethods {
             Robot.turret.runTurret(0);
     }
 
-    public void runCollector() {
-        if (Math.abs(Robot.xboxcontroller.getRawAxis(1)) > Math.abs(Robot.xboxcontroller.getRawAxis(5))) {
-            // runs the intake for the lower elvator and collector wheels
-            Robot.collector.runConveyorPower(.3 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
-            Robot.collector.runFrontWheels(.5 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
-        } else {
-            // runs the outtake for the lower elvator and collector wheels
-            Robot.collector.runConveyorPower(.3 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
-            Robot.collector.runFrontWheels(.5 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
+    public void runCollector(ActionQueue teleopActions) {
+        if (!teleopActions.isInProgress()) {
+        //if (Robot.xboxcontroller.getRawAxis(1) > .1 || Robot.xboxcontroller.getRawAxis(1) < -.1 || Robot.xboxcontroller.getRawAxis(5) > .1 || Robot.xboxcontroller.getRawAxis(5) < -.1)
+            if (Math.abs(Robot.xboxcontroller.getRawAxis(1)) > Math.abs(Robot.xboxcontroller.getRawAxis(5))) {
+                // runs the intake for the lower elvator and collector wheels
+                Robot.collector.runConveyorPower(.3 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
+                Robot.collector.runFrontWheels(.5 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
+            } else {
+                // runs the outtake for the lower elvator and collector wheels
+                Robot.collector.runConveyorPower(.3 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
+                Robot.collector.runFrontWheels(.5 * Math.abs(Robot.xboxcontroller.getRawAxis(5)));
+            }
         }
-
     }
 
     public void shooting(ActionQueue teleopActions) {
         if (Robot.xboxcontroller.getAButtonPressed() && Robot.limelight.isTargetSpotted()) Robot.actionList.Aim(teleopActions);
 
-        if (Robot.xboxcontroller.getXButtonPressed()) //Robot.actionList.FIRE_telop(teleopActions);
-        {
-            teleopActions.addAction(new Wait(1));
-            teleopActions.addAction(new StartFlyWheel(2));
-            teleopActions.addAction(new Shoot());
-        }
+        if (Robot.xboxcontroller.getXButtonPressed()) Robot.actionList.FIRE_telop(teleopActions);
 
-        if (Robot.xboxcontroller.getBButtonPressed()) teleopActions.clear();
+        if (Robot.xboxcontroller.getBButtonPressed()) teleopActions.abortShooter();
     }
 
     public void manualFire(ActionQueue teleopActions) {
@@ -98,6 +94,8 @@ public class TeleopMethods {
     public void moveFrontWheels() {
         // pushes out pistons to collect balls
         if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight)) Robot.collector.pushoutfrontwheel();
+        if (Robot.leftJoystick.getRawButtonPressed(11)) Robot.collector.pushinfrontwheel();
+
     }
 
     public void runClimber() {
