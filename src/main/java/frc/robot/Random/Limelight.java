@@ -100,15 +100,14 @@ public class Limelight {
         double targetAngle = targetYAngleFromCenter();
         double cameraHeight = 28;
         double targetHeight = 98;
-        double cameraAngle = 1;
+        double cameraAngle = 10;
         double d = (targetHeight-cameraHeight) / (Math.tan(Math.toRadians(cameraAngle+targetAngle)));
         //The equation: d = (h2-h1) / tan(a1+a2)
         return d;
     }
 
     public boolean is_target_in_shooting_range() {
-        //TODO fix placeholdoer values
-        int lower_range = 180;
+        int lower_range = 130; // FT
         return get_distance_in() > lower_range;
     }
     /*
