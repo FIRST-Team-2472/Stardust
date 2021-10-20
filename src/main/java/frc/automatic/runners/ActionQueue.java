@@ -64,7 +64,7 @@ public class ActionQueue {
 			if (done) {
 				System.out.println("Nothing in queue I am done");
 				SmartDashboard.putString("ActionName", "Action Queue Done");
-				done=false;
+				clear();
 			}
 			return true;
 		}

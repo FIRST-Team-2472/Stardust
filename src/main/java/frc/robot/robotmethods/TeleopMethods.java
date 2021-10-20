@@ -70,7 +70,7 @@ public class TeleopMethods {
 
         if (Robot.xboxcontroller.getXButtonPressed()) Robot.actionList.FIRE_telop(teleopActions);
 
-        if (Robot.xboxcontroller.getBButtonPressed()) teleopActions.abort();
+        if (Robot.xboxcontroller.getBButtonPressed()) teleopActions.clear();
     }
 
     public void manualFire(ActionQueue teleopActions) {
