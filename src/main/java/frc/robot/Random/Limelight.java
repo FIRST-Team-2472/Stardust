@@ -72,13 +72,14 @@ public class Limelight {
     public double limelightPipeline() {
         return limelight.getEntry("getpipe").getDouble(-1);
     }
+    
     public void setLedMode(int mode) {
         // This assert will never fail unless the api changes
-        assert limelight.getEntry("ledMode").setNumber(mode);
+        limelight.getEntry("ledMode").setNumber(mode);
     }
 
     public void setDriverCamMode(boolean yes) {
-        assert limelight.getEntry("ledMode").setNumber(yes ? 1 : 0 );
+        limelight.getEntry("ledMode").setNumber(yes ? 1 : 0 );
         // ?: operater means if yes is true assign the value of 1 to result otherwise use value of 2
     }
 
@@ -88,7 +89,7 @@ public class Limelight {
 
     public void setStream(int streamMode) {
         // This assert will never fail unless the api changes
-        assert limelight.getEntry("stream").setNumber(streamMode);
+        limelight.getEntry("stream").setNumber(streamMode);
     }
 
 
@@ -110,11 +111,4 @@ public class Limelight {
         int lower_range = 130; // FT
         return get_distance_in() > lower_range;
     }
-    /*
-    public double tangent() {
-        double targetAngle = targetYAngleFromCenter();
-        double cameraAngle = 1;
-        double t = (Math.tan(Math.toRadians(cameraAngle+targetAngle)));
-        return t;
-    } */
 }

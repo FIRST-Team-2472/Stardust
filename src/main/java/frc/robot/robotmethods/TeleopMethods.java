@@ -6,44 +6,20 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
 
 public class TeleopMethods {
-    int driveState, cooldown;
 
     public void initialize(ActionQueue teleopActions) {
-        Robot.turret.zeroTurret();
+        //Robot.turret.zeroTurret();
         Robot.drive.zeroCounters();
         Robot.collector.pushoutfrontwheel();
         Robot.compressor.setClosedLoopControl(true);
+        Robot.limelight.setDriverCamMode(true);
         //teleopActions.addAction(new SetShield());
         SmartDashboard.putString("RobotState", "TeleopEnabled");
-
-        driveState = 0;
-        cooldown = 0;
     }
 
     public void driveTrain() {
         Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
         SmartDashboard.putString("Drive State", "Arcade");
-
-        // switches drive state from tank to acrade drive
-        /*
-        if (Robot.leftJoystick.getRawButtonPressed(11)) {
-            driveState++;
-            if (driveState > 1) {
-                driveState = 0;
-            }
-        }
-
-        if (driveState == 0) {
-            // runs arcade drive
-            Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
-            SmartDashboard.putString("Drive State", "Arcade");
-        }
-        else if (driveState == 1) {
-            // runs tank drive
-            Robot.drive.tankDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.rightJoystick.getY() * -.5);
-            SmartDashboard.putString("Drive State", "Tonk ;)");
-        }
-        */
     }
 
     public void runTurret() {
