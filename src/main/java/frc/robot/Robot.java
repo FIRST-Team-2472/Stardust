@@ -60,7 +60,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() { //runs constantly no matter what state the robot is in
     drive.DoPigeon();
-    limelight.get_distance_in();
     smartDashBoard.update();
   }
 
