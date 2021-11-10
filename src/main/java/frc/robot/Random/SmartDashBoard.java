@@ -10,10 +10,6 @@ public class SmartDashBoard {
     
     public void update() {
         
-        // Robot state SmartDashboard stuff
-        SmartDashboard.putString("RobotState", "TeleopEnabled");
-        SmartDashboard.putString("RobotState", "Robot On");
-        
         // Pressure and solenoid SmartDashboard stuff
         // SmartDashboard.putNumber("Raw Pressure", pressure.getValue());
         SmartDashboard.putNumber("Raw Pressure", Robot.pressure.getAverageValue());
@@ -30,7 +26,7 @@ public class SmartDashBoard {
         SmartDashboard.putNumber("Shield Height", Robot.shield.getShieldHeight());
     }
 
-    public void smartdashboardTest{
+    public void smartdashboardTest() {
         SmartDashboard.putNumber("Left Joystick value", Robot.leftJoystick.getY());
         SmartDashboard.putNumber("Left Speed:", Robot.drive.getLeftSpeed());
         SmartDashboard.putNumber("Right Speed:", Robot.drive.getRightSpeed());

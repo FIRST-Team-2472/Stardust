@@ -246,11 +246,11 @@ public class Drive {
 
         boolean angleIsGood = (pigeon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
 
-    double currentAngularRate = xyz_dps[2];
+        double currentAngularRate = xyz_dps[2];
     
-    SmartDashboard.putBoolean("Pigeon Is Working?", angleIsGood);
-    SmartDashboard.putNumber("Angle", yaw);
-    SmartDashboard.putNumber("Rate", currentAngularRate);
+        SmartDashboard.putBoolean("Pigeon Is Working?", angleIsGood);
+        SmartDashboard.putNumber("Angle", yaw);
+        SmartDashboard.putNumber("Rate", currentAngularRate);
 
     }
 
