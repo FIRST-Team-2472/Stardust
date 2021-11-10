@@ -69,7 +69,7 @@ public class Collector {
     /**
      * Pushes the front wheels back inside the frame permitor for fun
      */
-    public void pushofffrontwheel() {
+    public void turnOffFrontWheel() {
         frontWheelPush.set(Value.kOff);
     }
 

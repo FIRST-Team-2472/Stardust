@@ -91,7 +91,7 @@ public class TestMethods {
         SmartDashboard.putString("PistonTest", "runFrontPistonBackward");
       }
       if (!Robot.xboxcontroller.getXButton() && !Robot.xboxcontroller.getYButton()) {
-        Robot.collector.pushofffrontwheel();
+        Robot.collector.turnOffFrontWheel();
       }
     // Test case for tank drive.
     }

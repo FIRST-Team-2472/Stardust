@@ -23,7 +23,7 @@ public class PushFrontWheels extends TimerBase {
 
     @Override
     public void endAction() {
-        Robot.collector.pushofffrontwheel();
+        Robot.collector.turnOffFrontWheel();
     }
 
     //TODO May not work
