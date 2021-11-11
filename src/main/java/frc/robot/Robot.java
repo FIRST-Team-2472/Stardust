@@ -52,15 +52,12 @@ public class Robot extends TimedRobot {
   public void robotInit() { //runs when the robot first starts up
     pigeon.setFusedHeading(0.0, 30);
     SmartDashboard.putString("RobotState", "Robot On");
-    collector.pushinfrontwheel();
     compressor.setClosedLoopControl(true);
-    limelight.setDriverCamMode(true);
   }
 
   @Override
   public void robotPeriodic() { //runs constantly no matter what state the robot is in
     drive.DoPigeon();
-    limelight.get_distance_in();
     smartDashBoard.update();
   }
 
@@ -69,8 +66,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     SmartDashboard.putString("RobotState", "Autonomous");
-
-    Robot.collector.pushoutfrontwheel();
+    collector.pushoutfrontwheel();
     drive.zeroCounters();
     drive.zeroIMU();
     turret.zeroTurret();

@@ -7,45 +7,30 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
 
 public class TeleopMethods {
-    int driveState, cooldown;
 
     public void initialize(ActionQueue teleopActions) {
-        Robot.turret.zeroTurret();
+        //zeros encoders
         Robot.drive.zeroCounters();
+
+        //pushes out the front pistons
         Robot.collector.pushoutfrontwheel();
+
+        //turns on the compresser
         Robot.compressor.setClosedLoopControl(true);
+
+        //turns off the limelight leds (theoreticly)
+        Robot.limelight.setDriverCamMode(true);
+
+        //moves the shield down to zero its encoder. In compition it is done in autnomous
         //teleopActions.addAction(new SetShield());
         Robot.limelight.setDriverCamMode(true);
         SmartDashboard.putString("RobotState", "TeleopEnabled");
-
-        driveState = 0;
-        cooldown = 0;
     }
 
     public void driveTrain() {
+        //sets the robot to drive with the left joystick based on their
         Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
         SmartDashboard.putString("Drive State", "Arcade");
-
-        // switches drive state from tank to acrade drive
-        /*
-        if (Robot.leftJoystick.getRawButtonPressed(11)) {
-            driveState++;
-            if (driveState > 1) {
-                driveState = 0;
-            }
-        }
-
-        if (driveState == 0) {
-            // runs arcade drive
-            Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
-            SmartDashboard.putString("Drive State", "Arcade");
-        }
-        else if (driveState == 1) {
-            // runs tank drive
-            Robot.drive.tankDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.rightJoystick.getY() * -.5);
-            SmartDashboard.putString("Drive State", "Tonk ;)");
-        }
-        */
     }
 
     public void runTurret() {
@@ -60,7 +45,6 @@ public class TeleopMethods {
 
     public void runCollector(ActionQueue teleopActions) {
         if (!teleopActions.isInProgress()) {
-        //if (Robot.xboxcontroller.getRawAxis(1) > .1 || Robot.xboxcontroller.getRawAxis(1) < -.1 || Robot.xboxcontroller.getRawAxis(5) > .1 || Robot.xboxcontroller.getRawAxis(5) < -.1)
             if (Math.abs(Robot.xboxcontroller.getRawAxis(1)) > Math.abs(Robot.xboxcontroller.getRawAxis(5))) {
                 // runs the intake for the lower elvator and collector wheels
                 Robot.collector.runConveyorPower(.3 * -Math.abs(Robot.xboxcontroller.getRawAxis(1)));
@@ -74,16 +58,22 @@ public class TeleopMethods {
     }
 
     public void shooting(ActionQueue teleopActions) {
+        //starts the automatic process of aiming at the target
         if (Robot.xboxcontroller.getAButtonPressed() && Robot.limelight.isTargetSpotted()) {
             Robot.limelight.setDriverCamMode(false);
             Robot.actionList.Aim(teleopActions);
         }
+
+        //starts the automatic process of firing at the target
         if (Robot.xboxcontroller.getXButtonPressed()) Robot.actionList.FIRE_telop(teleopActions);
 
+        //cancels all actions in the actionqueue
         if (Robot.xboxcontroller.getBButtonPressed()) teleopActions.abortShooter();
     }
 
     public void manualFire(ActionQueue teleopActions) {
+        //automaticly runs the shield up and down
+        //probaldy souldn't ever use
         if (Robot.xboxcontroller.getPOV() == 0 || Robot.xboxcontroller.getPOV() == 45
                 || Robot.xboxcontroller.getPOV() == 315) {
             Robot.shield.runShieldPower(.1);
@@ -96,10 +86,11 @@ public class TeleopMethods {
     }
 
     public void moveFrontWheels() {
-        // pushes out pistons to collect balls
+        //pushes out pistons to collect balls
         if (Robot.xboxcontroller.getBumper(GenericHID.Hand.kRight)) Robot.collector.pushoutfrontwheel();
+        //pushes in the pistons
+        //only used at the end of competion NOT during
         if (Robot.leftJoystick.getRawButtonPressed(11)) Robot.collector.pushinfrontwheel();
-
     }
 
     public void runClimber() {
