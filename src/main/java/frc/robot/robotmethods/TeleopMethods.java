@@ -1,6 +1,7 @@
 package frc.robot.robotmethods;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.automatic.runners.ActionQueue;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -14,6 +15,7 @@ public class TeleopMethods {
         Robot.collector.pushoutfrontwheel();
         Robot.compressor.setClosedLoopControl(true);
         //teleopActions.addAction(new SetShield());
+        Robot.limelight.setDriverCamMode(true);
         SmartDashboard.putString("RobotState", "TeleopEnabled");
 
         driveState = 0;
@@ -72,8 +74,10 @@ public class TeleopMethods {
     }
 
     public void shooting(ActionQueue teleopActions) {
-        if (Robot.xboxcontroller.getAButtonPressed() && Robot.limelight.isTargetSpotted()) Robot.actionList.Aim(teleopActions);
-
+        if (Robot.xboxcontroller.getAButtonPressed() && Robot.limelight.isTargetSpotted()) {
+            Robot.limelight.setDriverCamMode(false);
+            Robot.actionList.Aim(teleopActions);
+        }
         if (Robot.xboxcontroller.getXButtonPressed()) Robot.actionList.FIRE_telop(teleopActions);
 
         if (Robot.xboxcontroller.getBButtonPressed()) teleopActions.abortShooter();

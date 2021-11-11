@@ -61,9 +61,6 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() { //runs constantly no matter what state the robot is in
     drive.DoPigeon();
     limelight.get_distance_in();
-    //limelight.setLedMode(Limelight.LED_FORCE_BLINK);
-
-    //limelight.setLedMode(Limelight.LED_FORCE_ON);
     smartDashBoard.update();
   }
 
@@ -95,7 +92,6 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     teleopActions.clear();
     SmartDashboard.putString("RobotState", "Tele Operated");
-    //limelight.setLedMode(Limelight.LED_FORCE_ON);
     teleopMethods.initialize(teleopActions);
   }
   
