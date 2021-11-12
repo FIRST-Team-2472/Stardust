@@ -1,9 +1,0 @@
-[
-  {
-    "artifact": "frcJava (in project Stardust)",
-    "target": "roborio",
-    "debugfile": "frcJava_roborio.debugconfig",
-    "project": "Stardust",
-    "language": "java"
-  }
-]
