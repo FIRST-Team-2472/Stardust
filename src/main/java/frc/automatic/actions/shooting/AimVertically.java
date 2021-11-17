@@ -35,6 +35,7 @@ public class AimVertically implements Actionable {
 	@Override
 	public void endAction() {
         Robot.shield.runShieldPower(0);
+        Robot.limelight.setDriverCamMode(true);
 	}
 
 	@Override

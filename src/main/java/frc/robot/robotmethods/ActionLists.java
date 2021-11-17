@@ -22,6 +22,7 @@ public class ActionLists {
       }
     
       public void Aim(ActionQueue actions) {
+        Robot.limelight.setDriverCamMode(false);
         actions.addAction(new Wait(0.1));
         actions.addAction(new AimHorizontally());
         actions.addAction(new AimVertically());

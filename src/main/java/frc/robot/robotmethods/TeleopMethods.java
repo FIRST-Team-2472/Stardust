@@ -23,7 +23,6 @@ public class TeleopMethods {
 
         //moves the shield down to zero its encoder. In compition it is done in autnomous
         //teleopActions.addAction(new SetShield());
-        Robot.limelight.setDriverCamMode(true);
         SmartDashboard.putString("RobotState", "TeleopEnabled");
     }
 
@@ -59,8 +58,7 @@ public class TeleopMethods {
 
     public void shooting(ActionQueue teleopActions) {
         //starts the automatic process of aiming at the target
-        if (Robot.xboxcontroller.getAButtonPressed() && Robot.limelight.isTargetSpotted()) {
-            Robot.limelight.setDriverCamMode(false);
+        if (Robot.xboxcontroller.getAButtonPressed()) {
             Robot.actionList.Aim(teleopActions);
         }
 
