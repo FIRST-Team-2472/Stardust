@@ -1,5 +1,6 @@
 package frc.robot.robotmethods;
 
+import frc.robot.Robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.automatic.actions.drivestraight.*;
 import frc.automatic.actions.extras.*;
@@ -13,7 +14,6 @@ public class ActionLists {
         actions.addAction(new ZeroEncoder());
         actions.addAction(new Wait(0.01));
         actions.addAction(new DriveStraightVelocity(distance));
-        actions.addAction(new Correction(distance));
       }
     
       public void loadBallsAuto(ActionQueue actions) {
