@@ -103,6 +103,7 @@ public class TestMethods {
         SmartDashboard.putNumber("Left Speed:", leftSpeed);
         SmartDashboard.putNumber("Right Speed:", rightSpeed);
     }
+
     public void shooterKF(int joystickButton) {
       if (Robot.rightJoystick.getRawButton(joystickButton)) {
         Robot.shooter.runFlyWheelPower(.75);
@@ -113,6 +114,7 @@ public class TestMethods {
         Robot.shooter.runFlyWheelPower(0);
       }
     }
+    
     public void drivetrainKF(int joystickButton) {
       if (Robot.rightJoystick.getRawButton(joystickButton)) {
         Robot.drive.runBackRightPower(.75);

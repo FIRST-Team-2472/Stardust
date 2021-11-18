@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
     pigeon.setFusedHeading(0.0, 30);
     SmartDashboard.putString("RobotState", "Robot On");
     compressor.setClosedLoopControl(true);
+    limelight.setDriverCamMode(true);
   }
 
   @Override
@@ -66,14 +67,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     SmartDashboard.putString("RobotState", "Autonomous");
+
     collector.pushoutfrontwheel();
     drive.zeroCounters();
     drive.zeroIMU();
     turret.zeroTurret();
+
     autoActions.addAction(new SetShield());
     actionList.newAtonomose(autoActions);
-
-
   }
 
   @Override
@@ -82,12 +83,11 @@ public class Robot extends TimedRobot {
   }
 
 
-
-
+  
   @Override
   public void teleopInit() {
     teleopActions.clear();
-    SmartDashboard.putString("RobotState", "Tele Operated");
+    SmartDashboard.putString("RobotState", "TeleOp");
     teleopMethods.initialize(teleopActions);
   }
   
@@ -109,6 +109,15 @@ public class Robot extends TimedRobot {
     teleopActions.step();
   }
 
+
+
+  @Override
+  public void disabledInit() {
+    limelight.setDriverCamMode(true);
+  }
+
+
+
   @Override
   public void testInit() {
     SmartDashboard.putString("RobotState", "Test");
@@ -119,12 +128,8 @@ public class Robot extends TimedRobot {
     int teststate = 0;
 
     if (rightJoystick.getRawButtonPressed(1)) {
-      while (rightJoystick.getRawButtonPressed(1)) {
-      }
       teststate += 1;
-      if (teststate > 4) {
-        teststate = 0;
-      }
+      if (teststate > 4) teststate = 0;
       System.out.println(teststate);
     }
 
@@ -154,4 +159,5 @@ public class Robot extends TimedRobot {
 
     testMethods.drivetrainKF(3);
   }
+
 }
