@@ -44,20 +44,28 @@ public class Robot extends TimedRobot {
   public static final TestMethods testMethods = new TestMethods();
   public static final TeleopMethods teleopMethods = new TeleopMethods();
 
+  private Timer limelightTimer = new Timer(5);
   private final ActionQueue autoActions = new ActionQueue();
   private final ActionQueue teleopActions = new ActionQueue();
+
 
 
   @Override
   public void robotInit() { //runs when the robot first starts up
     pigeon.setFusedHeading(0.0, 30);
     SmartDashboard.putString("RobotState", "Robot On");
+
     compressor.setClosedLoopControl(true);
     limelight.setDriverCamMode(true);
+    limelightTimer.reset();
   }
 
   @Override
   public void robotPeriodic() { //runs constantly no matter what state the robot is in
+    if (limelightTimer.isTimedOut()) {
+      limelight.setDriverCamMode(true);
+    }  
+
     drive.DoPigeon();
     smartDashBoard.update();
   }
@@ -83,7 +91,7 @@ public class Robot extends TimedRobot {
   }
 
 
-  
+
   @Override
   public void teleopInit() {
     teleopActions.clear();

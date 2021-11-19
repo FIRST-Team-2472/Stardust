@@ -3,9 +3,11 @@ package frc.robot;
 
 public class Timer {
     private long end;
+    private double countdown;
 
     public Timer(double seconds) {
-        end = System.currentTimeMillis() + (long)(1000 * seconds);
+        countdown = seconds;
+        end = System.currentTimeMillis() + (long)(1000 * countdown);
     }
 
     public boolean isTimedOut() {
@@ -20,7 +22,7 @@ public class Timer {
     }
 
     public void reset() {
-        end = end + System.currentTimeMillis();
+        end = System.currentTimeMillis() + (long)(1000 * countdown);
     }
 
     public void reset(double seconds) {
