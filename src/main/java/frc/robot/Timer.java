@@ -2,7 +2,7 @@ package frc.robot;
 // Needs imports
 
 public class Timer {
-    private final long end;
+    private long end;
 
     public Timer(double seconds) {
         end = System.currentTimeMillis() + (long)(1000 * seconds);
@@ -17,5 +17,13 @@ public class Timer {
             return false;
         }
         return it.isTimedOut();
+    }
+
+    public void reset() {
+        end = end + System.currentTimeMillis();
+    }
+
+    public void reset(double seconds) {
+        end = System.currentTimeMillis() + (long)(1000 * seconds);
     }
 }

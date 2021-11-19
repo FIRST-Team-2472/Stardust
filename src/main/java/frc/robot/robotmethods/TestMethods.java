@@ -3,9 +3,12 @@ package frc.robot.robotmethods;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.Timer;
     
 public class TestMethods {
   public double suggestKF = 0;
+  private Timer timer = new Timer(1);
+  private int switchMotor = 0;
 
     public void case0() {
       Robot.collector.runConveyorPower(-Robot.xboxcontroller.getY(Joystick.Hand.kLeft));
@@ -128,5 +131,64 @@ public class TestMethods {
       } else {
         Robot.drive.runBackRightPower(0);
       }
+    }
+
+    public void resetTimer() {
+      timer.reset();
+    }
+
+    public void runEachMotor()
+    {
+      if (timer.isTimedOut() && switchMotor <= 10) {
+        switchMotor++;
+        timer.reset();
+      }  
+      
+        switch (switchMotor) {
+          // Test case that has the xboxcontroller independently control each motor.
+          case 0:
+            Robot.drive.runBackLeftPower(.75);
+            break;
+          case 1:
+            Robot.drive.runBackLeftPower(0);
+            Robot.drive.runBackRightPower(.75);
+            break;
+          case 2:
+            Robot.drive.runBackRightPower(0);
+            Robot.drive.runFrontLeftPower(.75);
+            break;
+          case 3:
+            Robot.drive.runFrontLeftPower(0);
+            Robot.drive.runFrontRightPower(.75);
+            break;
+          case 4:
+            Robot.drive.runFrontRightPower(0);
+            Robot.collector.runFrontWheels(.3);
+            break;
+          case 5:
+            Robot.collector.runFrontWheels(0);
+            Robot.collector.runCollector(.4);
+            break;
+          case 6:
+            Robot.collector.runCollector(0);
+            Robot.elevator.runElevatorPower(.5);
+            break;
+          case 7:
+            Robot.elevator.runElevatorPower(0);
+            Robot.turret.runTurret(.3);
+            break;
+          case 8:
+            Robot.turret.runTurret(0);
+            Robot.shooter.runFlyWheelPower(.3);
+            break;
+          case 9:
+            Robot.shooter.runFlyWheelPower(0);
+            Robot.shield.runShieldPower(.3);
+            break;
+          case 10:
+            Robot.shield.runShieldPower(0);
+
+          default:
+        }
     }
 }

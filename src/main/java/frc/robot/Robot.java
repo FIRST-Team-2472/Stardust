@@ -121,10 +121,13 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     SmartDashboard.putString("RobotState", "Test");
+    testMethods.resetTimer();
   }
 
   @Override
   public void testPeriodic() {
+    testMethods.runEachMotor();
+    /*
     int teststate = 0;
 
     if (rightJoystick.getRawButtonPressed(1)) {
@@ -157,7 +160,7 @@ public class Robot extends TimedRobot {
     }
     testMethods.shooterKF(2);
 
-    testMethods.drivetrainKF(3);
+    testMethods.drivetrainKF(3);*/
   }
 
 }

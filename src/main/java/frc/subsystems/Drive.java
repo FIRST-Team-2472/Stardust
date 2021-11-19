@@ -107,7 +107,6 @@ public class Drive {
     public static final int COUNTS_PER_FOOT = 5215;
 
     public void driverFeet(double meters) {
-        System.out.println("alskjfawleijafweofijwef");
         frontLeft.set(ControlMode.MotionMagic, meters * COUNTS_PER_FOOT * 99999);
         frontRight.set(ControlMode.MotionMagic, meters * COUNTS_PER_FOOT * 99999);
     }
@@ -170,6 +169,16 @@ public class Drive {
     //Just for testing.
     public void runFrontRight(double speed) {
         frontRight.set(ControlMode.Velocity, speed * 300);
+    }
+
+    //just for testing
+    public void runBackLeftPower(double speed) {
+        backLeft.set(ControlMode.PercentOutput, speed);
+    }
+
+    //Just for testing.
+    public void runFrontRightPower(double speed) {
+        frontRight.set(ControlMode.PercentOutput, speed);
     }
 
     public void runBackRightPower(double speed) {
