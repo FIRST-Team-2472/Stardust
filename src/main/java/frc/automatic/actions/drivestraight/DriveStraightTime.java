@@ -10,7 +10,7 @@ public class DriveStraightTime extends TimerBase {
 
     public DriveStraightTime(double givenSpeed, double seconds) {
         super(seconds);
-        speed = -givenSpeed;
+        speed = givenSpeed;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class DriveStraightTime extends TimerBase {
 
     @Override
     public void endAction() {
-        Robot.drive.tankDriveVelocity(0, 0);
+        Robot.drive.tankDrivePower(0, 0);
 
     }
 

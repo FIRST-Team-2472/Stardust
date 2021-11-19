@@ -28,7 +28,7 @@ public class TeleopMethods {
 
     public void driveTrain() {
         //sets the robot to drive with the left joystick based on their
-        Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * -.5, Robot.leftJoystick.getX() * -.5);
+        Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * .5, Robot.leftJoystick.getX() * -.5);
         SmartDashboard.putString("Drive State", "Arcade");
     }
 

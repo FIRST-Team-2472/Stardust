@@ -10,95 +10,96 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive {
 
-    private TalonSRX backLeft;
-    private TalonSRX backRight;
-    private TalonSRX frontLeft;
-    private TalonSRX frontRight;
+    private TalonSRX leftSlave;
+    private TalonSRX rightMaster;
+    private TalonSRX leftMaster;
+    private TalonSRX rightSlave;
     public double desiredLeft;
     public double desiredRight;
     public PigeonIMU pigeon = new PigeonIMU(2);
 
     public Drive(int backleftID, int backrightID, int frontleftID, int frontrightID) {
-        backLeft = new TalonSRX(backleftID);
-        backRight = new TalonSRX(backrightID);
-        frontLeft = new TalonSRX(frontleftID);
-        frontRight = new TalonSRX(frontrightID);
+        rightSlave = new TalonSRX(frontrightID);
+        rightMaster = new TalonSRX(backrightID);
 
-        frontLeft.config_kP(0, 0.05);
-        frontLeft.config_kI(0, 0);
-        frontLeft.config_kD(0, 0.05);
-        frontLeft.config_kF(0, -.19);
+        leftMaster = new TalonSRX(frontleftID);
+        leftSlave = new TalonSRX(backleftID);
+
+        leftMaster.config_kP(0, 0.05);
+        leftMaster.config_kI(0, 0);
+        leftMaster.config_kD(0, 0.05);
+        leftMaster.config_kF(0, -.19);
 
 
-        backRight.config_kP(0, 0.05);
-        backRight.config_kI(0, 0);
-        backRight.config_kD(0, 0.05);
-        backRight.config_kF(0, -.19);
+        rightMaster.config_kP(0, 0.05);
+        rightMaster.config_kI(0, 0);
+        rightMaster.config_kD(0, 0.05);
+        rightMaster.config_kF(0, -.19);
 
-        // Not slaved for testing
-        backLeft.follow(frontLeft);
-        backLeft.setInverted(InvertType.FollowMaster);
-        frontRight.follow(backRight);
-        //frontRight.setInverted(InvertType.FollowMaster);
+        leftMaster.setInverted(false);
+        rightMaster.setInverted(true);
 
-        frontLeft.setInverted(true);
-        backRight.setInverted(false);
+        leftSlave.follow(leftMaster);
+        leftSlave.setInverted(InvertType.FollowMaster);
+        rightSlave.follow(rightMaster);
+        rightSlave.setInverted(InvertType.FollowMaster);
+
         
 
         //encoders
         
-        backRight.setSensorPhase(true);  // correct encoder to motor direction
+        rightMaster.setSensorPhase(true);  // correct encoder to motor direction
      
         // Tell the talon that he has a quad encoder
-        backRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
        
         // Set minimum output (closed loop)  to 0 for now
-        backRight.configNominalOutputForward(0, 30);
-        backRight.configNominalOutputReverse(0, 30);
+        rightMaster.configNominalOutputForward(0, 30);
+        rightMaster.configNominalOutputReverse(0, 30);
         
         // Set maximum forward and backward to full speed
-        backRight.configPeakOutputForward(1, 30);
-        backRight.configPeakOutputReverse(-1, 30);
+        rightMaster.configPeakOutputForward(1, 30);
+        rightMaster.configPeakOutputReverse(-1, 30);
     
         // Motion magic cruise (max speed) is 100 counts per 100 ms
-            backRight.configMotionCruiseVelocity(500, 30);
-            backRight.configMotionCruiseVelocity(3000, 30);
-            backRight.configMotionCruiseVelocity(3000, 30);
+            rightMaster.configMotionCruiseVelocity(500, 30);
+            rightMaster.configMotionCruiseVelocity(3000, 30);
+            rightMaster.configMotionCruiseVelocity(3000, 30);
     
         // Motion magic acceleration is 50 counts
-            backRight.configMotionAcceleration(100, 30);
+            rightMaster.configMotionAcceleration(100, 30);
     
             // Zero the sensor once on robot boot up 
-            backRight.setSelectedSensorPosition(0, 0, 30);
+            rightMaster.setSelectedSensorPosition(0, 0, 30);
 
 //other side
 
-            frontLeft.setSensorPhase(true);  // correct encoder to motor direction
+            leftMaster.setSensorPhase(true);  // correct encoder to motor direction
 
             // Tell the talon that he has a quad encoder
-            frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+            leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
            
             // Set minimum output (closed loop)  to 0 for now
-            frontLeft.configNominalOutputForward(0, 30);
-            frontLeft.configNominalOutputReverse(0, 30);
+            leftMaster.configNominalOutputForward(0, 30);
+            leftMaster.configNominalOutputReverse(0, 30);
             
             // Set maximum forward and backward to full speed
-            frontLeft.configPeakOutputForward(1, 30);
-            frontLeft.configPeakOutputReverse(-1, 30);
+            leftMaster.configPeakOutputForward(1, 30);
+            leftMaster.configPeakOutputReverse(-1, 30);
         
             // Motion magic cruise (max speed) is 100 counts per 100 ms
 
-                frontLeft.configMotionCruiseVelocity(500, 30);
+                leftMaster.configMotionCruiseVelocity(500, 30);
 
-                frontLeft.configMotionCruiseVelocity(3000, 30);
+                leftMaster.configMotionCruiseVelocity(3000, 30);
 
-                frontLeft.configMotionCruiseVelocity(3000, 30);
+                leftMaster.configMotionCruiseVelocity(3000, 30);
         
             // Motion magic acceleration is 50 counts
-                frontLeft.configMotionAcceleration(100, 30);
+                leftMaster.configMotionAcceleration(100, 30);
         
                 // Zero the sensor once on robot boot up 
-                frontLeft.setSelectedSensorPosition(0, 0, 30);
+                leftMaster.setSelectedSensorPosition(0, 0, 30);
         
         
                 //setupMotionMagic(0, 0, 0, 0, 500, 100);
@@ -107,18 +108,18 @@ public class Drive {
     public static final int COUNTS_PER_FOOT = 5215;
 
     public void driverFeet(double meters) {
-        frontLeft.set(ControlMode.MotionMagic, meters * COUNTS_PER_FOOT * 99999);
-        frontRight.set(ControlMode.MotionMagic, meters * COUNTS_PER_FOOT * 99999);
+        leftMaster.set(ControlMode.MotionMagic, meters * COUNTS_PER_FOOT * 99999);
+        rightSlave.set(ControlMode.MotionMagic, meters * COUNTS_PER_FOOT * 99999);
     }
 
     
     public void runBackRightVelocity(double speed) {
-        backRight.set(ControlMode.Velocity, speed * 6250);
+        rightMaster.set(ControlMode.Velocity, speed * 6250);
         desiredRight = (double)speed * 6250;
     }
 
     public void runFrontLeftVelocity(double speed) {
-        frontLeft.set(ControlMode.Velocity, speed * 6250);
+        leftMaster.set(ControlMode.Velocity, speed * 6250);
         desiredLeft = (double)speed * 6250;
     }
 
@@ -147,8 +148,8 @@ public class Drive {
     }
 
     public void arcadeDriveVelocity(double y, double x) {
-        // y is Joystick Y
-        // x is Joystick X
+        // y is Joystick Y axis
+        // x is Joystick X axis
 
         if (Math.abs(x) + Math.abs(y) < .5) {
             tankDriveVelocity(y - x, y + x);
@@ -163,70 +164,70 @@ public class Drive {
     /** Run the back left moter at the given speed */
     //Just for testing
     public void runBackLeft(double speed) {
-        backLeft.set(ControlMode.Velocity, speed * 300);
+        leftSlave.set(ControlMode.Velocity, speed * 300);
     }
 
     //Just for testing.
     public void runFrontRight(double speed) {
-        frontRight.set(ControlMode.Velocity, speed * 300);
+        rightSlave.set(ControlMode.Velocity, speed * 300);
     }
 
     //just for testing
     public void runBackLeftPower(double speed) {
-        backLeft.set(ControlMode.PercentOutput, speed);
+        leftSlave.set(ControlMode.PercentOutput, speed);
     }
 
     //Just for testing.
     public void runFrontRightPower(double speed) {
-        frontRight.set(ControlMode.PercentOutput, speed);
+        rightSlave.set(ControlMode.PercentOutput, speed);
     }
 
     public void runBackRightPower(double speed) {
-        backRight.set(ControlMode.PercentOutput, speed);
+        rightMaster.set(ControlMode.PercentOutput, speed);
     }
 
     public void runFrontLeftPower(double speed) {
-        frontLeft.set(ControlMode.PercentOutput, speed);
+        leftMaster.set(ControlMode.PercentOutput, speed);
     }
 
     public int getRightSpeed() {
-        return (int)backRight.getSelectedSensorVelocity();
+        return (int)rightMaster.getSelectedSensorVelocity();
     }
 
     public int getLeftSpeed() {
-        return (int)frontLeft.getSelectedSensorVelocity();
+        return (int)leftMaster.getSelectedSensorVelocity();
     }
 
     public double getLeftDistance() {
-        return frontLeft.getSelectedSensorPosition();
+        return leftMaster.getSelectedSensorPosition();
     }
 
     public void setLeftDistance(int dis) {
-        frontLeft.setSelectedSensorPosition(dis);
+        leftMaster.setSelectedSensorPosition(dis);
     }
 
     public double getRightDistance(){
-        return backRight.getSelectedSensorPosition();
+        return rightMaster.getSelectedSensorPosition();
     }
 
     public void setRightDistance(int dis) {
-        backRight.setSelectedSensorPosition(dis);
+        rightMaster.setSelectedSensorPosition(dis);
     }
 
     public void setDistance(int lDis, int rDis) {
-        frontLeft.setSelectedSensorPosition(lDis);
-        backRight.setSelectedSensorPosition(rDis);
+        leftMaster.setSelectedSensorPosition(lDis);
+        rightMaster.setSelectedSensorPosition(rDis);
     }
 
 
     public void tankDriveMotionMagic(int targetPosR, int targetPosL){
-        backRight.set(ControlMode.MotionMagic, targetPosR);
-        frontLeft.set(ControlMode.MotionMagic, targetPosL);
+        rightMaster.set(ControlMode.MotionMagic, targetPosR);
+        leftMaster.set(ControlMode.MotionMagic, targetPosL);
     }
 
     public void zeroCounters(){
-        backRight.setSelectedSensorPosition(0);
-        frontLeft.setSelectedSensorPosition(0);
+        rightMaster.setSelectedSensorPosition(0);
+        leftMaster.setSelectedSensorPosition(0);
         
         
     }
