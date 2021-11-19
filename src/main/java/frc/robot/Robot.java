@@ -44,29 +44,35 @@ public class Robot extends TimedRobot {
   public static final TestMethods testMethods = new TestMethods();
   public static final TeleopMethods teleopMethods = new TeleopMethods();
 
-  private Timer limelightTimer = new Timer(5);
+  private Timer limelightTimer;
   private final ActionQueue autoActions = new ActionQueue();
   private final ActionQueue teleopActions = new ActionQueue();
+  boolean runOnce = false;
 
 
 
   @Override
   public void robotInit() { //runs when the robot first starts up
     pigeon.setFusedHeading(0.0, 30);
-    SmartDashboard.putString("RobotState", "Robot On");
+    SmartDashboard.putString("RobotState", "Robot Disabled");
 
     compressor.setClosedLoopControl(true);
     limelight.setDriverCamMode(true);
-    limelightTimer.reset();
+    limelightTimer = new Timer(5);
   }
 
   @Override
   public void robotPeriodic() { //runs constantly no matter what state the robot is in
-    if (limelightTimer.isTimedOut()) {
+
+    //waits 5 secs then turns off the limelight
+    if (limelightTimer.isTimedOut() && !runOnce) {
       limelight.setDriverCamMode(true);
+      runOnce = true;
     }  
 
+    //updates the angle of the robot
     drive.DoPigeon();
+    //displays all of our smartdashboad values
     smartDashBoard.update();
   }
 
@@ -121,6 +127,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
+    SmartDashboard.putString("RobotState", "Robot Disabled");
     limelight.setDriverCamMode(true);
   }
 
