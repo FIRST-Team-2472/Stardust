@@ -19,6 +19,7 @@ public class Limelight {
     // pipelines
     public static final int PIPLINE_FIND_TARGET = 0;
     public static final int PIPELINE_FIND_BALL = 1;
+    public static final int PIPELINE_LED_OFF = 2;
 
     // stream modes
     public static final int STANDARD_STREAM = 0;

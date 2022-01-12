@@ -122,7 +122,7 @@ public class Drive {
         leftMaster.set(ControlMode.Velocity, speed * 6250);
         desiredLeft = (double)speed * 6250;
     }
-
+//this code is trash btw honestly kys-issaC 
     public int leftDriveError() {
         return (int)desiredLeft - getLeftSpeed();
     }
