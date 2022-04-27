@@ -6,20 +6,20 @@ import frc.automatic.runners.ActionQueue;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
 
-public class TeleopMethods {
+public class TeleopMethods{
 
     public void initialize(ActionQueue teleopActions) {
         //zeros encoders
-        Robot.drive.zeroCounters();
+        //Robot.drive.zeroCounters();
 
         //pushes out the front pistons
-        Robot.collector.pushoutfrontwheel();
+        //Robot.collector.pushoutfrontwheel();
 
         //turns on the compresser
         Robot.compressor.setClosedLoopControl(true);
 
         //turns off the limelight leds (theoreticly)
-        Robot.limelight.setDriverCamMode(true);
+        //Robot.limelight.setDriverCamMode(true);
 
         //moves the shield down to zero its encoder. In compition it is done in autnomous
         //teleopActions.addAction(new SetShield());
@@ -28,7 +28,7 @@ public class TeleopMethods {
 
     public void driveTrain() {
         //sets the robot to drive with the left joystick based on their
-        Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * .5, Robot.leftJoystick.getX() * -.5);
+        Robot.drive.arcadeDriveVelocity(Robot.leftJoystick.getY() * .5, Robot.rightJoystick.getX() * -.5);
         SmartDashboard.putString("Drive State", "Arcade");
     }
 

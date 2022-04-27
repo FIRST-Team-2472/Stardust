@@ -57,23 +57,23 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("RobotState", "Robot Disabled");
 
     compressor.setClosedLoopControl(true);
-    limelight.setDriverCamMode(true);
-    limelightTimer = new Timer(5);
+    //limelight.setDriverCamMode(true);
+    //limelightTimer = new Timer(5);
   }
 
   @Override
   public void robotPeriodic() { //runs constantly no matter what state the robot is in
 
     //waits 5 secs then turns off the limelight
-    if (limelightTimer.isTimedOut() && !runOnce) {
-      limelight.setDriverCamMode(true);
-      runOnce = true;
-    }  
+    //if (limelightTimer.isTimedOut() && !runOnce) {
+      //limelight.setDriverCamMode(true);
+     // runOnce = true;
+    //}  
 
     //updates the angle of the robot
-    drive.DoPigeon();
+    //drive.DoPigeon();
     //displays all of our smartdashboad values
-    smartDashBoard.update();
+    //smartDashBoard.update();
   }
 
 
@@ -110,17 +110,6 @@ public class Robot extends TimedRobot {
 
     teleopMethods.driveTrain();
 
-    teleopMethods.runTurret();
-
-    teleopMethods.runCollector(teleopActions);
-
-    teleopMethods.moveFrontWheels();
-
-    teleopMethods.shooting(teleopActions);
-
-    teleopMethods.manualFire(teleopActions);
-
-    teleopActions.step();
   }
 
 
